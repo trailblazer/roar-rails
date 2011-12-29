@@ -31,4 +31,19 @@ class TestCaseTest < ActionController::TestCase
     post :show, "{}", :id => 1
     assert_equal "{}1", response.body
   end
+  
+  test "allows GET" do
+    get :show
+    assert_equal "", response.body
+  end
+  
+  test "allows PUT" do
+    put :show, "{}", :id => 1
+    assert_equal "{}1", response.body
+  end
+  
+  test "allows DELETE" do
+    delete :show, "{}", :id => 1
+    assert_equal "{}1", response.body
+  end
 end

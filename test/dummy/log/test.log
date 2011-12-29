@@ -24397,3 +24397,36 @@ Completed 200 OK in 45ms (Views: 45.0ms)
 Completed 200 OK in 0ms (Views: 0.2ms)
   Processing by TestCaseTest::BandController#show as HTML
 Completed 200 OK in 0ms (Views: 0.1ms)
+  Processing by TestCaseTest::BandController#show as HTML
+Rendered text template (0.0ms)
+Completed 200 OK in 45ms (Views: 44.5ms)
+  Processing by TestCaseTest::BandController#show as HTML
+  Parameters: {"id"=>"1"}
+Completed 200 OK in 0ms (Views: 0.2ms)
+  Processing by TestCaseTest::BandController#show as HTML
+Completed 200 OK in 0ms (Views: 0.1ms)
+  Processing by TestCaseTest::BandController#show as HTML
+Completed 200 OK in 44ms (Views: 43.8ms)
+  Processing by TestCaseTest::BandController#show as HTML
+Completed 200 OK in 0ms (Views: 0.2ms)
+  Processing by TestCaseTest::BandController#show as HTML
+  Parameters: {"id"=>"1"}
+Completed 200 OK in 0ms (Views: 0.1ms)
+  Processing by TestCaseTest::BandController#show as HTML
+Completed 200 OK in 0ms (Views: 0.1ms)
+  Processing by TestCaseTest::BandController#show as HTML
+  Parameters: {"id"=>"1"}
+Rendered text template (0.0ms)
+Completed 200 OK in 44ms (Views: 43.9ms)
+  Processing by TestCaseTest::BandController#show as HTML
+Completed 200 OK in 0ms (Views: 0.2ms)
+  Processing by TestCaseTest::BandController#show as HTML
+Completed 200 OK in 0ms (Views: 0.1ms)
+  Processing by TestCaseTest::BandController#show as HTML
+  Parameters: {"id"=>"1"}
+Completed 200 OK in 0ms (Views: 0.1ms)
+  Processing by TestCaseTest::BandController#show as HTML
+Completed 200 OK in 0ms (Views: 0.1ms)
+  Processing by TestCaseTest::BandController#show as HTML
+  Parameters: {"id"=>"1"}
+Completed 200 OK in 0ms (Views: 0.1ms)
