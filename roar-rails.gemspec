@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Nick Sutterer"]
   s.email       = ["apotonick@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Rails extensions for using Roar in the popular web framework.}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Use Roar in Rails.}
+  s.description = %q{Rails extensions for using Roar in the popular web framework.}
 
   s.rubyforge_project = "roar-rails"
 
@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   
   s.add_runtime_dependency "roar", "~> 0.9.1"
+  s.add_runtime_dependency "test_xml"
   
   s.add_development_dependency "minitest",	">= 2.8.1"
   s.add_development_dependency "actionpack",    "~> 3.0"
