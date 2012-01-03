@@ -33,8 +33,8 @@ class TestCaseTest < ActionController::TestCase
   end
   
   test "allows GET" do
-    get :show
-    assert_equal "", response.body
+    get :show, :id => 1
+    assert_equal "1", response.body
   end
   
   test "allows PUT" do
@@ -45,5 +45,26 @@ class TestCaseTest < ActionController::TestCase
   test "allows DELETE" do
     delete :show, "{}", :id => 1
     assert_equal "{}1", response.body
+  end
+  
+  test "#assert_body" do
+    get :show, :id => 1
+    assert_body "1"
+    
+    # TODO: check message.
+    assert_raises MiniTest::Assertion do
+      assert_body "3"
+    end
+  end
+  
+  test "#assert_body with xml" do
+    @controller.instance_eval do
+      def show
+        render :text => "<order/>"
+      end
+    end
+    
+    get :show
+    assert_body "<order></order>", :xml => true
   end
 end
