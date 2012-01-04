@@ -2,7 +2,7 @@ module Roar
   module Rails
     module TestCase
       def get(action, *args)
-        process(action, "GET", nil, *args)
+        process(action, "GET", *args)
       end
       
       def post(action, *args)
@@ -18,8 +18,14 @@ module Roar
       end
       
       def process(action, http_method, document="", params={})
+        if document.is_a?(Hash)
+          params = document
+          document = ""
+        end
+        
         request.env['RAW_POST_DATA'] = document
-        super(action, params, nil, nil, http_method)
+        
+        super(action, params, nil, nil, http_method)  # FIXME: for Rails <=3.1, only.
       end
       
       module Assertions

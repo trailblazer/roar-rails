@@ -22,6 +22,11 @@ class TestCaseTest < ActionController::TestCase
     assert_equal "", response.body
   end
   
+  test "allows POST with options, only" do
+    post :show, :id => 1
+    assert_equal "1", response.body
+  end
+  
   test "allows POST with document" do
     post :show, "{}"
     assert_equal "{}", response.body
