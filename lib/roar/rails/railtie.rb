@@ -14,12 +14,6 @@ module Roar
           include UrlMethods  # provide an initial #default_url_options.
         end
       end
-      
-      initializer "roar.load_common_files" do |app|
-        # TODO: use ActiveSupport's autoloading.
-        require "roar/representer/json"
-        require "roar/representer/feature/hypermedia"
-      end
     end
   end
 end

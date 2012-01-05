@@ -1,10 +1,5 @@
 require 'test_helper'
 
-ENV['RAILS_ENV'] = 'test'
-require "dummy/config/environment"
-require "rails/test_help" # adds stuff like @routes, etc.
-require "roar/rails/test_case"
-
 class TestCaseTest < ActionController::TestCase
   include Roar::Rails::TestCase
   

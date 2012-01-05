@@ -1,8 +1,16 @@
 require "roar/rails/version"
+require "roar/representer"
+require "roar/rails/railtie"
 
-# Load frequently used files. 
-require "roar/representer/json"
-require "roar/representer/feature/hypermedia"
+module Roar::Representer
+  autoload("JSON", "roar/representer/json")
+  
+  module Feature
+    autoload("Hypermedia", "roar/representer/feature/hypermedia")
+  end
+end
+
+
 
 module Roar
   module Rails
