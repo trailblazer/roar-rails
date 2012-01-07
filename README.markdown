@@ -27,7 +27,7 @@ config.representer.default_url_options = {:host => "www.apotomo.de"}
 
 ### Autoloading
 
-
+Put your representers in `app/representers` and they will be autoloaded by Rails. Also, frequently used modules as media representers and features don't need to be required manually. 
 
 
 ## Contributors
