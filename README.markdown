@@ -16,11 +16,10 @@ module FruitRepresenter
     fruit_url self
   end
 ```
-
-Note: In order to use the URL helpers you need to configure a host name in your environment.
+To get the hyperlinks up and running, please make sure to set the right _host name_ in your environment files (config/environments):
 
 ```ruby
-config.representer.default_url_options = {:host => "www.apotomo.de"}
+config.representer.default_url_options = {:host => "127.0.0.1:3000"}
 ```
 
 ### Testing
