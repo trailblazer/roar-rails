@@ -1,5 +1,6 @@
 require "roar/rails/version"
 require "roar/representer"
+require "roar/rails/responder"
 require "roar/rails/railtie"
 
 module Roar::Representer
