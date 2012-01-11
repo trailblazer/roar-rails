@@ -1,4 +1,4 @@
-module Roar
+module Roar::Rails
   module Responder
     def extend_with_representer!(resource, representer=nil)
       representer ||= representer_for_resource(resource)

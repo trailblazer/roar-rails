@@ -20,7 +20,7 @@ class SingersController < ActionController::Base
   end
 
   def self.responder
-    Class.new(super).send :include, Roar::Responder
+    Class.new(super).send :include, Roar::Rails::Responder
   end
 
 end

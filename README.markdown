@@ -18,13 +18,13 @@ class SingersController < ApplicationController
   end
 
   def self.responder
-    Class.new(super).send :include, Roar::Responder
+    Class.new(super).send :include, Roar::Rails::Responder
   end
 
 end
 ```
 
-Need to use a represnter with a different name than your model? Pass it in using the `:with_representer` option:
+Need to use a representer with a different name than your model? Pass it in using the `:with_representer` option:
 
 ```ruby
 class SingersController < ApplicationController
@@ -36,7 +36,7 @@ class SingersController < ApplicationController
   end
 
   def self.responder
-    Class.new(super).send :include, Roar::Responder
+    Class.new(super).send :include, Roar::Rails::Responder
   end
 
 end
@@ -48,7 +48,7 @@ Goes great with [Jose Valim's responders gem][responders]!
 class SingersController < ApplicationController
   respond_to :json
 
-  responders Roar::Responder
+  responders Roar::Rails::Responder
 
   def show
     singer = Singer.find_by_id(params[:id])
