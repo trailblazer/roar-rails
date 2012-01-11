@@ -4,7 +4,12 @@ _Makes using Roar's representers in your Rails app fun._
 
 ## Features
 
-### Rendering with #respond_with
+* Rendering with responders
+* URL helpers in representers
+* Better tests
+* Autoloading
+
+## Rendering with #respond_with
 
 Easily render resources using representers with the built-in responder.
 
@@ -58,7 +63,7 @@ class SingersController < ApplicationController
 end
 ```
 
-### URL Helpers
+## URL Helpers
 
 Any URL helpers from the Rails app are automatically available in representers.
 
@@ -76,9 +81,9 @@ To get the hyperlinks up and running, please make sure to set the right _host na
 config.representer.default_url_options = {:host => "127.0.0.1:3000"}
 ```
 
-### Testing
+## Testing
 
-### Autoloading
+## Autoloading
 
 Put your representers in `app/representers` and they will be autoloaded by Rails. Also, frequently used modules as media representers and features don't need to be required manually.
 
