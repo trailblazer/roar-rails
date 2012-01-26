@@ -37,7 +37,7 @@ class SingersController < ApplicationController
 
   def show
     singer = Musician.find_by_id(params[:id])
-    respond_with singer, with_representer: SingerRepresenter
+    respond_with singer, :with_representer => SingerRepresenter
   end
 
   def self.responder
