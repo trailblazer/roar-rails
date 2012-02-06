@@ -6,7 +6,7 @@ class SingersController < ActionController::Base
 
   def explicit_representer
     singer = Musician.new("Bumi")
-    respond_with singer, with_representer: SingerRepresenter
+    respond_with singer, :with_representer => SingerRepresenter
   end
 
   def implicit_representer
@@ -31,17 +31,17 @@ class ResponderTest < ActionController::TestCase
   tests SingersController
 
   test "responder allows specifying representer" do
-    get :explicit_representer, format: 'json'
+    get :explicit_representer, :format => 'json'
     assert_equal singer.to_json, @response.body
   end
 
   test "responder finds representer by convention" do
-    get :implicit_representer, format: 'json'
+    get :implicit_representer, :format => 'json'
     assert_equal singer.to_json, @response.body
   end
 
   test "responder works with collections" do
-    get :collection_of_representers, format: 'json'
+    get :collection_of_representers, :format => 'json'
     assert_equal singers.map(&:to_hash).to_json, @response.body
   end
 
@@ -55,5 +55,3 @@ class ResponderTest < ActionController::TestCase
   end
 
 end
-
-
