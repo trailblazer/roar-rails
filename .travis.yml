@@ -1,0 +1,6 @@
+language: ruby
+rvm:
+  - 1.9.2
+gemfile:
+  - Gemfile
+  - gemfiles/Gemfile.rails3-0
