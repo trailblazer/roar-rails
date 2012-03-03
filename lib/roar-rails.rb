@@ -16,5 +16,6 @@ end
 module Roar
   module Rails
     # Your code goes here...
+    autoload("TestCase", "roar/rails/test_case")
   end
 end
