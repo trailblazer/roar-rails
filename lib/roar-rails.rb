@@ -15,7 +15,7 @@ end
 
 module Roar
   module Rails
-    # Your code goes here...
     autoload("TestCase", "roar/rails/test_case")
+    autoload("ControllerAdditions", "roar/rails/controller_additions")
   end
 end

@@ -2,6 +2,7 @@ require 'test_helper'
 
 Singer = Struct.new(:name)
 class SingersController < ActionController::Base
+  include Roar::Rails::ControllerAdditions
   respond_to :json
 
   def explicit_representer
@@ -18,11 +19,6 @@ class SingersController < ActionController::Base
     singers = [Singer.new("Bumi"), Singer.new("Bjork"), Singer.new("Sinead")]
     respond_with singers
   end
-
-  def self.responder
-    Class.new(super).send :include, Roar::Rails::Responder
-  end
-
 end
 
 class ResponderTest < ActionController::TestCase

@@ -15,17 +15,13 @@ Easily render resources using representers with the built-in responder.
 
 ```ruby
 class SingersController < ApplicationController
+  include Roar::Rails::ControllerAdditions
   respond_to :json
 
   def show
     singer = Singer.find_by_id(params[:id])
     respond_with singer
   end
-
-  def self.responder
-    Class.new(super).send :include, Roar::Rails::Responder
-  end
-
 end
 ```
 
@@ -33,17 +29,13 @@ Need to use a representer with a different name than your model? Pass it in usin
 
 ```ruby
 class SingersController < ApplicationController
+  include Roar::Rails::ControllerAdditions
   respond_to :json
 
   def show
     singer = Musician.find_by_id(params[:id])
     respond_with singer, :with_representer => SingerRepresenter
   end
-
-  def self.responder
-    Class.new(super).send :include, Roar::Rails::Responder
-  end
-
 end
 ```
 
