@@ -6,13 +6,14 @@ module Roar::Rails
     end
     
     def display(resource, given_options={})
+      representer = given_options.delete(:with_representer)
       if resource.respond_to?(:map!)
         resource.map! do |r|
-          extend_with_representer!(r)
-          r.to_hash
+          extend_with_representer!(r, representer)
+          r.respond_to?(:to_hash) ? r.to_hash : r
         end
       else
-        extend_with_representer!(resource, options.delete(:with_representer))
+        extend_with_representer!(resource, representer)
       end
       super
     end
