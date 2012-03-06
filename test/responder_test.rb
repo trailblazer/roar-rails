@@ -1,5 +1,7 @@
 require 'test_helper'
 
+Singer = Struct.new(:name)
+
 class ResponderTest < ActionController::TestCase
   include Roar::Rails::TestCase
   
