@@ -5,6 +5,7 @@ _Makes using Roar's representers in your Rails app fun._
 ## Features
 
 * Rendering with responders
+* Parsing incoming documents
 * URL helpers in representers
 * Better tests
 * Autoloading
@@ -54,6 +55,34 @@ class SingersController < ApplicationController
 
 end
 ```
+
+
+## Parsing incoming documents
+
+In `#create` and `#update` actions it is often necessary to parse the incoming representation and map it to a model instance. Use the `#consume!` method for this.
+
+```ruby
+class SingersController < ApplicationController
+  respond_to :json
+
+  def create
+    singer = Singer.new
+    consume!(singer)
+    
+    respond_with singer
+  end
+end
+```
+
+The `consume!` call will roughly do the following.
+
+```ruby
+singer.
+  extend(SingerRepresenter)
+  from_json(request.body)
+```
+
+So, `#consume!` helps you figuring out the representer module and reading the incoming document.
 
 ## URL Helpers
 

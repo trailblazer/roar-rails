@@ -16,6 +16,7 @@ module Roar::Rails
     include ModelMethods
     
     def display(model, given_options={})
+      # TODO: remove the [] semantics, this should be done with a Collection representer.
       if model.respond_to?(:map!)
         model.map! do |r|
           extend_with_representer!(r)
