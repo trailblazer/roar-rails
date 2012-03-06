@@ -1,28 +1,27 @@
 require 'test_helper'
 
-Singer = Struct.new(:name)
-class SingersController < ActionController::Base
-  include Roar::Rails::ControllerAdditions
-  respond_to :json
-
-  def explicit_representer
-    singer = Musician.new("Bumi")
-    respond_with singer, :with_representer => SingerRepresenter
-  end
-
-  def implicit_representer
-    singer = Singer.new("Bumi")
-    respond_with singer
-  end
-
-  def collection_of_representers
-    singers = [Singer.new("Bumi"), Singer.new("Bjork"), Singer.new("Sinead")]
-    respond_with singers
-  end
-end
-
 class ResponderTest < ActionController::TestCase
   include Roar::Rails::TestCase
+  
+  class SingersController < ActionController::Base
+    include Roar::Rails::ControllerAdditions
+    respond_to :json
+
+    def explicit_representer
+      singer = Musician.new("Bumi")
+      respond_with singer, :with_representer => SingerRepresenter
+    end
+
+    def implicit_representer
+      singer = Singer.new("Bumi")
+      respond_with singer
+    end
+
+    def collection_of_representers
+      singers = [Singer.new("Bumi"), Singer.new("Bjork"), Singer.new("Sinead")]
+      respond_with singers
+    end
+  end
 
   tests SingersController
 
