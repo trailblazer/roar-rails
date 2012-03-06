@@ -1,6 +1,5 @@
 require "roar/rails/version"
 require "roar/representer"
-require "roar/rails/responder"
 require "roar/rails/railtie"
 
 module Roar::Representer
@@ -17,5 +16,7 @@ module Roar
   module Rails
     autoload("TestCase", "roar/rails/test_case")
     autoload("ControllerAdditions", "roar/rails/controller_additions")
+    autoload("Responder", "roar/rails/responder")
+    autoload("ModelMethods", "roar/rails/responder")
   end
 end
