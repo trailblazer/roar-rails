@@ -5,11 +5,15 @@ require "roar/rails/railtie"
 module Roar::Representer
   autoload("JSON", "roar/representer/json")
   
+  module JSON
+    autoload("HAL", "roar/representer/json/hal")
+  end
+  
+  
   module Feature
     autoload("Hypermedia", "roar/representer/feature/hypermedia")
   end
 end
-
 
 
 module Roar
