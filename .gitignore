@@ -6,3 +6,4 @@ bin
 Gemfile.lock
 pkg/*
 test/dummy/log/*
+.rvmrc
