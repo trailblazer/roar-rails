@@ -18,10 +18,11 @@ module Roar::Rails
     def display(model, given_options={})
       # TODO: remove the [] semantics, this should be done with a Collection representer.
       representer = options.delete(:with_representer)
+      
       if model.respond_to?(:map!)
-        model.map! do |r|
-          extend_with_representer!(r, representer)
-          r.to_hash
+        model.map! do |m|
+          extend_with_representer!(m, representer)
+          m.to_hash
         end
       else
         extend_with_representer!(model, representer)
