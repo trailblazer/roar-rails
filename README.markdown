@@ -91,10 +91,12 @@ Any URL helpers from the Rails app are automatically available in representers.
 ```ruby
 module FruitRepresenter
   include Roar::Representer::JSON
+  include Roar::Representer::Feature::Hypermedia
 
   link :self do
     fruit_url self
   end
+end
 ```
 To get the hyperlinks up and running, please make sure to set the right _host name_ in your environment files (config/environments):
 
