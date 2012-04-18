@@ -91,6 +91,7 @@ Any URL helpers from the Rails app are automatically available in representers.
 ```ruby
 module FruitRepresenter
   include Roar::Representer::JSON
+  include Roar::Representer::Feature::Hypermedia
 
   link :self do
     fruit_url self
