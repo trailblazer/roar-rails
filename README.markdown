@@ -96,6 +96,7 @@ module FruitRepresenter
   link :self do
     fruit_url self
   end
+end
 ```
 To get the hyperlinks up and running, please make sure to set the right _host name_ in your environment files (config/environments):
 
