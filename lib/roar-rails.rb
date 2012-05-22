@@ -3,6 +3,7 @@ require "roar/representer"
 require "roar/rails/railtie"
 
 module Roar::Representer
+  autoload("XML", "roar/representer/xml")
   autoload("JSON", "roar/representer/json")
   
   module JSON
