@@ -1,3 +1,7 @@
+h2. 0.0.6
+
+* Make roar-rails rely on roar 0.10 and bigger.
+
 h2. 0.0.4
 
 * Added `#consume!` to infer representer name and parse the incoming document for a model.
