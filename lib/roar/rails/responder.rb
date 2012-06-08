@@ -8,16 +8,25 @@ module Roar::Rails
     
   private
     def representer_for_model(model)
-      (model.class.name + "Representer").constantize
+      class_name = model.class.name
+      "#{class_name}Representer".constantize
     end
   end
   
   module Responder
     include ModelMethods
     
-    def display(model, given_options={})
-      # TODO: remove the [] semantics, this should be done with a Collection representer.
-      representer = options.delete(:with_representer)
+    # DISCUSS: why THE FUCK is options not passed as a method argument but kept as an internal instance variable in the responder? this is something i will never understand about Rails.
+    def display(model, *args)
+      if representer = options.delete(:represent_with)
+        # this is the new behaviour.
+        model.extend(representer) # FIXME: move to method.
+        return super
+      end
+      
+      
+      representer = options.delete(:with_representer) and ActiveSupport::Deprecation.warn(":with_representer is deprecated and will be removed in roar-rails 1.0. Use :represent_with or :represent_items_with.")
+      representer ||= options.delete(:represent_items_with) # new API.
       
       if model.respond_to?(:map!)
         model.map! do |m|
@@ -27,6 +36,7 @@ module Roar::Rails
       else
         extend_with_representer!(model, representer)
       end
+      
       super
     end
   end
