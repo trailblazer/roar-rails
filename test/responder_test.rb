@@ -102,8 +102,8 @@ class ResponderTest < ActionController::TestCase
   end
   
   test "use passed :represent_items_with for collection items" do
-    get :explicit_collection_representer, :format => 'json'
-    assert_equal({:singers => singers.collect {|s| s.extend(SingerRepresenter).to_hash }}.to_json, @response.body)
+    get :explicit_items_representer, :format => 'json'
+    assert_equal(singers.collect {|s| s.extend(SingerRepresenter).to_hash }.to_json, @response.body)
   end
   
   
