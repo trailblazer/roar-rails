@@ -65,10 +65,12 @@ class ResponderTest < ActionController::TestCase
   
   
 
-  test "responder works with collections" do
-    get do
-      singers = [Singer.new("Bumi"), Singer.new("Bjork"), Singer.new("Sinead")]
-      respond_with singers
+  test "responder works with collections" do # TODO: remove in 1.0.
+    assert_deprecated do
+      get do
+        singers = [Singer.new("Bumi"), Singer.new("Bjork"), Singer.new("Sinead")]
+        respond_with singers
+      end
     end
     
     assert_equal singers.map(&:to_hash).to_json, @response.body
