@@ -29,6 +29,8 @@ module Roar::Rails
       representer ||= options.delete(:represent_items_with) # new API.
       
       if model.respond_to?(:map!)
+        ActiveSupport::Deprecation.warn("Calling #respond_with with a collection will misbehave in future versions of roar-rails. Use :represent_items_with to get the old behaviour.")
+        
         model.map! do |m|
           extend_with_representer!(m, representer)
           m.to_hash
