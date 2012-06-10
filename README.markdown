@@ -40,7 +40,7 @@ class SingersController < ApplicationController
 end
 ```
 
-If you don't want to write a dedicated representer for a collection of items (highly recommended, thou) but rather use a representer for each item, use the `+represent_items_with+` option.
+If you don't want to write a dedicated representer for a collection of items (highly recommended, thou) but rather use a representer for each item, use the `:represent_items_with` option.
 
 ```ruby
 class SingersController < ApplicationController
