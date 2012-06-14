@@ -25,27 +25,6 @@ class ControllerAdditionsTest < MiniTest::Spec
       include Roar::Rails::ControllerAdditions
     end.new
   end
-    
-  describe "#representer_name_from_controller_name" do
-    it "returns representer class name" do
-      assert_equal "SingerRepresenter", @controller.send(:representer_name_from_controller_name, ::SingersController)
-    end
-    
-    
-    it "works with namespace" do
-      assert_equal "ControllerAdditionsTest::SingerRepresenter", @controller.send(:representer_name_from_controller_name, SingersController)
-    end
-    
-    describe "with plural set" do
-      it "returns plural name" do
-        assert_equal "SingersRepresenter", @controller.send(:representer_name_from_controller_name, ::SingersController, true)
-      end
-      
-      it "works with namespace" do
-        assert_equal "ControllerAdditionsTest::SingersRepresenter", @controller.send(:representer_name_from_controller_name, SingersController, true)
-      end
-    end
-  end
   
   describe "representer_name_for" do
     describe "nothing configured" do
