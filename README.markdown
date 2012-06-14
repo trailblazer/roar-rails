@@ -12,6 +12,10 @@ _Makes using Roar's representers in your Rails app fun._
 
 ## Rendering with #respond_with
 
+roar-rails provides a number of baked-in rendering methods.
+
+### Conventional Rendering
+
 Easily render resources using representers with the built-in responder.
 
 ```ruby
@@ -26,19 +30,33 @@ class SingersController < ApplicationController
 end
 ```
 
-Need to use a representer with a different name than your model? Pass it in using the `:represent_with` option:
+The representer name will be infered from the passed model class (e.g. a `Singer` instance gets the `SingerRepresenter`). If the passed model is a collection it will be extended using a representer. The representer name will be computed from the controller name (e.g. a `SingersController` uses the `SingersRepresenter`).
+
+Need to use a representer with a different name than your model? You may always pass it in using the `:represent_with` option:
+
+```ruby
+respond_with singers, :represent_with => MusicianCollectionRepresenter
+end
+```
+
+### Represents Configuration
+
+If you don't want to use conventions or pass representers you can configure them on the class level.
 
 ```ruby
 class SingersController < ApplicationController
-  include Roar::Rails::ControllerAdditions
-  respond_to :json
-
-  def show
-    singer = Musician.find_by_id(params[:id])
-    respond_with singer, :represent_with => SingerRepresenter
-  end
-end
+  represents :json, Musician
 ```
+This will use the `MusicianRepresenter` for models and `MusiciansRepresenter` for representing collections.
+
+Note that `#represents` also allows fine-tuning.
+
+```ruby
+class SingersController < ApplicationController
+  represents :json, :entity => MusicianRepresenter, :collection => MusicianCollectionRepresenter
+```
+
+### Old API Support
 
 If you don't want to write a dedicated representer for a collection of items (highly recommended, thou) but rather use a representer for each item, use the `:represent_items_with` option.
 
@@ -94,7 +112,7 @@ singer.
   from_json(request.body)
 ```
 
-So, `#consume!` helps you figuring out the representer module and reading the incoming document.
+So, `#consume!` helps you figuring out the representer module and reading the incoming document. Note that it respects settings from `#represents`.
 
 ## URL Helpers
 
