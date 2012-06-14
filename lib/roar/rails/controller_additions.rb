@@ -39,12 +39,18 @@ module Roar::Rails
       model
     end
     
+    def representer_for(*args)
+      name = representer_name_for(*args)
+      name = name.constantize unless name.is_a?(Module)
+      name
+    end
+    
   private
     def compute_parsing_method(format)
       "from_#{format}"
     end
     
-    def representer_name_for(format, model, options={})
+    def representer_name_for(format, model)  # DISCUSS: should we pass and process options here?
       if self.class.represents_options == {}
         model_name = model.class.name
         model_name = controller_path.camelize if model.kind_of?(Array)

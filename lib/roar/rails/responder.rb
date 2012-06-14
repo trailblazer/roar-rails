@@ -24,20 +24,16 @@ module Roar::Rails
         return super
       end
       
-      
-      representer = options.delete(:with_representer) and ActiveSupport::Deprecation.warn(":with_representer is deprecated and will be removed in roar-rails 1.0. Use :represent_with or :represent_items_with.")
-      representer ||= options.delete(:represent_items_with) # new API.
-      
-      if model.respond_to?(:map!)
-        ActiveSupport::Deprecation.warn("Calling #respond_with with a collection will misbehave in future versions of roar-rails. Use :represent_items_with to get the old behaviour.")
-        
+      if representer = options.delete(:represent_items_with)
         model.map! do |m|
-          extend_with_representer!(m, representer)
+          m.extend(representer) # FIXME: move to method.
           m.to_hash
         end
-      else
-        extend_with_representer!(model, representer)
+        return super
       end
+      
+      representer = controller.representer_for(format, model)
+       model.extend(representer) # FIXME: move to method.
       
       super
     end
