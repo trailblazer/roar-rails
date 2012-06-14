@@ -11,10 +11,6 @@ module SingersRepresenter
   end
 end
 
-class ObjectRepresenter
-end
-class ObjectsRepresenter
-end
 
 class ControllerAdditionsTest < MiniTest::Spec
   class SingersController
