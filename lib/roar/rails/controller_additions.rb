@@ -33,8 +33,9 @@ module Roar::Rails
     
     
     def consume!(model)
-      format = formats.first  # FIXME: i expected request.content_mime_type to do the job. copied from responder.rb. this will return the wrong format when the controller responds to :json and :xml and the Content-type is :xml (?)
-      extend_with_representer!(model)
+      format      = formats.first  # FIXME: i expected request.content_mime_type to do the job. copied from responder.rb. this will return the wrong format when the controller responds to :json and :xml and the Content-type is :xml (?)
+      representer = representer_for(format, model)
+      extend_with!(model, representer)
       model.send(compute_parsing_method(format), request.body.string) # e.g. from_json("...")
       model
     end
@@ -51,7 +52,7 @@ module Roar::Rails
     end
     
     def representer_name_for(format, model)  # DISCUSS: should we pass and process options here?
-      if self.class.represents_options == {}
+      if self.class.represents_options[format].blank?
         model_name = model.class.name
         model_name = controller_path.camelize if model.kind_of?(Array)
         return self.class.add_representer_suffix(model_name)
