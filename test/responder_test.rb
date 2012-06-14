@@ -12,7 +12,7 @@ module SingersRepresenter
 end
 
 
-class ControllerAdditionsTest < MiniTest::Spec
+class RepresentsTest < MiniTest::Spec
   class SingersController
   end
   
