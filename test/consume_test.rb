@@ -19,9 +19,37 @@ class ConsumeTest < ActionController::TestCase
     post :consume_json, "{\"name\": \"Bumi\"}", :format => 'json'
     assert_equal singer.to_json, @response.body
   end
-
+  
   def singer(name="Bumi")
     singer = Musician.new(name)
     singer.extend SingerRepresenter
+  end
+end
+
+class ConsumeWithConfigurationTest < ConsumeTest
+  include Roar::Rails::TestCase
+  
+  module MusicianRepresenter
+    include Roar::Representer::JSON
+    property :name, :from => :called
+  end
+  
+  
+  class SingersController < ActionController::Base
+    include Roar::Rails::ControllerAdditions
+    respond_to :json
+    represents "json", :entity => MusicianRepresenter
+
+    def consume_json
+      singer = consume!(Singer.new)
+      render :text => singer.to_json
+    end
+  end
+
+  tests SingersController
+  
+  test "#consume uses #represents config to parse incoming document" do
+    post :consume_json, "{\"name\": \"Bumi\"}", :format => :json
+    assert_equal singer.to_json, @response.body
   end
 end

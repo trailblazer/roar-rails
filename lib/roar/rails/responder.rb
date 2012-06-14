@@ -23,7 +23,7 @@ module Roar::Rails
     
   private
     def render_items_with(collection, representer)
-      collection.map! do |m|
+      collection.map! do |m|  # DISCUSS: i don't like changing the method argument here.
         extend_with!(m, representer)
         m.to_hash # FIXME: huh? and what about XML?
       end
