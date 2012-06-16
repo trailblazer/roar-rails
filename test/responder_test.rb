@@ -11,6 +11,10 @@ module SingersRepresenter
   end
 end
 
+module ObjectRepresenter
+end
+module ObjectsRepresenter
+end
 
 class RepresentsTest < MiniTest::Spec
   class SingersController
@@ -22,7 +26,7 @@ class RepresentsTest < MiniTest::Spec
     end.new
   end
   
-  describe "representer_name_for" do
+  describe "representer_for" do
     describe "nothing configured" do
       before do
         @controller = class ::SingersController
@@ -32,11 +36,11 @@ class RepresentsTest < MiniTest::Spec
       end
       
       it "uses model class" do
-        assert_equal "SingerRepresenter", @controller.send(:representer_name_for, :json, Singer.new)
+        assert_equal SingerRepresenter, @controller.representer_for(:json, Singer.new)
       end
       
       it "uses plural controller name when collection" do
-        assert_equal "SingersRepresenter", @controller.send(:representer_name_for, :json, [])
+        assert_equal SingersRepresenter, @controller.representer_for(:json, [])
       end
     end
     
@@ -50,11 +54,11 @@ class RepresentsTest < MiniTest::Spec
       end
       
       it "uses defined class for item" do
-        assert_equal "ObjectRepresenter", @controller.send(:representer_name_for, :json, Singer.new)
+        assert_equal ObjectRepresenter, @controller.representer_for(:json, Singer.new)
       end
       
       it "uses plural name when collection" do
-        assert_equal "ObjectsRepresenter", @controller.send(:representer_name_for, :json, [])
+        assert_equal ObjectsRepresenter, @controller.representer_for(:json, [])
       end
     end
     
@@ -69,11 +73,11 @@ class RepresentsTest < MiniTest::Spec
       end
       
       it "returns :entity representer name" do
-        assert_equal "ObjectRepresenter", @controller.send(:representer_name_for, :json, Singer.new)
+        assert_equal "ObjectRepresenter", @controller.representer_for(:json, Singer.new)
       end
       
       it "doesn't infer collection representer" do
-        assert_equal nil, @controller.send(:representer_name_for, :json, [])
+        assert_equal nil, @controller.representer_for(:json, [])
       end
     end
     
@@ -87,33 +91,12 @@ class RepresentsTest < MiniTest::Spec
       end
       
       it "uses defined class for item" do
-        assert_equal "ObjectRepresenter", @controller.send(:representer_name_for, :json, Singer.new)
+        assert_equal "ObjectRepresenter", @controller.representer_for(:json, Singer.new)
       end
       
       it "uses defined class when collection" do
-        assert_equal "SingersRepresenter", @controller.send(:representer_name_for, :json, [])
+        assert_equal "SingersRepresenter", @controller.representer_for(:json, [])
       end
-    end
-  end
-  
-  describe "#representer_for" do
-    describe "respond_with model, :represent_with => SingerRepresenter" do
-      before do
-        @controller = class ::BooController
-          include Roar::Rails::ControllerAdditions
-          represents :json, :entity => Object, :collection => "SingersRepresenter"
-          self
-        end.new
-      end
-      
-      it "returns module" do
-        assert_equal Object, @controller.send(:representer_for, :json, Singer.new)
-      end
-      
-      it "returns constant when string configured" do
-        assert_equal SingersRepresenter, @controller.send(:representer_for, :json, [])
-      end
-      
     end
   end
 end

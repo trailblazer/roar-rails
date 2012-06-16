@@ -112,7 +112,13 @@ singer.
   from_json(request.body)
 ```
 
-So, `#consume!` helps you figuring out the representer module and reading the incoming document. Note that it respects settings from `#represents`.
+So, `#consume!` helps you figuring out the representer module and reading the incoming document.
+
+Note that it respects settings from `#represents`. You can use the same mechanics known from `#respond_with` to choose a representer.
+
+```ruby
+consume!(singer, :represent_with => MusicianRepresenter)
+```
 
 ## URL Helpers
 

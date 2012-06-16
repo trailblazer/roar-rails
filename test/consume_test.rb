@@ -53,3 +53,25 @@ class ConsumeWithConfigurationTest < ConsumeTest
     assert_equal singer.to_json, @response.body
   end
 end
+
+class ConsumeWithOptionsOverridingConfigurationTest < ConsumeTest
+  include Roar::Rails::TestCase
+  
+  class SingersController < ActionController::Base
+    include Roar::Rails::ControllerAdditions
+    respond_to :json
+    represents :json, :entity => Object
+
+    def consume_json
+      singer = consume!(Singer.new, :represent_with => SingerRepresenter)
+      render :text => singer.to_json
+    end
+  end
+
+  tests SingersController
+  
+  test "#consume uses #represents config to parse incoming document" do
+    post :consume_json, "{\"name\": \"Bumi\"}", :format => :json
+    assert_equal singer.to_json, @response.body
+  end
+end

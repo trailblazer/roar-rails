@@ -16,7 +16,7 @@ module Roar::Rails
         return super
       end
       
-      representer = options.delete(:represent_with) || controller.representer_for(format, model)
+      representer = controller.representer_for(format, model, options)
       extend_with!(model, representer)
       super
     end
