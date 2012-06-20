@@ -2,6 +2,8 @@
 
 _Makes using Roar's representers in your Rails app fun._
 
+Roar is a framework for parsing and rendering REST documents. For a better overview about representers please check the [roar repository](https://github.com/apotonick/roar#roar).
+
 ## Features
 
 * Rendering with responders
@@ -114,7 +116,7 @@ singer.
 
 So, `#consume!` helps you figuring out the representer module and reading the incoming document.
 
-Note that it respects settings from `#represents`. You can use the same mechanics known from `#respond_with` to choose a representer.
+Note that it respects settings from `#represents`. It uses the same mechanics known from `#respond_with` to choose a representer.
 
 ```ruby
 consume!(singer, :represent_with => MusicianRepresenter)
