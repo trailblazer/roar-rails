@@ -174,6 +174,37 @@ class ResponderTest < ActionController::TestCase
     end
   end
 
+  class RepresentingStdLibObjectsTest < ResponderTest
+    class BandsController < ActionController::Base
+      include Roar::Rails::ControllerAdditions
+      respond_to :json
+
+      def execute
+        instance_exec &@block
+      end
+    end
+
+    tests BandsController
+
+    [nil, "my_string", { :my => 'hash'}].each do |obj|
+      test "responder does not look for #{obj.class.name}Representer" do
+        assert_nothing_raised(NameError) do
+          get do
+            respond_with obj
+          end
+        end
+      end
+
+      test "responder fallback to default #to_json for #{obj.class.name}" do
+        get do
+          respond_with obj
+        end
+
+        assert_equal(obj.to_json, @response.body)
+      end
+    end
+  end
+
   class ConfiguredControllerTest < ResponderTest
     class MusicianController < BaseController
       represents :json, :entity => SingerRepresenter, :collection => SingersRepresenter

@@ -16,8 +16,13 @@ module Roar::Rails
         return super
       end
 
-      representer = controller.representer_for(format, model, options)
-      extend_with!(model, representer)
+      begin
+        representer = controller.representer_for(format, model, options)
+        extend_with!(model, representer)
+      rescue NameError
+        return super
+      end
+
       super
     end
 
