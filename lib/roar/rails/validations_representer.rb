@@ -6,14 +6,14 @@ module ValidatorsRepresenter
   class ValidatorClient
     attr_accessor :kind, :options
   end
-  
+
   # Represents a single Validator instance.
   module ValidatorRepresenter
     include Roar::Representer::JSON
     property :kind
     hash :options
   end
-  
+
   # Represents an array of validators for an attribute.
   module AttributeValidators
     include Representable::JSON::Collection
