@@ -46,7 +46,7 @@ class RepresentsTest < MiniTest::Spec
     
     describe "represents :json, Singer" do
       before do
-        @controller = class ::WhateverController
+        @controller = class ::WhateverController < ActionController::Base
           include Roar::Rails::ControllerAdditions
           represents :json, Object
           self
@@ -65,7 +65,7 @@ class RepresentsTest < MiniTest::Spec
     
     describe "represents :json, :entity => SingerRepresenter" do
       before do
-        @controller = class ::FooController
+        @controller = class ::FooController < ActionController::Base
           include Roar::Rails::ControllerAdditions
           represents :json, :entity => "ObjectRepresenter"
           self
@@ -83,7 +83,7 @@ class RepresentsTest < MiniTest::Spec
     
     describe "represents :json, :entity => SingerRepresenter, :collection => SingersRepresenter" do
       before do
-        @controller = class ::BooController
+        @controller = class ::BooController < ActionController::Base
           include Roar::Rails::ControllerAdditions
           represents :json, :entity => "ObjectRepresenter", :collection => "SingersRepresenter"
           self

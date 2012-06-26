@@ -28,6 +28,7 @@ module Roar::Rails
         end
         
         represents_options[format] = options
+        respond_to format
       end
     end
     
