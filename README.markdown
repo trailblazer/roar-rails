@@ -43,7 +43,7 @@ end
 
 ### Represents Configuration
 
-If you don't want to use conventions or pass representers you can configure them on the class level.
+If you don't want to use conventions or pass representers you can configure them on the class level using `#represents`. This will also call `respond_to` for you.
 
 ```ruby
 class SingersController < ApplicationController

@@ -1,3 +1,7 @@
+h2. 0.0.8
+
+* Added `#represents` to configure consuming and rendering on controller class layer. This also calls `respond_to`.
+
 h2. 0.0.7
 
 * Introduce `:represent_with` and `:represent_items_with` for `#respond_with`. In turn, deprecate the old behaviour since it will change in 1.0.
