@@ -142,6 +142,8 @@ To get the hyperlinks up and running, please make sure to set the right _host na
 config.representer.default_url_options = {:host => "127.0.0.1:3000"}
 ```
 
+Attention: If you are using representers from a gem your Rails URL helpers might not work in these modules. This is due to a [loading order problem](https://groups.google.com/forum/?fromgroups#!topic/rubyonrails-core/5tG5unZ8jDQ) in Rails. As a workaround, don't require the representers in the gem but load them as lately as possible, usually it works when you require in the controller. We are working on fixing that problem.
+
 ## Testing
 
 ## Autoloading
