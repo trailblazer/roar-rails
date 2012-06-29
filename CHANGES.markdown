@@ -1,3 +1,7 @@
+h2. 0.0.9
+
+* Changed `request.body.string` to `read` to make it work with Unicorn.
+
 h2. 0.0.8
 
 * Added `#represents` to configure consuming and rendering on controller class layer. This also calls `respond_to`.
