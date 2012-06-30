@@ -150,8 +150,17 @@ class ResponderTest < ActionController::TestCase
       
       assert_equal({:singers => singers.collect {|s| s.extend(SingerRepresenter).to_hash }}.to_json, @response.body)
     end
+
+    test "responder allows empty response bodies to pass through" do
+      put do
+        singer = Singer.new("Bumi")
+        respond_with singer
+      end
+    end
+
   end
-  
+
+
   class RespondToOptionsOverridingConfigurationTest < ResponderTest
     class SingersController < BaseController
       represents :json, Object
@@ -218,6 +227,13 @@ class ResponderTest < ActionController::TestCase
       @block = block
     end
     
+    super :execute, :format => 'json'
+  end
+
+  def put(&block)
+    @controller.instance_eval do
+      @block = block
+    end
     super :execute, :format => 'json'
   end
   
