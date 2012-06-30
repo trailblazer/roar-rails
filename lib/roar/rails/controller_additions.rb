@@ -19,6 +19,9 @@ module Roar::Rails
       end
     
       def represents(format, options)
+        if superclass.respond_to?(:represents_options) && represents_options.eql?(superclass.represents_options)
+          self.represents_options = {}
+        end
         unless options.is_a?(Hash)
           model = options
           options = {
