@@ -14,8 +14,12 @@ module Roar::Rails
       if representer = options.delete(:represent_items_with)
         render_items_with(model, representer) # convenience API, not recommended since it's missing hypermedia.
         return super
+      elsif respond_to?("empty_#{format}_resource") && model == empty_resource
+        # rails <= 3.1 compatibility. #display gets called for empty responses
+        # >= 3.2 fixes by calling #head, not #display for all empty bodies (PUT, DELETE)
+        return super
       end
-      
+
       representer = controller.representer_for(format, model, options)
       extend_with!(model, representer)
       super

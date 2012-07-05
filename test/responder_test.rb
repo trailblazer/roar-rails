@@ -113,13 +113,26 @@ class ResponderTest < ActionController::TestCase
       instance_exec &@block
     end
   end
-  
+
+  class UniqueRepresentsOptionsTest < ResponderTest
+    class One < BaseController
+      represents :json, Object
+    end
+    class Two < BaseController
+      represents :json, Singer
+    end
+    test "each subclass of a roar-augmented controller can represent different things" do
+      assert_not_equal One.represents_options, Two.represents_options
+    end
+  end
+
   class UnconfiguredControllerTest < ResponderTest
+    SingersRepresenter = ::SingersRepresenter
     class SingersController < BaseController
     end
-    
+
     tests SingersController
-    
+
     test "responder finds SingerRepresenter representer by convention" do
       get do
         singer = Singer.new("Bumi")
@@ -137,8 +150,17 @@ class ResponderTest < ActionController::TestCase
       
       assert_equal({:singers => singers.collect {|s| s.extend(SingerRepresenter).to_hash }}.to_json, @response.body)
     end
+
+    test "responder allows empty response bodies to pass through" do
+      put do
+        singer = Singer.new("Bumi")
+        respond_with singer
+      end
+    end
+
   end
-  
+
+
   class RespondToOptionsOverridingConfigurationTest < ResponderTest
     class SingersController < BaseController
       represents :json, Object
@@ -205,6 +227,13 @@ class ResponderTest < ActionController::TestCase
       @block = block
     end
     
+    super :execute, :format => 'json'
+  end
+
+  def put(&block)
+    @controller.instance_eval do
+      @block = block
+    end
     super :execute, :format => 'json'
   end
   
