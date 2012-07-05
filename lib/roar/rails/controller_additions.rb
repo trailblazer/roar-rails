@@ -1,10 +1,13 @@
+require 'hooks/inheritable_attribute'
+
 module Roar::Rails
   module ControllerAdditions
     extend ActiveSupport::Concern
     include ModelMethods
     
     included do
-      class_attribute :represents_options
+      extend Hooks::InheritableAttribute
+      inheritable_attr :represents_options
       self.represents_options ||= {}
     end
     
@@ -19,9 +22,6 @@ module Roar::Rails
       end
     
       def represents(format, options)
-        if superclass.respond_to?(:represents_options) && represents_options.eql?(superclass.represents_options)
-          self.represents_options = {}
-        end
         unless options.is_a?(Hash)
           model = options
           options = {
