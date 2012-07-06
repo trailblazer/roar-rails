@@ -12,7 +12,7 @@ class RepresenterTest < ActionController::TestCase
 
   test "it works with uninitialized config.representer.default_url_options" do
     url_options = Rails.application.config.representer.default_url_options
-    
+
     begin
       Rails.application.config.representer.default_url_options = nil
       assert_raises RuntimeError, ArgumentError do
@@ -21,7 +21,7 @@ class RepresenterTest < ActionController::TestCase
       assert $!.message =~ /Missing host to link to/
     rescue
     ensure
-      Rails.application.config.representer.default_url_options = url_options    
+      Rails.application.config.representer.default_url_options = url_options
     end
   end
 end
