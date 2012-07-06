@@ -1,3 +1,7 @@
+h2. 0.0.10
+
+* Empty resources now work properly in Rails 3.0 and 3.1.
+
 h2. 0.0.9
 
 * Changed `request.body.string` to `read` to make it work with Unicorn.
