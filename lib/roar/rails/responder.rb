@@ -1,8 +1,14 @@
 module Roar::Rails
   module ModelMethods
+  private
     # DISCUSS: move this into a generic namespace as we could need that in Sinatra as well.
     def extend_with!(model, representer)
       model.extend(representer)
+    end
+  
+    def prepare_model!(model)
+      representer = controller.representer_for(format, model, options)
+      extend_with!(model, representer)
     end
   end
   
@@ -14,14 +20,10 @@ module Roar::Rails
       if representer = options.delete(:represent_items_with)
         render_items_with(model, representer) # convenience API, not recommended since it's missing hypermedia.
         return super
-      elsif respond_to?("empty_#{format}_resource") && model == empty_resource
-        # rails <= 3.1 compatibility. #display gets called for empty responses
-        # >= 3.2 fixes by calling #head, not #display for all empty bodies (PUT, DELETE)
-        return super
       end
-
-      representer = controller.representer_for(format, model, options)
-      extend_with!(model, representer)
+      
+      prepare_model!(model)
+      
       super
     end
     
@@ -33,5 +35,6 @@ module Roar::Rails
       end
     end
     
+    include VersionStrategy
   end
 end

@@ -17,11 +17,24 @@ module Roar::Representer
 end
 
 
+
 module Roar
   module Rails
+    def self.rails3_0?
+      ::Rails::VERSION::MINOR == 0
+    end
+    
+    if rails3_0?
+      require 'roar/rails/rails3_0_strategy'
+    else
+      require 'roar/rails/rails3_1_strategy'
+    end
+    
     autoload("TestCase", "roar/rails/test_case")
     autoload("ControllerAdditions", "roar/rails/controller_additions")
     autoload("Responder", "roar/rails/responder")
     autoload("ModelMethods", "roar/rails/responder")
   end
 end
+
+
