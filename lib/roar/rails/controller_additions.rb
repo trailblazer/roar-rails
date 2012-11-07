@@ -60,8 +60,7 @@ module Roar::Rails
     
     def representer_name_for(format, model)  # DISCUSS: should we pass and process options here?
       if self.class.represents_options[format.to_sym].blank?  # TODO: test to_sym?
-        model_name = model.class.name
-        model_name = controller_path.camelize if model.kind_of?(Array)
+        model_name = model.kind_of?(Array) ? controller_path.camelize : model.class.name
         return self.class.add_representer_suffix(model_name).constantize
       end
       
