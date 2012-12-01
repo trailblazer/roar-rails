@@ -21,7 +21,7 @@ end
 module Roar
   module Rails
     def self.rails3_0?
-      ::Rails::VERSION::MINOR == 0
+      ::Rails::VERSION::MAJOR == 3 && ::Rails::VERSION::MINOR == 0
     end
     
     if rails3_0?
