@@ -32,6 +32,7 @@ module Roar
         require 'test_xml/test_unit'
         def assert_body(body, options={})
           return assert_xml_equal body, response.body if options[:xml]
+          return assert_equal JSON[body], JSON[response.body] if options[:json]
           assert_equal body, response.body
         end
       end

@@ -67,4 +67,15 @@ class TestCaseTest < ActionController::TestCase
     get :show
     assert_body "<order></order>", :xml => true
   end
+
+  test "#assert_body with json" do
+    @controller.instance_eval do
+      def show
+        render :text => "{\"a\": 1, \"b\":2}"
+      end
+    end
+    
+    get :show
+    assert_body "{\"b\": 2, \"a\":1}", :json => true
+  end
 end
