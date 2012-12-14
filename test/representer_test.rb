@@ -7,7 +7,7 @@ class RepresenterTest < ActionController::TestCase
 
   test "representers can use URL helpers" do
     get :show, :id => "bumi"
-    assert_body "{\"name\":\"Bumi\",\"links\":[{\"rel\":\"self\",\"href\":\"http://http://roar.apotomo.de/singers/Bumi\"}]}"
+    assert_body "{\"name\":\"Bumi\",\"links\":[{\"rel\":\"self\",\"href\":\"http://http://roar.apotomo.de/singers/Bumi\"}]}", :json => true
   end
 
   test "it works with uninitialized config.representer.default_url_options" do
