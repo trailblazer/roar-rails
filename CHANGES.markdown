@@ -1,3 +1,7 @@
+h2. 0.0.11
+
+* Back to `request.body.read` in `#consume!` (again). If anyone is having problems with empty incoming strings this is a Rails issue - update ;-)
+
 h2. 0.0.10
 
 * Empty resources now work properly in Rails 3.0 and 3.1.
