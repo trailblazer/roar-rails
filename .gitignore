@@ -3,7 +3,7 @@
 *.swo
 bin
 .bundle
-Gemfile.lock
+Gemfile*.lock
 pkg/*
 test/dummy/log/*
 .rvmrc
