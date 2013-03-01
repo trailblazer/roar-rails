@@ -4,4 +4,4 @@ source "http://rubygems.org"
 gemspec path: '../'
 
 #use the whole rails, because there is no way to get only railties from git
-gem 'rails', :git => 'git://github.com/rails/rails.git'
+gem 'rails', '4.0.0.beta1'
