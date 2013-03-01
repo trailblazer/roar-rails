@@ -13,7 +13,7 @@ module Dummy
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
-    
+    config.secret_key_base = "super secret"
     config.cache_store = :memory_store
   end
 end
