@@ -37,10 +37,16 @@ module Roar::Rails
 
 
     def consume!(model, options={})
-      format      = formats.first  # FIXME: i expected request.content_mime_type to do the job. copied from responder.rb. this will return the wrong format when the controller responds to :json and :xml and the Content-type is :xml (?)
+      format  = formats.first  # FIXME: i expected request.content_mime_type to do the job. copied from responder.rb. this will return the wrong format when the controller responds to :json and :xml and the Content-type is :xml (?)
+      model   = prepare_model_for(format, model, options)
+
+      model.send(compute_parsing_method(format), incoming_string) # e.g. from_json("...")
+      model
+    end
+
+    def prepare_model_for(format, model, options)
       representer = representer_for(format, model, options)
       extend_with!(model, representer)
-      model.send(compute_parsing_method(format), incoming_string) # e.g. from_json("...")
       model
     end
 
