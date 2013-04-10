@@ -2,8 +2,8 @@ module Roar::Rails
   module ModelMethods
   private
     # DISCUSS: move this into a generic namespace as we could need that in Sinatra as well.
-    def extend_with!(model, representer)
-      model.extend(representer)
+    def extend_with!(model, representer)  # TODO: rename to #prepare_model.
+      representer.prepare(model)
     end
 
     def prepare_model!(model)

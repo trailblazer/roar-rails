@@ -17,13 +17,14 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
-  
+
   s.add_runtime_dependency "roar", "~> 0.10"
+  s.add_runtime_dependency "representable", "~> 1.4"
   s.add_runtime_dependency "test_xml"
   s.add_runtime_dependency "actionpack",    "~> 3.0"
   s.add_runtime_dependency "railties",    "~> 3.0"
   s.add_runtime_dependency "hooks"
-  
+
   s.add_development_dependency "minitest",	">= 2.8.1"
   s.add_development_dependency "tzinfo" # FIXME: why the hell do we need this for 3.1?
 end

@@ -100,7 +100,7 @@ class SingersController < ApplicationController
   def create
     singer = Singer.new
     consume!(singer)
-    
+
     respond_with singer
   end
 end
@@ -120,6 +120,18 @@ Note that it respects settings from `#represents`. It uses the same mechanics kn
 
 ```ruby
 consume!(singer, :represent_with => MusicianRepresenter)
+```
+
+## Using Decorators
+
+If you prefer roar's decorator approach over extend, just go for it. roar-rails will figure out automatically which represent strategy to use.
+
+```ruby
+class SingerRepresenter < Roar::Decorator
+  include Roar::Representer::JSON
+
+  property :name
+end
 ```
 
 ## URL Helpers
