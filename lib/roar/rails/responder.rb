@@ -14,7 +14,6 @@ module Roar::Rails
   module Responder
     include ModelMethods
 
-    # DISCUSS: why THE FUCK is options not passed as a method argument but kept as an internal instance variable in the responder? this is something i will never understand about Rails.
     def display(model, *args)
       if representer = options.delete(:represent_items_with)
         render_items_with(model, representer) # convenience API, not recommended since it's missing hypermedia.

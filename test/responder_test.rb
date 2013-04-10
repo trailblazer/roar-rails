@@ -225,21 +225,35 @@ class ResponderTest < ActionController::TestCase
   class ControllerWithDecoratorTest < ResponderTest
     class SingerRepresentation < Representable::Decorator
       include Roar::Representer::JSON
-      include ::SingerRepresenter
+
+      property :name
     end
+
     class MusicianController < BaseController
       represents :json, :entity => SingerRepresentation
     end
 
     tests MusicianController
 
-    test "responder uses configured decorating representer" do
+    test "rendering uses decorating representer" do
       get do
         singer = Singer.new("Bumi")
         respond_with singer
       end
 
       assert_equal "{\"name\":\"Bumi\"}", @response.body
+    end
+
+    test "parsing uses decorating representer" do # FIXME: move to controller_test.
+      created_singer = nil
+
+      put singer.to_json do
+        created_singer = consume!(Singer.new)
+        respond_with created_singer
+      end
+
+      created_singer.must_be_kind_of(Singer)
+      created_singer.name.must_equal "Bumi"
     end
   end
 
@@ -252,11 +266,11 @@ class ResponderTest < ActionController::TestCase
     super :execute, :format => 'json'
   end
 
-  def put(&block)
+  def put(body="", &block)
     @controller.instance_eval do
       @block = block
     end
-    super :execute, :format => 'json'
+    super :execute, body, :format => 'json'
   end
 
   def singer(name="Bumi")
