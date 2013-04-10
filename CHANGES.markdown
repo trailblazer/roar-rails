@@ -1,3 +1,7 @@
+h2. 0.0.12
+
+* Bumping representable to 1.4 which allows us using both extend and decorating representers.
+
 h2. 0.0.11
 
 * Back to `request.body.read` in `#consume!` (again). If anyone is having problems with empty incoming strings this is a Rails issue - update ;-)
