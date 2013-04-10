@@ -1,9 +1,9 @@
 require 'hooks/inheritable_attribute'
+require 'roar/rails/responder'
 
 module Roar::Rails
   module ControllerAdditions
     extend ActiveSupport::Concern
-    include ModelMethods
 
     included do
       extend Hooks::InheritableAttribute
@@ -46,7 +46,7 @@ module Roar::Rails
 
     def prepare_model_for(format, model, options)
       representer = representer_for(format, model, options)
-      extend_with!(model, representer)
+      representer.prepare(model)
     end
 
     # Central entry-point for finding the appropriate representer.
