@@ -72,22 +72,6 @@ class SingersController < ApplicationController
 end
 ```
 
-Goes great with [Jose Valim's responders gem][responders]!
-
-```ruby
-class SingersController < ApplicationController
-  respond_to :json
-
-  responders Roar::Rails::Responder
-
-  def show
-    singer = Singer.find_by_id(params[:id])
-    respond_with singer
-  end
-
-end
-```
-
 
 ## Parsing incoming documents
 
