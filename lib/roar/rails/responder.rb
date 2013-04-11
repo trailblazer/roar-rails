@@ -6,7 +6,7 @@ module Roar::Rails
         return super
       end
 
-      model = controller.prepare_model_for(format, model, options)
+      model = prepare_model_for(format, model, options)
 
       super
     end
@@ -18,6 +18,12 @@ module Roar::Rails
       end
     end
 
+    module PrepareModel
+      def prepare_model_for(format, model, options) # overwritten in VersionStrategy/3.0.
+        controller.prepare_model_for(format, model, options)
+      end
+    end
+    include PrepareModel
     include VersionStrategy
   end
 end
