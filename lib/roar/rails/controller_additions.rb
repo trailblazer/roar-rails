@@ -40,7 +40,7 @@ module Roar::Rails
       format      = formats.first  # FIXME: i expected request.content_mime_type to do the job. copied from responder.rb. this will return the wrong format when the controller responds to :json and :xml and the Content-type is :xml (?)
       representer = prepare_model_for(format, model, options)
 
-      representer.send(compute_parsing_method(format), incoming_string) # e.g. from_json("...")
+      representer.send(compute_parsing_method(format), incoming_string, options) # e.g. from_json("...")
       model
     end
 

@@ -1,3 +1,8 @@
+h2. 0.0.13
+
+* Allow passing user options to both `#respond_with` and `#consume!`.
+* Fixing `#consume!` with decorators.
+
 h2. 0.0.12
 
 * Bumping representable to 1.4 which allows us using both extend and decorating representers.

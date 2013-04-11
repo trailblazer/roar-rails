@@ -14,8 +14,7 @@ module Roar::Rails
   private
     def render_items_with(collection, representer)
       collection.map! do |mdl|  # DISCUSS: i don't like changing the method argument here.
-        representer.prepare(mdl)
-        mdl.to_hash # FIXME: huh? and what about XML?
+        representer.prepare(mdl).to_hash(options) # FIXME: huh? and what about XML?
       end
     end
 

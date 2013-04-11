@@ -118,6 +118,23 @@ class SingerRepresenter < Roar::Decorator
 end
 ```
 
+## Passing Options
+
+Both rendering and consuming support passing user options to the representer.
+
+With `#respond_with`, any additional options will be passed to `to_json` (or whatever format you're using).
+
+```ruby
+respond_with @singer, :current_user => current_user
+```
+
+Same goes with `#consume!`, passing options to `from_json`.
+
+```ruby
+consume! Singer.new, :current_user => current_user
+```
+
+
 ## URL Helpers
 
 Any URL helpers from the Rails app are automatically available in representers.
