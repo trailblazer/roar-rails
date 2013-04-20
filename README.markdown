@@ -169,3 +169,7 @@ Put your representers in `app/representers` and they will be autoloaded by Rails
 * [Railslove](http://www.railslove.de) and especially Michael Bumann [bumi] have heavily supported development of roar-rails ("resource :singers").
 
 [responders]: https://github.com/plataformatec/responders
+
+## License
+
+Roar-rails is released under the [MIT License](http://www.opensource.org/licenses/MIT).
