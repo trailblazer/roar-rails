@@ -5,3 +5,4 @@ gemfile:
   - Gemfile
   - gemfiles/Gemfile.rails3-0
   - gemfiles/Gemfile.rails3-2
+  - gemfiles/Gemfile.rails4-0
