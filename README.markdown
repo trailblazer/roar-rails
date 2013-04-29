@@ -12,6 +12,8 @@ Roar is a framework for parsing and rendering REST documents. For a better overv
 * Better tests
 * Autoloading
 
+This gem works with all Rails >= 3.x.
+
 ## Rendering with #respond_with
 
 roar-rails provides a number of baked-in rendering methods.
