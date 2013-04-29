@@ -29,7 +29,12 @@ module Roar
       end
 
       module Assertions
-        require 'test_xml/test_unit'
+        if ::ActionPack::VERSION::MAJOR == 4
+          require 'test_xml/mini_test'
+        else
+          require 'test_xml/test_unit'
+        end
+
         def assert_body(body, options={})
           return assert_xml_equal body, response.body if options[:xml]
           assert_equal body, response.body
