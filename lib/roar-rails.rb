@@ -1,5 +1,6 @@
 require "roar/rails/version"
 require "roar/representer"
+require "roar/decorator"
 require "roar/rails/railtie"
 
 module Roar::Representer
@@ -9,7 +10,6 @@ module Roar::Representer
   module JSON
     autoload("HAL", "roar/representer/json/hal")
   end
-
 
   module Feature
     autoload("Hypermedia", "roar/representer/feature/hypermedia")
