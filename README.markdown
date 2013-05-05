@@ -110,7 +110,7 @@ consume!(singer, :represent_with => MusicianRepresenter)
 
 ## Using Decorators
 
-If you prefer roar's decorator approach over extend, just go for it. roar-rails will figure out automatically which represent strategy to use.
+If you prefer roar's decorator approach over extend, just go for it. roar-rails will figure out automatically which represent strategy to use. Be sure to use roar >= 0.11.17.
 
 ```ruby
 class SingerRepresenter < Roar::Decorator
