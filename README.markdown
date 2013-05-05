@@ -117,8 +117,14 @@ class SingerRepresenter < Roar::Decorator
   include Roar::Representer::JSON
 
   property :name
+
+  link :self do
+    singer_url(represented)
+  end
 end
 ```
+
+In decorators' link blocks you currently have to use `represented` to get the actual represented model (this is `self` in module representers).
 
 ## Passing Options
 
