@@ -11,96 +11,6 @@ module SingersRepresenter
   end
 end
 
-module ObjectRepresenter
-end
-module ObjectsRepresenter
-end
-
-class RepresentsTest < MiniTest::Spec
-  class SingersController
-  end
-
-  before do
-    @controller = Class.new do
-      include Roar::Rails::ControllerAdditions
-    end.new
-  end
-
-  describe "representer_for" do
-    describe "nothing configured" do
-      before do
-        @controller = class ::SingersController
-          include Roar::Rails::ControllerAdditions
-          self
-        end.new
-      end
-
-      it "uses model class" do
-        assert_equal SingerRepresenter, @controller.representer_for(:json, Singer.new)
-      end
-
-      it "uses plural controller name when collection" do
-        assert_equal SingersRepresenter, @controller.representer_for(:json, [])
-      end
-    end
-
-    describe "represents :json, Singer" do
-      before do
-        @controller = class ::WhateverController < ActionController::Base
-          include Roar::Rails::ControllerAdditions
-          represents :json, Object
-          self
-        end.new
-      end
-
-      it "uses defined class for item" do
-        assert_equal ObjectRepresenter, @controller.representer_for(:json, Singer.new)
-      end
-
-      it "uses plural name when collection" do
-        assert_equal ObjectsRepresenter, @controller.representer_for(:json, [])
-      end
-    end
-
-
-    describe "represents :json, :entity => SingerRepresenter" do
-      before do
-        @controller = class ::FooController < ActionController::Base
-          include Roar::Rails::ControllerAdditions
-          represents :json, :entity => "ObjectRepresenter"
-          self
-        end.new
-      end
-
-      it "returns :entity representer name" do
-        assert_equal "ObjectRepresenter", @controller.representer_for(:json, Singer.new)
-      end
-
-      it "doesn't infer collection representer" do
-        assert_equal nil, @controller.representer_for(:json, [])
-      end
-    end
-
-    describe "represents :json, :entity => SingerRepresenter, :collection => SingersRepresenter" do
-      before do
-        @controller = class ::BooController < ActionController::Base
-          include Roar::Rails::ControllerAdditions
-          represents :json, :entity => "ObjectRepresenter", :collection => "SingersRepresenter"
-          self
-        end.new
-      end
-
-      it "uses defined class for item" do
-        assert_equal "ObjectRepresenter", @controller.representer_for(:json, Singer.new)
-      end
-
-      it "uses defined class when collection" do
-        assert_equal "SingersRepresenter", @controller.representer_for(:json, [])
-      end
-    end
-  end
-end
-
 
 class ResponderTest < ActionController::TestCase
   include Roar::Rails::TestCase
@@ -114,15 +24,26 @@ class ResponderTest < ActionController::TestCase
     end
   end
 
-  class UniqueRepresentsOptionsTest < ResponderTest
+  class UniqueRepresentsOptionsTest < MiniTest::Spec
     class One < BaseController
       represents :json, Object
     end
     class Two < BaseController
       represents :json, Singer
     end
-    test "each subclass of a roar-augmented controller can represent different things" do
-      assert_not_equal One.represents_options, Two.represents_options
+
+    it "each subclass of a roar-augmented controller can represent different things" do
+      One.represents_options.wont_equal Two.represents_options
+    end
+
+    it "does not share RepresenterComputer instances when inheriting" do
+      Class.new(One) do
+        represents :json, Singer
+      end.represents_options.wont_equal One.represents_options
+    end
+
+    it "inherits when subclass doesn't call ::represents" do
+      Class.new(One).represents_options.must_equal One.represents_options
     end
   end
 
@@ -139,7 +60,7 @@ class ResponderTest < ActionController::TestCase
         respond_with singer
       end
 
-      assert_equal singer.to_json, @response.body
+      @response.body.must_equal singer.to_json
     end
 
     test "responder finds SingersRepresenter for collections by convention" do
@@ -209,7 +130,7 @@ class ResponderTest < ActionController::TestCase
         respond_with singer
       end
 
-      assert_equal singer.to_json, @response.body
+      @response.body.must_equal singer.to_json
     end
 
     test "responder uses configured representer for collection" do
@@ -259,13 +180,13 @@ class ResponderTest < ActionController::TestCase
 
   class PassingUserOptionsTest < ResponderTest
     # FIXME: should be in generic roar-rails test.
-    module SingerRepresenter
+    module DynamicSingerRepresenter
       include Roar::Representer::JSON
       property :name, :setter => lambda { |val, opts| self.name = "#{opts[:title]} #{val}" },
                       :getter => lambda { |opts| "#{opts[:title]} #{name}" }
     end
     class MusicianController < BaseController
-      represents :json, :entity => SingerRepresenter, :collection => SingersRepresenter
+      represents :json, :entity => DynamicSingerRepresenter, :collection => SingersRepresenter
     end
 
     tests MusicianController
@@ -281,7 +202,7 @@ class ResponderTest < ActionController::TestCase
 
     test "passes options to explicit collection representer" do
       get do
-        respond_with [Singer.new("Bumi"), Singer.new("Iggy")], :title => "Mr.", :represent_items_with => SingerRepresenter
+        respond_with [Singer.new("Bumi"), Singer.new("Iggy")], :title => "Mr.", :represent_items_with => DynamicSingerRepresenter
       end
 
       @response.body.must_equal("[{\"name\":\"Mr. Bumi\"},{\"name\":\"Mr. Iggy\"}]")

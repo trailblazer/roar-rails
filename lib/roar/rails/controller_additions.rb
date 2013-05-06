@@ -8,7 +8,7 @@ module Roar::Rails
     included do
       extend Hooks::InheritableAttribute
       inheritable_attr :represents_options
-      self.represents_options ||= {}
+      self.represents_options ||= RepresenterComputer.new
     end
 
 
@@ -17,20 +17,8 @@ module Roar::Rails
         Class.new(super).send :include, Roar::Rails::Responder
       end
 
-      def add_representer_suffix(prefix)
-        "#{prefix}Representer"
-      end
-
       def represents(format, options)
-        unless options.is_a?(Hash)
-          model = options
-          options = {
-            :entity     => add_representer_suffix(model.name).constantize,
-            :collection => add_representer_suffix(model.name.pluralize).constantize
-          }
-        end
-
-        represents_options[format] = options
+        represents_options.add(format,options)
         respond_to format
       end
     end
@@ -51,7 +39,7 @@ module Roar::Rails
 
     # Central entry-point for finding the appropriate representer.
     def representer_for(format, model, options={})
-      options.delete(:represent_with) || representer_name_for(format, model)
+      options.delete(:represent_with) || self.class.represents_options.for(format, model, controller_path)
     end
 
   private
@@ -63,15 +51,44 @@ module Roar::Rails
       request.body.read
     end
 
-    def representer_name_for(format, model)  # DISCUSS: should we pass and process options here?
-      if self.class.represents_options[format.to_sym].blank?  # TODO: test to_sym?
-        model_name = model.class.name
-        model_name = controller_path.camelize if model.kind_of?(Array)
-        return self.class.add_representer_suffix(model_name).constantize
+
+    class RepresenterComputer < Hash
+      def add(format, opts)
+        # FIXME: use controller_path here as well!
+        # by pre-computing the representer name we allow "one-step inheritance": if B doesn't call ::represents it "inherits" A's settings.
+        unless opts.is_a?(Hash)
+          model = opts
+          opts = {
+            :entity     => add_representer_suffix(model.name),
+            :collection => add_representer_suffix(model.name.pluralize)
+          }
+        end
+
+        self[format] = opts
       end
 
-      return self.class.represents_options[format][:collection] if model.kind_of?(Array)
-      self.class.represents_options[format][:entity]
+      def for(*args)
+        name = name_for(*args) or return
+
+        return name if name.is_a?(Module) # i hate is_a? but this is really handy here.
+        name.constantize
+      end
+
+    private
+      def name_for(format, model, controller_path)  # DISCUSS: should we pass and process options here?
+        if self[format.to_sym].blank?  # TODO: test to_sym?
+          model_name = model.class.name
+          model_name = controller_path.camelize if model.kind_of?(Array)
+          return add_representer_suffix(model_name).constantize
+        end
+
+        return self[format][:collection] if model.kind_of?(Array)
+        self[format][:entity]
+      end
+
+      def add_representer_suffix(prefix)
+        "#{prefix}Representer"
+      end
     end
   end
 end

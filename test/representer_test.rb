@@ -26,6 +26,7 @@ class RepresenterTest < ActionController::TestCase
   end
 end
 
+
 class DecoratorTest < ActionController::TestCase
   include Roar::Rails::TestCase
 
