@@ -16,7 +16,7 @@ class RepresenterComputerTest < MiniTest::Spec
     end
 
     it "uses plural controller name when collection" do
-      subject.for(:json, [Singer.new], "bands").must_equal BandsRepresenter
+      subject.for(:json, [Singer.new], "objects").must_equal ObjectsRepresenter
     end
   end
 

@@ -45,7 +45,7 @@ end
 
 ### Represents Configuration
 
-If you don't want to use conventions or pass representers you can configure them on the class level using `#represents`. This will also call `respond_to` for you.
+If you don't want to use conventions or pass representers you can configure them on the class level using `::represents`. This will also call `respond_to` for you.
 
 ```ruby
 class SingersController < ApplicationController
@@ -53,12 +53,15 @@ class SingersController < ApplicationController
 ```
 This will use the `MusicianRepresenter` for models and `MusiciansRepresenter` for representing collections.
 
-Note that `#represents` also allows fine-tuning.
+Note that `::represents` also allows fine-tuning.
 
 ```ruby
 class SingersController < ApplicationController
   represents :json, :entity => MusicianRepresenter, :collection => MusicianCollectionRepresenter
 ```
+
+You might pass strings as representer names to `::represents`, they will be constantized at run-time when needed.
+
 
 ### Old API Support
 

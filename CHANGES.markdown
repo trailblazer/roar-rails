@@ -1,3 +1,9 @@
+h2. 0.0.14
+
+* Moved logic to infer representer names from `ControllerAdditions` to `RepresenterComputer` class.
+* Representer names passed to `::represents` are now constantized at runtime where they are actually needed, only. This fixes a bug where you were required to provide a `SingersRepresenter` (for collections) everywhere even when you just want to represent singular resources.
+* You can now pass strings to `::represents` as representer names.
+
 h2. 0.0.13
 
 * Allow passing user options to both `#respond_with` and `#consume!`.

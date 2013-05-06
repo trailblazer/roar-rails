@@ -1,5 +1,4 @@
 Band = Struct.new(:name)
-module BandsRepresenter;end # FIXME!!!!!!!!!
 
 class BandsController < ActionController::Base
   include Roar::Rails::ControllerAdditions
