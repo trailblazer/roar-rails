@@ -39,8 +39,20 @@ class RepresenterComputerTest < MiniTest::Spec
       subject.for(:json, Singer.new, "bands").must_equal ObjectRepresenter
     end
 
-    it "doesn't infer collection representer" do
-      subject.for(:json, [], "bands").must_equal nil
+    it "infer collection representer" do
+      subject.for(:json, [], "singers").must_equal SingersRepresenter
+    end
+  end
+
+  describe "represents :json, :collection => SingersRepresenter only" do
+    before { subject.add(:json, :collection => SingersRepresenter) }
+
+    it "infers entity representer" do
+      subject.for(:json, Singer.new, "bands").must_equal SingerRepresenter
+    end
+
+    it "returns :collection representer" do
+      subject.for(:json, [Singer.new], "singers").must_equal SingersRepresenter
     end
   end
 

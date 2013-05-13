@@ -75,15 +75,34 @@ module Roar::Rails
       end
 
     private
-      def name_for(format, model, controller_path)  # DISCUSS: should we pass and process options here?
-        if self[format.to_sym].blank?  # TODO: test to_sym?
-          model_name = model.class.name
-          model_name = controller_path.camelize if model.kind_of?(Array)
-          return add_representer_suffix(model_name).constantize
+      def name_for(format, model, controller_path) # DISCUSS: should we pass and process options here?
+        if model.kind_of?(Array)
+          collection_representer(format, model, controller_path)
+        else
+          entity_representer(format, model, controller_path)
         end
+      end
 
-        return self[format][:collection] if model.kind_of?(Array)
-        self[format][:entity]
+      def collection_representer(format, model, controller_path)
+        options = self[format.to_sym] || {}
+        if options[:collection].blank?
+          infer_representer(controller_path.camelize)
+        else
+          options[:collection]
+        end
+      end
+
+      def entity_representer(format, model, controller_path)
+        options = self[format.to_sym] || {}
+        if options[:entity].blank?
+          infer_representer(model.class.name)
+        else
+          options[:entity]
+        end
+      end
+
+      def infer_representer(model_name)
+        add_representer_suffix(model_name).constantize
       end
 
       def add_representer_suffix(prefix)
