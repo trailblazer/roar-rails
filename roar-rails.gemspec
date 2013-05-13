@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "railties",      ">= 3.0.0"
   s.add_runtime_dependency "hooks"
 
-  s.add_development_dependency "minitest",	">= 2.8.1"
+  s.add_development_dependency "minitest",	"~> 4.0"
   s.add_development_dependency "activemodel"
   s.add_development_dependency "tzinfo" # FIXME: why the hell do we need this for 3.1?
 end
