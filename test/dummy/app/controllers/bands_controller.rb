@@ -1,4 +1,9 @@
-Band = Struct.new(:name)
+class Band
+  attr_accessor :name
+  def initialize(name=nil)
+    @name = name
+  end
+end
 
 class BandsController < ActionController::Base
   include Roar::Rails::ControllerAdditions

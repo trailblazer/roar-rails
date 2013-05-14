@@ -1,6 +1,11 @@
 require 'test_helper'
 
-Singer = Struct.new(:name)
+class Singer
+  attr_accessor :name
+  def initialize(name=nil)
+    @name = name
+  end
+end
 
 module SingersRepresenter
   include Roar::Representer::JSON

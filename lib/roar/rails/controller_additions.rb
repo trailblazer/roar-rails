@@ -78,11 +78,11 @@ module Roar::Rails
       def name_for(format, model, controller_path)  # DISCUSS: should we pass and process options here?
         if self[format.to_sym].blank?  # TODO: test to_sym?
           model_name = model.class.name
-          model_name = controller_path.camelize if model.kind_of?(Array)
+          model_name = controller_path.camelize if model.respond_to?(:each)
           return add_representer_suffix(model_name).constantize
         end
 
-        return self[format][:collection] if model.kind_of?(Array)
+        return self[format][:collection] if model.respond_to?(:each)
         self[format][:entity]
       end
 
