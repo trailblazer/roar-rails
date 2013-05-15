@@ -1,6 +1,14 @@
+if ::ActionPack::VERSION::MAJOR == 4
+  require 'test_xml/mini_test'
+else
+  require 'test_xml/test_unit'
+end
+
 module Roar
   module Rails
     module TestCase
+      include TestXml::Assertions # FIXME: including from test_xml in MiniTest::Test doesn't work with rails 4.
+
       def get(action, *args)
         process(action, "GET", *args)
       end
@@ -29,12 +37,6 @@ module Roar
       end
 
       module Assertions
-        if ::ActionPack::VERSION::MAJOR == 4
-          require 'test_xml/mini_test'
-        else
-          require 'test_xml/test_unit'
-        end
-
         def assert_body(body, options={})
           return assert_xml_equal body, response.body if options[:xml]
           assert_equal body, response.body

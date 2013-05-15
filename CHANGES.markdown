@@ -1,3 +1,7 @@
+h2. 0.0.15
+
+* `ActiveRecord::Relation` is now detected as a collection and the appropriate representer should be found.
+
 h2. 0.0.14
 
 * Moved logic to infer representer names from `ControllerAdditions` to `RepresenterComputer` class.
