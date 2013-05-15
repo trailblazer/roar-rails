@@ -9,8 +9,6 @@ class RepresenterComputerTest < MiniTest::Spec
   let (:subject) { Roar::Rails::ControllerAdditions::RepresenterComputer.new }
 
   describe "nothing configured" do
-
-
     it "uses model class" do
       subject.for(:json, Singer.new, "bands").must_equal SingerRepresenter
     end
@@ -54,6 +52,15 @@ class RepresenterComputerTest < MiniTest::Spec
 
     it "doesn't infer collection representer" do
       subject.for(:json, [], "bands").must_equal SingersRepresenter
+    end
+  end
+
+  describe "with ActiveRecord::Relation" do
+    before { subject.add(:json, :entity     => ObjectRepresenter,
+                                :collection => SingersRepresenter) }
+
+    it "detects collection in form of ActiveRecord::Relation" do
+      subject.for(:json, Artist.find(:all), "artists").must_equal SingersRepresenter
     end
   end
 
