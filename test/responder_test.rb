@@ -146,8 +146,11 @@ class ResponderTest < ActionController::TestCase
   class ControllerWithDecoratorTest < ResponderTest
     class SingerRepresentation < Representable::Decorator
       include Roar::Representer::JSON
+      include Roar::Representer::JSON::HAL
 
       property :name
+
+      link(:self) { "http://singers/#{represented.name}" }
     end
 
     class MusicianController < BaseController
@@ -162,7 +165,7 @@ class ResponderTest < ActionController::TestCase
         respond_with singer
       end
 
-      assert_equal "{\"name\":\"Bumi\"}", @response.body
+      assert_equal %{{"name":"Bumi","_links":{"self":{"href":"http://singers/Bumi"}}}}, @response.body
     end
 
     test "parsing uses decorating representer" do # FIXME: move to controller_test.
