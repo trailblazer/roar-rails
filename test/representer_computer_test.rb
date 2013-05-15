@@ -18,6 +18,17 @@ class RepresenterComputerTest < MiniTest::Spec
     it "uses plural controller name when collection" do
       subject.for(:json, [Singer.new], "objects").must_equal ObjectsRepresenter
     end
+
+    it "works with Enumerable" do
+      enumerable = Class.new do
+        include Enumerable
+        def each(&block)
+          2.times.map { Singer.new }.each(&block)
+        end
+      end
+
+      subject.for(:json, enumerable.new, "objects").must_equal ObjectsRepresenter
+    end
   end
 
   describe "represents :json, Singer" do
