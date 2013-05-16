@@ -5,6 +5,18 @@ end
 module ObjectsRepresenter
 end
 
+module V1
+  module SingerRepresenter
+  end
+  module BassistRepresenter
+  end
+  module SingersRepresenter
+  end
+end
+
+class Bassist
+end
+
 class RepresenterComputerTest < MiniTest::Spec
   let (:subject) { Roar::Rails::ControllerAdditions::RepresenterComputer.new }
 
@@ -67,6 +79,22 @@ class RepresenterComputerTest < MiniTest::Spec
     end
   end
 
+  describe "namespaces" do
+    describe "unconfigured" do
+      it "returns namespaced entity" do
+        subject.for(:json, Singer.new, "v1/singers").must_equal V1::SingerRepresenter
+      end
+
+      it "returns polymorphic namespaced entity" do
+        subject.for(:json, Bassist.new, "v1/singers").must_equal V1::BassistRepresenter
+      end
+
+      it "returns namespaced collection" do
+        subject.for(:json, [Object.new], "v1/singers").must_equal V1::SingersRepresenter
+      end
+    end
+  end
+
   describe "with ActiveRecord::Relation" do
     before { subject.add(:json, :entity     => ObjectRepresenter,
                                 :collection => SingersRepresenter) }
@@ -99,4 +127,12 @@ class RepresenterComputerTest < MiniTest::Spec
       subject.for(:xml, Class.new.new, "bands").must_equal nil
     end
   end
+end
+
+class PathTest < MiniTest::Spec
+  let (:path) { Roar::Rails::ControllerAdditions::RepresenterComputer::Path }
+
+  it { path.new("bands").namespace.must_equal nil }
+  it { path.new("v1/bands").namespace.must_equal "v1" }
+  it { path.new("api/v1/bands").namespace.must_equal "api/v1" }
 end

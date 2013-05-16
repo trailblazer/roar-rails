@@ -1,6 +1,8 @@
-h2. 0.0.15
+h2. 0.1.0
 
 * `ActiveRecord::Relation` is now detected as a collection and the appropriate representer should be found.
+* Entity (singular) representers are now correctly infered even if you only specified `collection:` in `::represents`. That works by querying the model.
+* Entity representers are now *namespaced* when guessed (i.e., when you didn't specify them explicitly in `::represents`) as it works with collection representers already. If you have a namespaced controller and it suddenly doesn't find its entity representer anymore, either namespace the representer or specify its name in `::represents`.
 
 h2. 0.0.14
 

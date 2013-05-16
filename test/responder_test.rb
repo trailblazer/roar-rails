@@ -1,7 +1,5 @@
 require 'test_helper'
 
-Singer = Struct.new(:name)
-
 module SingersRepresenter
   include Roar::Representer::JSON
 
@@ -49,6 +47,8 @@ class ResponderTest < ActionController::TestCase
 
   class UnconfiguredControllerTest < ResponderTest
     SingersRepresenter = ::SingersRepresenter
+    SingerRepresenter  = ::SingerRepresenter
+
     class SingersController < BaseController
     end
 
@@ -69,7 +69,7 @@ class ResponderTest < ActionController::TestCase
         respond_with singers
       end
 
-      assert_equal({:singers => singers.collect {|s| s.extend(SingerRepresenter).to_hash }}.to_json, @response.body)
+      @response.body.must_equal({:singers => singers.collect {|s| s.extend(SingerRepresenter).to_hash }}.to_json)
     end
 
     test "responder allows empty response bodies to pass through" do
