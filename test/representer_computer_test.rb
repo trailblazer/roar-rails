@@ -96,7 +96,7 @@ class RepresenterComputerTest < MiniTest::Spec
 
     it "returns nil when not present" do
       skip "not sure what to do when format is unknown"
-      subject.for(:xml, Object.new, "bands").must_equal nil
+      subject.for(:xml, Class.new.new, "bands").must_equal nil
     end
   end
 end
