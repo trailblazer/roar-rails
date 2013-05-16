@@ -75,30 +75,26 @@ module Roar::Rails
       end
 
     private
+      def [](format)
+        super(format.to_sym) or {}
+      end
+
       def name_for(format, model, controller_path) # DISCUSS: should we pass and process options here?
+        options = self[format]
+
         if detect_collection(model)
-          collection_representer(format, model, controller_path)
+          collection_representer(format, model, controller_path, options)
         else
-          entity_representer(format, model, controller_path)
+          entity_representer(format, model, controller_path, options)
         end
       end
 
-      def collection_representer(format, model, controller_path)
-        options = self[format.to_sym] || {}
-        if options[:collection].blank?
-          infer_representer(controller_path.camelize)
-        else
-          options[:collection]
-        end
+      def collection_representer(format, model, controller_path, options)
+        options[:collection] or infer_representer(controller_path.camelize)
       end
 
-      def entity_representer(format, model, controller_path)
-        options = self[format.to_sym] || {}
-        if options[:entity].blank?
-          infer_representer(model.class.name)
-        else
-          options[:entity]
-        end
+      def entity_representer(format, model, controller_path, options)
+        options[:entity] or infer_representer(model.class.name)
       end
 
       def infer_representer(model_name)

@@ -84,9 +84,19 @@ class RepresenterComputerTest < MiniTest::Spec
   end
 
   describe "#for" do
+    before { subject.add(:json, :entity => "ObjectRepresenter") }
+
     it "constantizes strings" do
-      subject.add(:json, :entity => "ObjectRepresenter")
       subject.for(:json, Object.new, "bands").must_equal ObjectRepresenter
+    end
+
+    it "accepts string format" do
+      subject.for("json", Object.new, "bands").must_equal ObjectRepresenter
+    end
+
+    it "returns nil when not present" do
+      skip "not sure what to do when format is unknown"
+      subject.for(:xml, Object.new, "bands").must_equal nil
     end
   end
 end
