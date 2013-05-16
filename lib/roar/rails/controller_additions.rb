@@ -83,18 +83,18 @@ module Roar::Rails
         options = self[format]
 
         if detect_collection(model)
-          collection_representer(format, model, controller_path, options)
+          options[:collection] or collection_representer(format, model, controller_path)
         else
-          entity_representer(format, model, controller_path, options)
+          options[:entity] or entity_representer(format, model, controller_path)
         end
       end
 
-      def collection_representer(format, model, controller_path, options)
-        options[:collection] or infer_representer(controller_path.camelize)
+      def collection_representer(format, model, controller_path)
+        infer_representer(controller_path.camelize)
       end
 
-      def entity_representer(format, model, controller_path, options)
-        options[:entity] or infer_representer(model.class.name)
+      def entity_representer(format, model, controller_path)
+        infer_representer(model.class.name)
       end
 
       def infer_representer(model_name)
