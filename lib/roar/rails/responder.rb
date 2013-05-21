@@ -19,6 +19,11 @@ module Roar::Rails
       to_format
     end
 
+    def resource_errors
+      resource.errors.extend ToHal if format == :hal
+      super
+    end
+
   private
     def render_items_with(collection, representer)
       collection.map! do |mdl|  # DISCUSS: i don't like changing the method argument here.
