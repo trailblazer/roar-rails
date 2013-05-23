@@ -19,9 +19,8 @@ module Roar::Rails
       to_format
     end
 
-    def resource_errors
-      resource.errors.extend ToHal if format == :hal
-      super
+    def hal_resource_errors
+      resource_errors.extend ToHal
     end
 
   private
