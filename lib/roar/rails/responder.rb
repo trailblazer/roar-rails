@@ -1,5 +1,8 @@
 module Roar::Rails
   module Responder
+    def default_render
+      render
+    end
     def display(model, *args)
       if representer = options.delete(:represent_items_with)
         render_items_with(model, representer) # convenience API, not recommended since it's missing hypermedia.
