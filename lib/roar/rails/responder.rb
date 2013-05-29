@@ -1,14 +1,12 @@
 module Roar::Rails
   module Responder
     def to_format
-      if should_represent_model?(format, options)
-        if representer = options.delete(:represent_items_with)
-          @resource = render_items_with(resource, representer) # convenience API, not recommended since it's missing hypermedia.
-          return super
-        end
-
-        @resource = prepare_model_for(format, resource, options)
+      if representer = options.delete(:represent_items_with)
+        @resource = render_items_with(resource, representer) # convenience API, not recommended since it's missing hypermedia.
+        return super
       end
+
+      @resource = prepare_model_for(format, resource, options)
 
       super
     end
@@ -37,11 +35,6 @@ module Roar::Rails
     end
 
     module PrepareModel
-      # By default the resource should be represented. If you pass in a format or an array of formats, only represent the resource for those formats.
-      def should_represent_model?(format, options)
-        options[:represent_formats].blank? || Array(options[:represent_formats]).include?(format)
-      end
-
       def prepare_model_for(format, model, options) # overwritten in VersionStrategy/3.0.
         controller.prepare_model_for(format, model, options)
       end
