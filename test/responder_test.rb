@@ -45,6 +45,23 @@ class ResponderTest < ActionController::TestCase
     end
   end
 
+  class ResponseTest < ResponderTest
+    SingerRepresenter  = ::SingerRepresenter
+    class SingersController < BaseController
+    end
+    tests SingersController
+
+    test "set Content-type" do
+      get do
+        singer = Singer.new("Bumi")
+        respond_with singer
+      end
+
+      @response.body.must_equal singer.to_json
+      @response.headers["Content-Type"].must_match "application/json"
+    end
+  end
+
   class UnconfiguredControllerTest < ResponderTest
     SingersRepresenter = ::SingersRepresenter
     SingerRepresenter  = ::SingerRepresenter
