@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_runtime_dependency "roar",          "~> 0.11.13"
-  s.add_runtime_dependency "representable", "~> 1.4"
   s.add_runtime_dependency "test_xml",      ">= 0.1.6"  # TODO: remove dependency as most people don't use XML.
   s.add_runtime_dependency "actionpack"
   s.add_runtime_dependency "railties",      ">= 3.0.0"
