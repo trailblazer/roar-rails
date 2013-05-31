@@ -8,7 +8,7 @@ module Roar::Representer
   autoload("JSON", "roar/representer/json")
 
   module JSON
-    autoload("HAL", "roar/representer/json/hal")
+    autoload("HAL", "roar/rails/hal")
   end
 
   module Feature
