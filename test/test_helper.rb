@@ -1,8 +1,6 @@
-require 'bundler'
-Bundler.setup
-
 require 'test/unit'
 require 'minitest/spec'
+require 'test_xml/mini_test'
 
 ENV['RAILS_ENV'] = 'test'
 require "dummy/config/environment"
