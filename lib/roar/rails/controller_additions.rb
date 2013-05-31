@@ -51,6 +51,15 @@ module Roar::Rails
       request.body.read
     end
 
+    def render_to_body(options)
+      if res = options[formats.first] and res.is_a?(Roar::Rails::Responder::Response)
+        response.content_type = res.content_type
+        return res.body
+      end
+
+      super
+    end
+
 
     class RepresenterComputer < Hash
       def add(format, opts)

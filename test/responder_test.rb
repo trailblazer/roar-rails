@@ -45,13 +45,13 @@ class ResponderTest < ActionController::TestCase
     end
   end
 
-  class ResponseTest < ResponderTest
+  class JsonResponseTest < ResponderTest
     SingerRepresenter  = ::SingerRepresenter
     class SingersController < BaseController
     end
     tests SingersController
 
-    test "set Content-type" do
+    test "set Content-type to json" do
       get do
         singer = Singer.new("Bumi")
         respond_with singer
@@ -59,6 +59,30 @@ class ResponderTest < ActionController::TestCase
 
       @response.body.must_equal singer.to_json
       @response.headers["Content-Type"].must_match "application/json"
+    end
+  end
+
+  class XmlResponseTest < ResponderTest
+    module SingerRepresenter
+      include Roar::Representer::XML
+
+      property :name
+      self.representation_wrap = :singer
+    end
+
+    class SingersController < BaseController
+      respond_to :xml
+    end
+    tests SingersController
+
+    test "set Content-type to xml" do
+      get :xml do
+        singer = Singer.new("Bumi")
+        respond_with singer
+      end
+
+      @response.body.must_equal_xml '<singer><name>Bumi</name></singer>'
+      @response.headers["Content-Type"].must_match "application/xml"
     end
   end
 
@@ -243,19 +267,19 @@ class ResponderTest < ActionController::TestCase
 
 
 
-  def get(&block)
+  def get(format=:json, &block)
     @controller.instance_eval do
       @block = block
     end
 
-    super :execute, :format => 'json'
+    super :execute, :format => format
   end
 
-  def put(body="", &block)
+  def put(body="", format=:json, &block)
     @controller.instance_eval do
       @block = block
     end
-    super :execute, body, :format => 'json'
+    super :execute, body, :format => format
   end
 
   def singer(name="Bumi")
