@@ -145,6 +145,12 @@ Same goes with `#consume!`, passing options to `from_json`.
 consume! Singer.new, :current_user => current_user
 ```
 
+## Rendering Options
+If you have passed in options to a representer, you must process them to use them.  For example, you can do so by using a :getter with a decorator.
+
+```ruby
+property :username, getter: lambda { |args| args[:current_user]}
+```
 
 ## URL Helpers
 
