@@ -70,12 +70,13 @@ class ResponderTest < ActionController::TestCase
     tests SingersController
 
     test "returns non-represented json of model" do
+      singer = Singer.new('Bumi', 42)
+
       get do
-        singer = Singer.new('Bumi', 42)
         respond_with singer, :represented_formats => []
       end
 
-      assert_equal %{{"name":"Bumi","age":42}}, @response.body
+      assert_equal singer.to_json, @response.body
     end
   end
 
@@ -87,8 +88,9 @@ class ResponderTest < ActionController::TestCase
     tests SingersController
 
     test "returns represented json of model" do
+      singer = Singer.new('Bumi')
+
       get do
-        singer = Singer.new('Bumi')
         respond_with singer, :represented_formats => [:json]
       end
 
