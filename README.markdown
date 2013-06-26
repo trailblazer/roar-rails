@@ -178,6 +178,27 @@ config.representer.default_url_options = {:host => "127.0.0.1:3000"}
 
 Attention: If you are using representers from a gem your Rails URL helpers might not work in these modules. This is due to a [loading order problem](https://groups.google.com/forum/?fromgroups#!topic/rubyonrails-core/5tG5unZ8jDQ) in Rails. As a workaround, don't require the representers in the gem but load them as lately as possible, usually it works when you require in the controller. We are working on fixing that problem.
 
+## Representing Formats Exclusively
+
+By default roar-rails will represent all requested formats.  This behavior may not be well suited to certain scenarios and can be changed both globally and on a per action basis.  To configure this behavior globally you can set the `config.representer.represented_formats` in your environment's configuration to an array of formats.  For example the following will only represent hal and json requests.
+
+```ruby
+config.representer.represented_formats = [:hal, :json]
+```
+
+The global configuration (or lack thereof) can be overridden by supplying the `represented_formats` array in the options passed to `respond_with`.  The following will only represent the hal format.
+
+```ruby
+class MyController < ApplicationController
+  ...
+
+  def show
+    ...
+    respond_with @resource, :represented_formats => [:hal]
+  end
+end
+```
+
 ## Testing
 
 ## Autoloading

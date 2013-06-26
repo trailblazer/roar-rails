@@ -1,14 +1,28 @@
 module Roar::Rails
   module Responder
     def display(model, *args)
-      handle_lonely_collection!(model) and return super # :represent_items_with
+      if represent_format?
+        handle_lonely_collection!(model) and return super # :represent_items_with
 
-      model = prepare_model_for(format, model, options)
+        model = prepare_model_for(format, model, options)
+      end
 
       super(create_response(model), *args) # AC::Responder: this calls controller.render which calls render_to_body which calls renderer[:json] which calls model.to_json.
     end
 
   private
+
+    # Get configured default or default to the previous behavior and always represent for the requested format.
+    def default_represented_formats
+      Rails.application.config.representer.represented_formats or [format]
+    end
+
+    # First check for user option overrides, then check for defaults.
+    def represent_format?
+      formats = Array((options[:represented_formats] || default_represented_formats))
+      formats.include?(format)
+    end
+
     def resourceful?
       # FIXME: find out if we have a representer? what about old behaviour?
       #resource.respond_to?("to_#{format}")
