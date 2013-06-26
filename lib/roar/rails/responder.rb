@@ -1,5 +1,8 @@
 module Roar::Rails
   module Responder
+    def default_render
+      render
+    end
     def display(model, *args)
       handle_lonely_collection!(model) and return super # :represent_items_with
 
