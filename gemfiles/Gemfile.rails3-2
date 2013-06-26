@@ -3,5 +3,5 @@ source "http://rubygems.org"
 # Specify your gem's dependencies in roar-rails.gemspec
 gemspec :path => '../'
 
-gem 'railties', '~> 3.2.0'
+gem 'railties', '~> 3.2.13'
 gem 'roar', 	">= 0.11.17"
