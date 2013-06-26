@@ -265,6 +265,22 @@ class ResponderTest < ActionController::TestCase
     end
   end
 
+  class FallbackTest < ResponderTest
+    class MusicianController < BaseController
+      represents :json, Object
+    end
+
+    tests MusicianController
+
+    test "passes options to entity representer" do
+      get do
+        render :text => "Rendered template"
+      end
+
+      @response.body.must_equal("Rendered template")
+    end
+  end
+
 
 
   def get(format=:json, &block)
