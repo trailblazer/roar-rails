@@ -68,12 +68,24 @@ class ResponderTest < ActionController::TestCase
     end
     tests SingersController
 
-    test "returns non-represented json of model by falling back to Rails default responding" do
+    test "returns non-represented json of model by falling back to Rails default responding when supressed in respond_with" do
       singer = Singer.new('Bumi', 42)
 
       get do
         respond_with singer, :represented_formats => []
       end
+
+      assert_equal singer.to_json, @response.body
+    end
+
+    test "return non-represented json model by falling back to Rails default responding when supressed in the configuration" do
+      singer = Singer.new('Bumi', 42)
+
+      Rails.application.config.representer.represented_formats = []
+      get do
+        respond_with singer
+      end
+      Rails.application.config.representer.represented_formats = nil
 
       assert_equal singer.to_json, @response.body
     end
