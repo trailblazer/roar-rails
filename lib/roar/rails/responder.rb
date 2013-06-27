@@ -12,14 +12,14 @@ module Roar::Rails
 
   private
 
-    # Get configured default or default to the previous behavior and always represent for the requested format.
     def default_represented_formats
-      Rails.application.config.representer.represented_formats or [format]
+      Rails.application.config.representer.represented_formats
     end
 
-    # First check for user option overrides, then check for defaults.
+    # First check for user option overrides, then check for defaults, then trigger
+    # previous behavior and always represent for the requested format.
     def represent_format?
-      formats = Array((options[:represented_formats] || default_represented_formats))
+      formats = Array((options[:represented_formats] || default_represented_formats || [format]))
       formats.include?(format)
     end
 

@@ -62,14 +62,13 @@ class ResponderTest < ActionController::TestCase
     end
   end
 
-  class JsonWithoutRepresentationResponseTest < ResponderTest
-    SingerRepresenter  = ::SingerRepresenter
+  class SuppressingRepresenterForFormatTest < ResponderTest
     Singer = Struct.new(:name, :age)
     class SingersController < BaseController
     end
     tests SingersController
 
-    test "returns non-represented json of model" do
+    test "returns non-represented json of model by falling back to Rails default responding" do
       singer = Singer.new('Bumi', 42)
 
       get do
@@ -80,7 +79,7 @@ class ResponderTest < ActionController::TestCase
     end
   end
 
-  class JsonWithRepresentationResponseTest < ResponderTest
+  class ProvidingRepresenterForFormatTest < ResponderTest
     SingerRepresenter  = ::SingerRepresenter
     class SingersController < BaseController
       represents :json, :entity => SingerRepresenter
