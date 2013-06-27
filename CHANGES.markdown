@@ -1,3 +1,7 @@
+h2. 0.1.1
+
+* Added the `represented_formats: [...]` option to be passed to `#respond_with` for either suppressing roar-rails from extending/decorating models when rendering or to fine-tune so this will only happen on white-listed formats as `:hal`.
+
 h2. 0.1.0
 
 * `ActiveRecord::Relation` is now detected as a collection and the appropriate representer should be found.
