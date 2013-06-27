@@ -180,21 +180,33 @@ Attention: If you are using representers from a gem your Rails URL helpers might
 
 ## Representing Formats Exclusively
 
-By default roar-rails will represent all requested formats.  This behavior may not be well suited to certain scenarios and can be changed both globally and on a per action basis.  To configure this behavior globally you can set the `config.representer.represented_formats` in your environment's configuration to an array of formats.  For example the following will only represent hal and json requests.
+By default, roar-rails will extend/decorate any model passed to `respond_with` for any request format. When adding roar-rails to a legacy project, you might want to restrict roar-rails' representing and fall back to the old behavior for certain formats. This can be configured both globally and on a per action basis.
+
+To restrict representing globally to a particular format you can set the `config.representer.represented_formats` in your environment's configuration to an array of formats.  For example the following will only represent hal and json requests.
 
 ```ruby
 config.representer.represented_formats = [:hal, :json]
 ```
 
-The global configuration (or lack thereof) can be overridden by supplying the `represented_formats` array in the options passed to `respond_with`.  The following will only represent the hal format.
+The global configuration (or lack thereof) can be overridden by supplying the `:represented_formats` array when calling `respond_with`.  The following will only represent `@resource` for the hal format in the `show` action. For any other format, it will expose the resource using Rails' old behavior.
+
 
 ```ruby
 class MyController < ApplicationController
-  ...
-
   def show
     ...
     respond_with @resource, :represented_formats => [:hal]
+  end
+end
+```
+
+You can entirely suppress roar-rails in `respond_with` by passing in an empty array.
+
+```ruby
+class MyController < ApplicationController
+  def show
+    ...
+    respond_with @resource, :represented_formats => []
   end
 end
 ```
