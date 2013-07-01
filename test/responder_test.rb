@@ -63,19 +63,18 @@ class ResponderTest < ActionController::TestCase
   end
 
   class SuppressingRepresenterForFormatTest < ResponderTest
-    Singer = Struct.new(:name, :age)
     class SingersController < BaseController
     end
     tests SingersController
 
     test "returns non-represented json of model by falling back to Rails default responding when supressed in respond_with" do
-      singer = Singer.new('Bumi', 42)
+      singer = Singer.new('Bumi')
 
       get do
         respond_with singer, :represented_formats => []
       end
 
-      assert_equal "{\"name\":\"Bumi\",\"age\":42}", @response.body
+      assert_equal bumi_json, @response.body
     end
   end
 
@@ -117,7 +116,7 @@ class ResponderTest < ActionController::TestCase
       end
       Rails.application.config.representer.represented_formats = nil
 
-      assert_equal "{\"name\":\"Bumi\"}", @response.body
+      assert_equal bumi_json, @response.body
     end
 
     test "represented_formats passed to respond_with override global directive" do
@@ -376,5 +375,10 @@ class ResponderTest < ActionController::TestCase
 
   def singers
     [singer("Bumi"), singer("Bjork"), singer("Sinead")]
+  end
+
+  def bumi_json
+    return "[\"Bumi\"]" if Roar::Rails.rails3_0?
+    "{\"name\":\"Bumi\"}"
   end
 end
