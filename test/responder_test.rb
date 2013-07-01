@@ -57,7 +57,7 @@ class ResponderTest < ActionController::TestCase
         respond_with singer
       end
 
-      @response.body.must_equal singer.to_json
+      @response.body.must_equal "{\"name\":\"Bumi\",\"links\":[{\"rel\":\"self\",\"href\":\"http://roar.apotomo.de/singers/Bumi\"}]}"
       @response.headers["Content-Type"].must_match "application/json"
     end
   end
@@ -75,19 +75,7 @@ class ResponderTest < ActionController::TestCase
         respond_with singer, :represented_formats => []
       end
 
-      assert_equal singer.to_json, @response.body
-    end
-
-    test "return non-represented json model by falling back to Rails default responding when supressed in the configuration" do
-      singer = Singer.new('Bumi', 42)
-
-      Rails.application.config.representer.represented_formats = []
-      get do
-        respond_with singer
-      end
-      Rails.application.config.representer.represented_formats = nil
-
-      assert_equal singer.to_json, @response.body
+      assert_equal "{\"name\":\"Bumi\",\"age\":42}", @response.body
     end
   end
 
@@ -98,12 +86,48 @@ class ResponderTest < ActionController::TestCase
     end
     tests SingersController
 
-    test "returns represented json of model" do
+    test "returns represented json of model when set in respond_with" do
       singer = Singer.new('Bumi')
 
       get do
         respond_with singer, :represented_formats => [:json]
       end
+
+      assert_equal %{{"name":"Bumi","links":[{"rel":"self","href":"http://roar.apotomo.de/singers/Bumi"}]}}, @response.body
+    end
+
+    test "return represented json model by using configured default" do
+      singer = Singer.new('Bumi')
+
+      Rails.application.config.representer.represented_formats = [:json]
+      get do
+        respond_with singer
+      end
+      Rails.application.config.representer.represented_formats = nil
+
+      assert_equal %{{"name":"Bumi","links":[{"rel":"self","href":"http://roar.apotomo.de/singers/Bumi"}]}}, @response.body
+    end
+
+    test "return non-represented json model by falling back to Rails default responding when supressed in the configuration" do
+      singer = Singer.new('Bumi')
+
+      Rails.application.config.representer.represented_formats = []
+      get do
+        respond_with singer
+      end
+      Rails.application.config.representer.represented_formats = nil
+
+      assert_equal "{\"name\":\"Bumi\"}", @response.body
+    end
+
+    test "represented_formats passed to respond_with override global directive" do
+      singer = Singer.new('Bumi')
+
+      Rails.application.config.representer.represented_formats = [:hal]
+      get do
+        respond_with singer, :represented_formats => [:json]
+      end
+      Rails.application.config.representer.represented_formats = nil
 
       assert_equal %{{"name":"Bumi","links":[{"rel":"self","href":"http://roar.apotomo.de/singers/Bumi"}]}}, @response.body
     end
@@ -148,7 +172,7 @@ class ResponderTest < ActionController::TestCase
         respond_with singer
       end
 
-      @response.body.must_equal singer.to_json
+      @response.body.must_equal "{\"name\":\"Bumi\",\"links\":[{\"rel\":\"self\",\"href\":\"http://roar.apotomo.de/singers/Bumi\"}]}"
     end
 
     test "responder finds SingersRepresenter for collections by convention" do
@@ -183,7 +207,7 @@ class ResponderTest < ActionController::TestCase
         respond_with singer, :represent_with => SingerRepresenter
       end
 
-      assert_equal singer.to_json, @response.body
+      @response.body.must_equal "{\"name\":\"Bumi\",\"links\":[{\"rel\":\"self\",\"href\":\"http://roar.apotomo.de/singers/Bumi\"}]}"
     end
 
     test "responder uses passed representer for collection" do
@@ -218,7 +242,7 @@ class ResponderTest < ActionController::TestCase
         respond_with singer
       end
 
-      @response.body.must_equal singer.to_json
+      @response.body.must_equal "{\"name\":\"Bumi\",\"links\":[{\"rel\":\"self\",\"href\":\"http://roar.apotomo.de/singers/Bumi\"}]}"
     end
 
     test "responder uses configured representer for collection" do
