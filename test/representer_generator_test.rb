@@ -1,12 +1,12 @@
 require 'test_helper'
 require 'rails/generators'
 
-require 'generators/roar/representer/representer_generator'
+require 'generators/rails/representer_generator'
 
 class RepresentetGeneratorTest < Rails::Generators::TestCase
   destination File.join(Rails.root, "tmp")
   setup :prepare_destination
-  tests Roar::Rails::Generators::RepresenterGenerator
+  tests Rails::Generators::RepresenterGenerator
 
   test "create a representer with correct class_name" do
     run_generator %w(singer)
@@ -31,6 +31,24 @@ class RepresentetGeneratorTest < Rails::Generators::TestCase
     run_generator %w(singer --format=XML)
 
     assert_file representer_path('singer'), /include Roar::Representer::XML/
+  end
+
+  test "create a representer with property, class and exnted" do
+    run_generator %w(singer band:band:group_representer instrument:equipament:instrument_representer)
+
+    assert_file representer_path('singer'),
+      /property :band, :class => Band, :extend => GroupRepresenter/
+    assert_file representer_path('singer'),
+      /property :instrument, :class => Equipament, :extend => InstrumentRepresenter/
+  end
+
+  test "create a representer with property and class only" do
+    run_generator %w(singer band:band instrument:equipament)
+
+    assert_file representer_path('singer'),
+      /property :band, :class => Band/
+    assert_file representer_path('singer'),
+      /property :instrument, :class => Equipament/
   end
 
   def representer_path(name)

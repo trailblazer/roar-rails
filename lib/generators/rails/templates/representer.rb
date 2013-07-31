@@ -1,6 +1,6 @@
 module <%= class_name %>Representer
   include Roar::Representer::<%= format %>
-  <% for options in properties -%>
-    property <%= ":#{options}" %>
+  <% property_options.each do |property| %>
+  <%= property -%>
   <% end %>
 end
