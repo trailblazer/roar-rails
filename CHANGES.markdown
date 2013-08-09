@@ -1,3 +1,7 @@
+h2. 0.1.3
+
+* Fix a bug where `TestCase` wouldn't work in 3.2.
+
 h2. 0.1.2
 
 * Introducing a check where `request.body.read` is called (as usual) if `request.body.string` isn't present. This is due to some faulty behaviour in Rails and some web servers that don't provide a properly working `#read`, as it's the Rack rule. Should finally fix https://github.com/apotonick/roar-rails/issues/18 and friends.
