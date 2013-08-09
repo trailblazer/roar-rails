@@ -73,7 +73,6 @@ end
 
 class RequestBodyStringTest < ConsumeTest
   test "allows Request instances supporting #string instead of #read" do
-    puts @request.inspect
     @request.instance_eval do
       def body
         Object.new.instance_eval do
