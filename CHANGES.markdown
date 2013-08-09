@@ -1,3 +1,7 @@
+h2. 0.1.2
+
+* Introducing a check where `request.body.read` is called (as usual) if `request.body.string` isn't present. This is due to some faulty behaviour in Rails and some web servers that don't provide a properly working `#read`, as it's the Rack rule. Should finally fix https://github.com/apotonick/roar-rails/issues/18 and friends.
+
 h2. 0.1.1
 
 * Added the `represented_formats: [...]` option to be passed to `#respond_with` for either suppressing roar-rails from extending/decorating models when rendering or to fine-tune so this will only happen on white-listed formats as `:hal`. This can also be set globally using `config.representer.represented_formats`.
