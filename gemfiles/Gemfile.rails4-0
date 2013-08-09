@@ -8,5 +8,3 @@ gem 'actionpack', '~> 4.0.0'
 
 gem 'activemodel', '~> 4.0.0'
 gem 'activerecord', '~> 4.0.0'
-
-gem 'roar', "~> 0.12.0"
