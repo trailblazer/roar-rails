@@ -28,12 +28,18 @@ module Roar
       ::Rails::VERSION::MAJOR == 3 && ::Rails::VERSION::MINOR == 1
     end
 
+    def self.rails3_2?
+      ::Rails::VERSION::MAJOR == 3 && ::Rails::VERSION::MINOR == 2
+    end
+
     if rails3_0?
       require 'roar/rails/rails3_0_strategy'
     elsif rails3_1?
       require 'roar/rails/rails3_1_strategy'
-    else
+    elsif rails3_2?
       require 'roar/rails/rails3_2_strategy'
+    else
+      require 'roar/rails/rails4_0_strategy'
     end
 
     autoload("TestCase", "roar/rails/test_case")
