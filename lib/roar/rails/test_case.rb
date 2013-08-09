@@ -33,8 +33,18 @@ module Roar
 
         request.env['RAW_POST_DATA'] = document
 
-        super(action, params, nil, nil, http_method)  # FIXME: for Rails <=3.1, only.
+        super(*process_args(action, http_method, document, params))
       end
+
+    private
+      module ProcessArgs
+        def process_args(*args) # TODO: remove when <= 3.1 support is dropped (in 2016).
+          args
+        end
+      end
+      include ProcessArgs
+      include TestCase::VersionStrategy # overwrites #process_args for <= 3.1.
+
 
       module Assertions
         def assert_body(body, options={})
@@ -42,7 +52,6 @@ module Roar
           assert_equal body, response.body
         end
       end
-
       include Assertions
     end
   end
