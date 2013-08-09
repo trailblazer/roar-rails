@@ -70,3 +70,21 @@ class ConsumeWithOptionsOverridingConfigurationTest < ActionController::TestCase
     assert_equal %{#<struct Singer name="Bumi">}, @response.body
   end
 end
+
+class RequestBodyStringTest < ConsumeTest
+  test "allows Request instances supporting #string instead of #read" do
+    puts @request.inspect
+    @request.instance_eval do
+      def body
+        Object.new.instance_eval do
+          def read;   "";                     end
+          def string; "{\"name\": \"Bumi\"}"; end # in rails 4, for whatever reasons, #read doesn't work as expected.
+
+          self
+        end
+      end
+    end
+    post :consume_json, "{\"name\": \"Bumi\"}", :format => 'json'
+    assert_equal %{#<struct Singer name="Bumi">}, @response.body
+  end
+end
