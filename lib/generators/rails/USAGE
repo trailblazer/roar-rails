@@ -1,0 +1,42 @@
+Description:
+  Creates a new Representer and its properties.
+
+  This generates a representer module in app/representers directory.
+
+Examples:
+
+  rails g representer Band id name
+
+  This will create a representer as follows:
+
+  module BandRepresenter
+    include Roar::Representer::JSON
+
+    property :id
+    property :name
+  end
+
+  You can pass :class and :extend property options:
+
+    rails g singer id instrument:equipament:instrument_representer
+
+  This will add property options:
+
+    module SingerRepresenter
+      include Roar::Representer::JSON
+
+      property :id
+      property :instrument, :class => Equipament, :extend => InstrumentRepresenter
+    end
+
+  You can also choose representer format with --format option
+
+    rails g representer Band id name --format=xml
+
+  module BandRepresenter
+    include Roar::Representer::XML
+
+    property :id
+    property :name
+  end
+
