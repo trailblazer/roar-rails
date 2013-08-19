@@ -1,3 +1,7 @@
+h2. 0.1.4
+
+* Added a generator to create modules from the command-line. Thanks to Guilherme Cavalcanti <guiocavalcanti> for working on this.
+
 h2. 0.1.3
 
 * Fix a bug where `TestCase` wouldn't work in 3.2.

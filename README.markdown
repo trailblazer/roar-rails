@@ -11,12 +11,43 @@ Roar is a framework for parsing and rendering REST documents. For a better overv
 * URL helpers in representers
 * Better tests
 * Autoloading
+* Generators
 
 This gem works with all Rails >= 3.x.
+
+
+## Generators
+
+The generator will create the representer modules in `app/representers` for you.
+
+Here's an example.
+
+```shell
+rails g representer Band id name
+```
+
+This will create the file `app/representers/band_representer.rb` with the following content,
+
+```ruby
+  module BandRepresenter
+    include Roar::Representer::JSON
+
+    property :id
+    property :name
+  end
+```
+
+You can change the format (e.g. XML), and pass arbitrary options to customize the generated representer. For all available options, just run
+
+```shell
+rails g representer
+```
+
 
 ## Rendering with #respond_with
 
 roar-rails provides a number of baked-in rendering methods.
+
 
 ### Conventional Rendering
 
@@ -128,6 +159,7 @@ end
 ```
 
 In decorators' link blocks you currently have to use `represented` to get the actual represented model (this is `self` in module representers).
+
 
 ## Passing Options
 
