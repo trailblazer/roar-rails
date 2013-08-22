@@ -1,6 +1,7 @@
 h2. 0.1.4
 
 * Added a generator to create modules from the command-line. Thanks to Guilherme Cavalcanti <guiocavalcanti> for working on this.
+* We always use `request.body.read` now, however, we call `rewind` beforehand.
 
 h2. 0.1.3
 
