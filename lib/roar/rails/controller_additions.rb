@@ -49,9 +49,7 @@ module Roar::Rails
 
     def incoming_string
       body = request.body
-
-      # this is my first respond_to? ever and i hate it (thanks, Rails :)
-      return body.string if body.respond_to?(:string)
+      body.rewind
       body.read
     end
 
