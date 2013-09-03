@@ -9,6 +9,7 @@ module Roar::Rails
       extend Hooks::InheritableAttribute
       inheritable_attr :represents_options
       self.represents_options ||= RepresenterComputer.new
+      before_action :set_representer_config
     end
 
 
@@ -62,6 +63,16 @@ module Roar::Rails
       super
     end
 
+    def set_representer_config
+      Rails.configuration.representer.default_url_options ||= {}
+      url_options = {
+        host:     request.host,
+        port:     request.port,
+        protocol: request.protocol
+      }
+      url_options.merge!(Rails.configuration.representer.default_url_options)
+      Rails.configuration.representer.default_url_options = url_options
+    end
 
     class RepresenterComputer < Hash
       def add(format, opts)
