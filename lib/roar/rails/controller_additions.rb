@@ -9,7 +9,7 @@ module Roar::Rails
       extend Hooks::InheritableAttribute
       inheritable_attr :represents_options
       self.represents_options ||= RepresenterComputer.new
-      before_action :set_representer_config
+      before_filter :set_representer_config
     end
 
 
