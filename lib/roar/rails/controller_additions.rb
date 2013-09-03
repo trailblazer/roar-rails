@@ -64,13 +64,10 @@ module Roar::Rails
     end
 
     def set_representer_config
-      Rails.configuration.representer.default_url_options ||= {}
-      url_options = {
-        host:     request.host,
-        port:     request.port,
-        protocol: request.protocol
-      }
-      url_options.merge!(Rails.configuration.representer.default_url_options)
+      url_options = Rails.configuration.representer.default_url_options || {}
+      url_options[:protocol] ||= request.protocol
+      url_options[:host]     ||= request.host
+      url_options[:port]     ||= request.port unless request.port == 80
       Rails.configuration.representer.default_url_options = url_options
     end
 
