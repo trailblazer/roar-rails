@@ -26,7 +26,7 @@ Examples:
       include Roar::Representer::JSON
 
       property :id
-      property :instrument, :class => Equipament, :extend => InstrumentRepresenter
+      property :instrument, :class => Equipment, :extend => InstrumentRepresenter
     end
 
   You can also choose representer format with --format option
