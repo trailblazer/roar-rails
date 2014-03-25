@@ -1,4 +1,4 @@
-require 'hooks/inheritable_attribute'
+require 'uber/inheritable_attr'
 require 'roar/rails/responder'
 
 module Roar::Rails
@@ -6,7 +6,7 @@ module Roar::Rails
     extend ActiveSupport::Concern
 
     included do
-      extend Hooks::InheritableAttribute
+      extend Uber::InheritableAttr
       inheritable_attr :represents_options
       self.represents_options ||= RepresenterComputer.new
     end
