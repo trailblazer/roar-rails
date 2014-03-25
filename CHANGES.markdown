@@ -1,3 +1,7 @@
+## 0.1.5
+
+* Maintenance release, using Uber now and get rid of deprecation warning.
+
 ## 0.1.4
 
 * Added a generator to create modules from the command-line. Thanks to Guilherme Cavalcanti <guiocavalcanti> for working on this.
