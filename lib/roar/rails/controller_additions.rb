@@ -9,6 +9,7 @@ module Roar::Rails
       extend Uber::InheritableAttr
       inheritable_attr :represents_options
       self.represents_options ||= RepresenterComputer.new
+      before_filter :set_representer_config
     end
 
 
@@ -62,6 +63,13 @@ module Roar::Rails
       super
     end
 
+    def set_representer_config
+      url_options = Rails.configuration.representer.default_url_options || {}
+      url_options[:protocol] ||= request.protocol
+      url_options[:host]     ||= request.host
+      url_options[:port]     ||= request.port unless request.port == 80
+      Rails.configuration.representer.default_url_options = url_options
+    end
 
     class RepresenterComputer < Hash
       def add(format, opts)
