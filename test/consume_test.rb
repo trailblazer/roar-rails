@@ -26,7 +26,7 @@ class ConsumeWithConfigurationTest < ActionController::TestCase
 
   module MusicianRepresenter
     include Roar::Representer::JSON
-    property :name, :from => :called
+    property :name, :as => :called
   end
 
 
