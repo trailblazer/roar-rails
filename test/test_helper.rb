@@ -1,5 +1,4 @@
-require 'test/unit'
-require 'minitest/spec'
+require 'minitest/autorun'
 require 'test_xml/mini_test'
 
 ENV['RAILS_ENV'] = 'test'
