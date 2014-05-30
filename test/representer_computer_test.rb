@@ -100,7 +100,7 @@ class RepresenterComputerTest < MiniTest::Spec
                                 :collection => SingersRepresenter) }
 
     it "detects collection in form of ActiveRecord::Relation" do
-      subject.for(:json, Artist.find(:all), "artists").must_equal SingersRepresenter
+      subject.for(:json, Artist.all, "artists").must_equal SingersRepresenter
     end
   end
 

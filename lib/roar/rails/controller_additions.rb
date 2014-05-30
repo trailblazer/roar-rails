@@ -1,12 +1,22 @@
-require 'hooks/inheritable_attribute'
+require 'uber/inheritable_attr'
 require 'roar/rails/responder'
 
 module Roar::Rails
+  module Controller
+    # Include if you intend to use roar-rails with <tt>render json: model</tt>.
+    module Render
+      def render(options)
+        format = options.keys.first
+        super format => prepare_model_for(format, options.values.first, options)
+      end
+    end
+  end
+
   module ControllerAdditions
     extend ActiveSupport::Concern
 
     included do
-      extend Hooks::InheritableAttribute
+      extend Uber::InheritableAttr
       inheritable_attr :represents_options
       self.represents_options ||= RepresenterComputer.new
     end

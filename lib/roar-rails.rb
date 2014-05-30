@@ -32,6 +32,14 @@ module Roar
       ::Rails::VERSION::MAJOR == 3 && ::Rails::VERSION::MINOR == 2
     end
 
+    def self.rails4_0?
+      ::Rails::VERSION::MAJOR == 4 && ::Rails::VERSION::MINOR == 0
+    end
+
+    def self.rails4_1?
+      ::Rails::VERSION::MAJOR == 4 && ::Rails::VERSION::MINOR == 1
+    end
+
     if rails3_0?
       require 'roar/rails/rails3_0_strategy'
     elsif rails3_1?
