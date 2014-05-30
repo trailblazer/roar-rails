@@ -35,8 +35,7 @@ module Roar
     end
 
     autoload("TestCase", "roar/rails/test_case")
-    autoload("ControllerAdditions", "roar/rails/controller_additions")
   end
 end
 
-
+require "roar/rails/controller_additions"
