@@ -17,34 +17,18 @@ module Roar::Representer
 end
 
 
-
 module Roar
   module Rails
-    def self.rails3_0?
-      ::Rails::VERSION::MAJOR == 3 && ::Rails::VERSION::MINOR == 0
+    require 'uber/version'
+    def self.rails_version
+      Uber::Version.new(::ActionPack::VERSION::STRING)
     end
 
-    def self.rails3_1?
-      ::Rails::VERSION::MAJOR == 3 && ::Rails::VERSION::MINOR == 1
-    end
-
-    def self.rails3_2?
-      ::Rails::VERSION::MAJOR == 3 && ::Rails::VERSION::MINOR == 2
-    end
-
-    def self.rails4_0?
-      ::Rails::VERSION::MAJOR == 4 && ::Rails::VERSION::MINOR == 0
-    end
-
-    def self.rails4_1?
-      ::Rails::VERSION::MAJOR == 4 && ::Rails::VERSION::MINOR == 1
-    end
-
-    if rails3_0?
+    if rails_version.~ 3.0
       require 'roar/rails/rails3_0_strategy'
-    elsif rails3_1?
+    elsif rails_version.~ 3.1
       require 'roar/rails/rails3_1_strategy'
-    elsif rails3_2?
+    elsif rails_version.~ 3.2
       require 'roar/rails/rails3_2_strategy'
     else
       require 'roar/rails/rails4_0_strategy'

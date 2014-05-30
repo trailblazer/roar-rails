@@ -378,7 +378,7 @@ class ResponderTest < ActionController::TestCase
   end
 
   def bumi_json
-    return "[\"Bumi\"]" if Roar::Rails.rails3_0?
+    return "[\"Bumi\"]" if Roar::Rails.rails_version.~ 3.0
     "{\"name\":\"Bumi\"}"
   end
 end

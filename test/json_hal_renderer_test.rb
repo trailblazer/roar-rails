@@ -1,7 +1,7 @@
 require 'test_helper'
 
 Mime::Type.register 'application/json+hal', :hal
-if Roar::Rails.rails4_1?
+if Roar::Rails.rails_version >= 4.1
   ActionController.add_renderer :hal do |js, options|
     self.content_type ||= Mime::HAL
     js.to_json
