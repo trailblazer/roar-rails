@@ -19,14 +19,12 @@ module Roar::Rails
       extend Uber::InheritableAttr
       inheritable_attr :represents_options
       self.represents_options ||= RepresenterComputer.new
+
+      self.responder = Roar::Rails::Responder
     end
 
 
     module ClassMethods
-      def responder
-        Class.new(super).send :include, Roar::Rails::Responder
-      end
-
       def represents(format, options)
         represents_options.add(format,options)
         respond_to format
