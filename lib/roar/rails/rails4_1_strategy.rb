@@ -1,5 +1,5 @@
 module Roar::Rails
-  module Responder
+  class Responder < ActionController::Responder
     module VersionStrategy
       extend ActiveSupport::Concern
       included do

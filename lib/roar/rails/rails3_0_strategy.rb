@@ -1,5 +1,5 @@
 module Roar::Rails
-  module Responder
+  class Responder < ActionController::Responder
     module VersionStrategy
       def prepare_model_for(format, model, *args)
         # rails <= 3.1 compatibility. #display gets called for empty responses
