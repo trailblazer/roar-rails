@@ -1,1 +1,2 @@
 * Investigate to what extend we need our own Response in the responder. I want to be able to have additional formats like hal or object-hal without registering (and implementing!) a global renderer
+* Add tests for rails-api (anyone???).

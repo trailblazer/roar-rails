@@ -95,6 +95,21 @@ class SingersController < ApplicationController
 
 You might pass strings as representer names to `::represents`, they will be constantized at run-time when needed.
 
+## Rendering with #render
+
+In place of `#respond_with`, you can also use `#render` to serialize objects using representers.
+
+```ruby
+class SingersController < ApplicationController
+  include Roar::Rails::ControllerAdditions
+  include Roar::Rails::ControllerAdditions::Render
+
+  def show
+    singer = Singer.find_by_id(params[:id])
+    render json: singer
+  end
+end
+```
 
 ### Old API Support
 
