@@ -1,3 +1,10 @@
+## 0.1.6
+
+* Added `ControllerAdditions::Render` to support `#render` in controller actions with representers.
+* Roar-rails now works properly with rails-api.
+* `Roar::Rails::Responder` is a class now.
+* Moved `RepresenterComputer` to `Formats`.
+
 ## 0.1.5
 
 * Maintenance release, using Uber now and get rid of deprecation warning.
