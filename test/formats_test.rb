@@ -17,8 +17,8 @@ end
 class Bassist
 end
 
-class RepresenterComputerTest < MiniTest::Spec
-  let (:subject) { Roar::Rails::ControllerAdditions::RepresenterComputer.new }
+class FormatsTest < MiniTest::Spec
+  let (:subject) { Roar::Rails::Formats.new }
 
   describe "nothing configured" do
     it "uses model class" do
@@ -130,7 +130,7 @@ class RepresenterComputerTest < MiniTest::Spec
 end
 
 class PathTest < MiniTest::Spec
-  let (:path) { Roar::Rails::ControllerAdditions::RepresenterComputer::Path }
+  let (:path) { Roar::Rails::Formats::Path }
 
   it { path.new("bands").namespace.must_equal nil }
   it { path.new("v1/bands").namespace.must_equal "v1" }
