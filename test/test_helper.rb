@@ -7,3 +7,5 @@ require "rails/test_help" # adds stuff like @routes, etc.
 require "roar/rails/test_case"
 
 Singer = Struct.new(:name)
+
+# Rails.backtrace_cleaner.remove_silencers!
