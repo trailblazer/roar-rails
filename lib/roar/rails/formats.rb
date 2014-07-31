@@ -38,21 +38,18 @@ module Roar::Rails
     end
 
     def collection_representer(format, model, controller_path)
-      infer_representer(controller_path)
+      add_representer_suffix(controller_path).camelize.constantize
     end
 
     def entity_representer(format, model, controller_path)
-      model_name = model.class.name.underscore
+      representer_name = add_representer_suffix(
+        model.class.name.underscore
+      )
 
-      if namespace = controller_path.namespace
-        model_name = "#{namespace}/#{model_name}"
-      end
-
-      infer_representer(model_name)
-    end
-
-    def infer_representer(model_name)
-      add_representer_suffix(model_name).camelize.constantize
+      find_namespaced_class(
+        controller_path.camelize,
+        representer_name.camelize
+      )
     end
 
     def add_representer_suffix(prefix)
@@ -62,6 +59,41 @@ module Roar::Rails
     def detect_collection(model)
       return true if model.kind_of?(Array)
       return true if Object.const_defined?("ActiveRecord") and model.kind_of?(ActiveRecord::Relation)
+    end
+
+    def find_namespaced_class(basis, to_find)
+      # If the class we're looking for starts with :: then just use that
+      return to_find.constantize if to_find =~ /^::/
+
+      ancestor_mods = build_ancestor_modules(basis)
+      namespace = find_class_in_namespaces(ancestor_mods, to_find)
+
+      namespace.nil? ? to_find.constantize : namespace.const_get(to_find)
+    end
+
+    def build_ancestor_modules(basis)
+      namespaces = []
+      ancestors = basis.split('::')
+
+      if ancestors.size > 1
+        # Transform any namespace this class has into a module
+        receiver = Object
+        namespaces = ancestors[0..-2].map do |mod|
+          receiver = receiver.const_get(mod)
+        end
+      end
+
+      namespaces
+    end
+
+    def find_class_in_namespaces(modules, class_name)
+      modules.reverse.detect do |ns|
+        begin
+          ns.const_get(class_name, false)
+        rescue NameError
+          nil
+        end
+      end
     end
 
     class Path < String

@@ -6,16 +6,20 @@ module ObjectsRepresenter
 end
 
 module V1
-  module SingerRepresenter
-  end
-  module BassistRepresenter
-  end
-  module SingersRepresenter
-  end
+  Singer = Class.new
+
+  SingerRepresenter = Class.new
+  BassistRepresenter = Class.new
+  SingersRepresenter = Class.new
 end
 
-class Bassist
+module V2
+  Singer = Class.new
+  SingerRepresenter = Class.new
+  SingersRepresenter = Class.new
 end
+
+Bassist = Class.new
 
 class FormatsTest < MiniTest::Spec
   let (:subject) { Roar::Rails::Formats.new }
@@ -91,6 +95,16 @@ class FormatsTest < MiniTest::Spec
 
       it "returns namespaced collection" do
         subject.for(:json, [Object.new], "v1/singers").must_equal V1::SingersRepresenter
+      end
+    end
+
+    describe "namespaced class" do
+      it "returns a namespaced entity" do
+        subject.for(:json, V1::Singer.new, 'v1/singers').must_equal V1::SingerRepresenter
+      end
+
+      it 'finds the right class in another namespace' do
+        subject.for(:json, V2::Singer.new, 'v1/singers').must_equal V2::SingerRepresenter
       end
     end
   end
