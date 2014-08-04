@@ -54,7 +54,8 @@ module Roar::Rails
 
     def render_to_body(options)
       if res = options[formats.first] and res.is_a?(Roar::Rails::Responder::Response)
-        response.content_type = res.content_type
+        _process_options(options) # To set status and location headers
+        response.content_type = res.content_type # Override content_type based on Roar Response
         return res.body
       end
 

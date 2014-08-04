@@ -351,6 +351,39 @@ class ResponderTest < ActionController::TestCase
     end
   end
 
+  class StatusCodeTest < ResponderTest
+    class MusicianController < BaseController
+      represents :json, Singer
+      respond_to :json
+
+      def create
+        singer = Singer.new('asdf')
+        respond_with singer, location: nil
+      end
+
+      def update
+        singer = Singer.new('asdf')
+        respond_with singer
+      end
+    end
+
+    tests MusicianController
+
+    test "sets the right status code for a POST" do
+      post :create, "{}", format: :json
+      assert_equal 201, response.status
+    end
+
+    # This behavior only applies to Rails >= 3.2
+
+    if Rails.version >= "3.2"
+      test "sets the right status code for a PUT" do
+        default_put :update, "{}", format: :json
+        assert_equal 204, response.status
+      end
+    end
+  end
+
 
 
   def get(format=:json, &block)
@@ -361,6 +394,8 @@ class ResponderTest < ActionController::TestCase
     super :execute, :format => format
   end
 
+  # Keep access to the original put method
+  alias_method :default_put, :put
   def put(body="", format=:json, &block)
     @controller.instance_eval do
       @block = block
