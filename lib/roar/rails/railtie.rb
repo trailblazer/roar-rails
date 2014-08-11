@@ -5,6 +5,9 @@ module Roar
   module Rails
     class Railtie < ::Rails::Railtie
       config.representer = ActiveSupport::OrderedOptions.new
+      config.action_dispatch.rescue_responses.merge!(
+          'Roar::Rails::ControllerAdditions::UnsupportedMediaType' => :unsupported_media_type
+      )
 
       initializer "roar.set_configs" do |app|
         ::Roar::Representer.module_eval do

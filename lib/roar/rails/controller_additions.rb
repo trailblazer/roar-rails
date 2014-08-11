@@ -23,11 +23,30 @@ module Roar::Rails
     end
 
 
+    class UnsupportedMediaType < StandardError #:nodoc:
+    end
+
+
     def consume!(model, options={})
-      format      = formats.first  # FIXME: i expected request.content_mime_type to do the job. copied from responder.rb. this will return the wrong format when the controller responds to :json and :xml and the Content-type is :xml (?)
+      content_type = request.content_type
+      if content_type.nil?
+        raise UnsupportedMediaType.new("Cannot consume input without content type")
+      end
+
+      format = Mime::Type.lookup(content_type).try(:symbol)
+
+      unless format
+        raise UnsupportedMediaType.new("Cannot consume unregistered media type '#{content_type}'")
+      end
+
+      parsing_method = compute_parsing_method(format)
       representer = prepare_model_for(format, model, options)
 
-      representer.send(compute_parsing_method(format), incoming_string, options) # e.g. from_json("...")
+      if parsing_method && !representer.respond_to?(parsing_method)
+        raise UnsupportedMediaType.new("Cannot consume unsupported media type '#{content_type}'")
+      end
+
+      representer.send(parsing_method, incoming_string, options) # e.g. from_json("...")
       model
     end
 
