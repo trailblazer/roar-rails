@@ -52,16 +52,23 @@ module Roar::Rails
       body.read
     end
 
-    def render_to_body(options)
-      if res = options[formats.first] and res.is_a?(Roar::Rails::Responder::Response)
-        _process_options(options) # To set status and location headers
-        response.content_type = res.content_type # Override content_type based on Roar Response
-        return res.body
-      end
-
-      super
+    # These methods deal with interfacing between the Roar Response object and
+    # ActionController, they simply pass the body of the Roar response up or do nothing
+    def _render_option_json(resource, options)
+      super(_resource_or_body(resource), options)
     end
 
+    def _render_option_xml(resource, options)
+      super(_resource_or_body(resource), options)
+    end
+
+    def _render_option_hal(resource, options)
+      super(_resource_or_body(resource), options)
+    end
+
+    def _resource_or_body(resource)
+      resource.is_a?(Roar::Rails::Responder::Response) ? resource.body : resource
+    end
 
     # Include if you intend to use roar-rails with <tt>render json: model</tt>.
     module Render
