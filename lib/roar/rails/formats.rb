@@ -68,7 +68,7 @@ module Roar::Rails
       ancestor_mods = build_ancestor_modules(basis)
       namespace = find_class_in_namespaces(ancestor_mods, to_find)
 
-      namespace.nil? ? to_find.constantize : namespace.const_get(to_find)
+      namespace.nil? ? to_find.constantize : get_constant(namespace, to_find)
     end
 
     def build_ancestor_modules(basis)
@@ -88,12 +88,22 @@ module Roar::Rails
 
     def find_class_in_namespaces(modules, class_name)
       modules.reverse.detect do |ns|
-        begin
-          ns.const_get(class_name, false)
-        rescue NameError
-          nil
-        end
+        get_constant(ns, class_name)
       end
+    end
+
+    # Used to patch different behavior between
+    # different versions of ruby when looking up a
+    # constant like V1::Singer
+    def get_constant(basis, class_string)
+      begin
+        class_string.split('::').reduce(basis) do |basis, const|
+          basis.const_get(const, false)
+        end
+      rescue NameError
+        nil
+      end
+
     end
 
     class Path < String

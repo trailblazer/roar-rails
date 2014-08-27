@@ -11,12 +11,25 @@ module V1
   SingerRepresenter = Class.new
   BassistRepresenter = Class.new
   SingersRepresenter = Class.new
+
+  module Inner
+    SingerRepresenter = Class.new
+  end
 end
 
 module V2
   Singer = Class.new
   SingerRepresenter = Class.new
   SingersRepresenter = Class.new
+end
+
+module Inner
+  Singer = Class.new
+end
+
+module Outer
+  Singer = Class.new
+  SingerRepresenter = Class.new
 end
 
 Bassist = Class.new
@@ -105,6 +118,18 @@ class FormatsTest < MiniTest::Spec
 
       it 'finds the right class in another namespace' do
         subject.for(:json, V2::Singer.new, 'v1/singers').must_equal V2::SingerRepresenter
+      end
+
+      it 'finds the right class in an inner namespace' do
+        subject.for(:json, Inner::Singer.new, 'v1/singers').must_equal V1::Inner::SingerRepresenter
+      end
+
+      it 'finds the right class from the root namespace' do
+        subject.for(:json, Outer::Singer.new, 'v1/singers').must_equal Outer::SingerRepresenter
+      end
+
+      it 'finds the right class in a deep namespace' do
+        subject.for(:json, Singer.new, 'v1/inner/singers').must_equal V1::Inner::SingerRepresenter
       end
     end
   end
