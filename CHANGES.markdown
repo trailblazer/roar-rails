@@ -1,3 +1,8 @@
+## 1.0.0
+
+* Requires Roar >= 1.0.0.
+* In `#consume!` roar-rails now finds the correct representer for the `Content-type:` header. In former version the representer name was infered using the `Accept:` header, which was totally wrong. Thanks to @pgaertig for fixing that.
+
 ## 0.1.6
 
 * Added `ControllerAdditions::Render` to support `#render` in controller actions with representers.
