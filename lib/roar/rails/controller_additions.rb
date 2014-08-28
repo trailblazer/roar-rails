@@ -30,7 +30,7 @@ module Roar::Rails
     def consume!(model, options={})
       content_type = request.content_type
       if content_type.nil?
-        raise UnsupportedMediaType.new("Cannot consume input without content type.#{request.inspect}")
+        raise UnsupportedMediaType.new("Cannot consume input without content type.")
       end
 
       format = Mime::Type.lookup(content_type).try(:symbol)
