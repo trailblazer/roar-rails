@@ -129,7 +129,7 @@ end
 ## Parsing incoming documents
 
 In `#create` and `#update` actions it is often necessary to parse the incoming representation and map it to a model instance. Use the `#consume!` method for this.
-The client must provide `Content-Type` request header with proper MIME type to let `#consume!` know what kind of parser it should use.
+The client must provide a `Content-Type` request header with proper MIME type to let `#consume!` know which representer to use.
 
 ```ruby
 class SingersController < ApplicationController
@@ -144,7 +144,7 @@ class SingersController < ApplicationController
 end
 ```
 
-If content type is set to `application/xml` the `consume!` call will roughly do the following.
+For instance, if content type is set to `application/xml` the `consume!` call will roughly do the following.
 
 ```ruby
 singer.
@@ -152,12 +152,10 @@ singer.
   from_xml(request.body)
 ```
 
-So, `#consume!` helps you figuring out the representer module and reading the incoming document. It also chooses
-parser according to content type header provided in request.
+So, `#consume!` helps you figuring out the representer module and reading the incoming document. Just like Rails, depending on the registered MIME type for `Content-type` it picks the deserialize method (e.g. `from_json` vs. `from_xml`)
 
-It is important to provide known content type in request. If content type is missing or not supported by the responder then
-`#consume!` will raise an exception `Roar::Rails::ControllerAdditions::UnsupportedMediaType`. Unless you rescue the exception
-the action will stop and respond with HTTP status `406 Unsupported Media Type`.
+It is important to provide a known content type in the request. If it is missing or not supported by the responder
+`#consume!` will raise an exception `Roar::Rails::ControllerAdditions::UnsupportedMediaType`. Unless you rescue the exception the action will stop and respond with HTTP status `406 Unsupported Media Type`.
 
 Note that `#consume!` respects settings from `#represents`. It uses the same mechanics known from `#respond_with` to choose a representer.
 

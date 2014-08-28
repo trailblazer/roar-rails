@@ -23,28 +23,14 @@ module Roar::Rails
     end
 
 
-    class UnsupportedMediaType < StandardError #:nodoc:
-    end
-
-
+    # TODO: move into separate class so we don't pollute controller.
     def consume!(model, options={})
       content_type = request.content_type
-      if content_type.nil?
-        raise UnsupportedMediaType.new("Cannot consume input without content type.")
-      end
 
-      format = Mime::Type.lookup(content_type).try(:symbol)
-
-      unless format
-        raise UnsupportedMediaType.new("Cannot consume unregistered media type '#{content_type}'")
-      end
+      format = Mime::Type.lookup(content_type).try(:symbol) or raise UnsupportedMediaType.new("Cannot consume unregistered media type '#{content_type.inspect}'")
 
       parsing_method = compute_parsing_method(format)
       representer = prepare_model_for(format, model, options)
-
-      if parsing_method && !representer.respond_to?(parsing_method)
-        raise UnsupportedMediaType.new("Cannot consume unsupported media type '#{content_type}'")
-      end
 
       representer.send(parsing_method, incoming_string, options) # e.g. from_json("...")
       model
@@ -96,5 +82,8 @@ module Roar::Rails
         super format => prepare_model_for(format, options.values.first, options)
       end
     end
+  end
+
+  class UnsupportedMediaType < StandardError #:nodoc:
   end
 end

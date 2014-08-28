@@ -27,9 +27,11 @@ class ConsumeHalWithNoHalRespondTest < ActionController::TestCase
 
   tests UnnamespaceSingersController
 
+  # Content-type is set properly, it's a registered mime but responder doesn't do #from_hal.
+  # FIXME: why does that still find a representer?
   test "#consume parses hal document and updates the model" do
     @request.env['CONTENT_TYPE'] = 'application/json+hal'
-    assert_raises Roar::Rails::ControllerAdditions::UnsupportedMediaType do
+    assert_raises Roar::Rails::UnsupportedMediaType do
       post :consume_json, "{\"name\": \"Bumi\"}"
     end
   end
@@ -64,7 +66,7 @@ class ConsumeWithConfigurationTest < ActionController::TestCase
   end
 
   test "#do not consume missing content type" do
-    assert_raises Roar::Rails::ControllerAdditions::UnsupportedMediaType do
+    assert_raises Roar::Rails::UnsupportedMediaType do
       post :consume_json, "{\"name\": \"Bumi\"}"
     end
   end
@@ -72,7 +74,7 @@ class ConsumeWithConfigurationTest < ActionController::TestCase
 
   test "#do not consume parses unknown content type" do
     @request.env['CONTENT_TYPE'] = 'application/custom+json'
-    assert_raises Roar::Rails::ControllerAdditions::UnsupportedMediaType do
+    assert_raises Roar::Rails::UnsupportedMediaType do
       post :consume_json, "{\"name\": \"Bumi\"}"
     end
   end
