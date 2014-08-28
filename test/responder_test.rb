@@ -282,7 +282,7 @@ class ResponderTest < ActionController::TestCase
     test "parsing uses decorating representer" do # FIXME: move to controller_test.
       created_singer = nil
 
-      @request.headers['Content-Type'] = 'application/json'
+      @request.env['CONTENT_TYPE'] = 'application/json'
 
       put singer.to_json do
         created_singer = consume!(Singer.new)
@@ -327,7 +327,7 @@ class ResponderTest < ActionController::TestCase
     test "passes options in #consume!" do
       created_singer = nil
 
-      @request.headers['Content-Type'] = 'application/json'
+      @request.env['CONTENT_TYPE'] = 'application/json'
 
       put singer.to_json do
         created_singer = consume!(Singer.new, :title => "Mr.")

@@ -16,7 +16,7 @@ class ConsumeTest < ActionController::TestCase
   tests UnnamespaceSingersController
 
   test "#consume parses incoming document and updates the model" do
-    @request.headers['Content-Type'] = 'application/json'
+    @request.env['CONTENT_TYPE'] = 'application/json'
     post :consume_json, "{\"name\": \"Bumi\"}"
     assert_equal %{#<struct Singer name="Bumi">}, @response.body
   end
@@ -28,7 +28,7 @@ class ConsumeHalWithNoHalRespondTest < ActionController::TestCase
   tests UnnamespaceSingersController
 
   test "#consume parses hal document and updates the model" do
-    @request.headers['Content-Type'] = 'application/json+hal'
+    @request.env['CONTENT_TYPE'] = 'application/json+hal'
     assert_raises Roar::Rails::ControllerAdditions::UnsupportedMediaType do
       post :consume_json, "{\"name\": \"Bumi\"}"
     end
@@ -58,7 +58,7 @@ class ConsumeWithConfigurationTest < ActionController::TestCase
   tests SingersController
 
   test "#consume uses ConsumeWithConfigurationTest::MusicianRepresenter to parse incoming document" do
-    @request.headers['Content-Type'] = 'application/json'
+    @request.env['CONTENT_TYPE'] = 'application/json'
     post :consume_json, %{{"called":"Bumi"}}, :format => :json
     assert_equal %{#<struct Singer name="Bumi">}, @response.body
   end
@@ -71,7 +71,7 @@ class ConsumeWithConfigurationTest < ActionController::TestCase
 
 
   test "#do not consume parses unknown content type" do
-    @request.headers['Content-Type'] = 'application/custom+json'
+    @request.env['CONTENT_TYPE'] = 'application/custom+json'
     assert_raises Roar::Rails::ControllerAdditions::UnsupportedMediaType do
       post :consume_json, "{\"name\": \"Bumi\"}"
     end
@@ -100,7 +100,7 @@ class ConsumeHalTest < ActionController::TestCase
   tests SingersController
 
   test "#consume parses HAL document and updates the model" do
-    @request.headers['Content-Type'] = 'application/json+hal'
+    @request.env['CONTENT_TYPE'] = 'application/json+hal'
     post :consume_hal, "{\"name\": \"Bumi\"}"
     assert_equal %{#<struct Singer name="Bumi">}, @response.body
   end
@@ -123,7 +123,7 @@ class ConsumeWithOptionsOverridingConfigurationTest < ActionController::TestCase
   tests SingersController
 
   test "#consume uses #represents config to parse incoming document" do
-    @request.headers['Content-Type'] = 'application/json'
+    @request.env['CONTENT_TYPE'] = 'application/json'
     post :consume_json, %{{"called":"Bumi"}}, :format => :json
     assert_equal %{#<struct Singer name="Bumi">}, @response.body
   end
@@ -131,7 +131,7 @@ end
 
 class RequestBodyStringTest < ConsumeTest
   test "#read rewinds before reading" do
-    @request.headers['Content-Type'] = 'application/json'
+    @request.env['CONTENT_TYPE'] = 'application/json'
     @request.instance_eval do
       def body
         incoming = super
