@@ -129,6 +129,7 @@ end
 ## Parsing incoming documents
 
 In `#create` and `#update` actions it is often necessary to parse the incoming representation and map it to a model instance. Use the `#consume!` method for this.
+The client must provide `Content-Type` request header with proper MIME type to let `#consume!` know what kind of parser it should use.
 
 ```ruby
 class SingersController < ApplicationController
@@ -143,17 +144,22 @@ class SingersController < ApplicationController
 end
 ```
 
-The `consume!` call will roughly do the following.
+If content type is set to `application/xml` the `consume!` call will roughly do the following.
 
 ```ruby
 singer.
   extend(SingerRepresenter)
-  from_json(request.body)
+  from_xml(request.body)
 ```
 
-So, `#consume!` helps you figuring out the representer module and reading the incoming document.
+So, `#consume!` helps you figuring out the representer module and reading the incoming document. It also chooses
+parser according to content type header provided in request.
 
-Note that it respects settings from `#represents`. It uses the same mechanics known from `#respond_with` to choose a representer.
+It is important to provide known content type in request. If content type is missing or not supported by the responder then
+`#consume!` will raise an exception `Roar::Rails::ControllerAdditions::UnsupportedMediaType`. Unless you rescue the exception
+the action will stop and respond with HTTP status `406 Unsupported Media Type`.
+
+Note that `#consume!` respects settings from `#represents`. It uses the same mechanics known from `#respond_with` to choose a representer.
 
 ```ruby
 consume!(singer, :represent_with => MusicianRepresenter)
