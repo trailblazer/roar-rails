@@ -5,7 +5,9 @@ module Roar
   module Rails
     class Railtie < ::Rails::Railtie
       config.representer = ActiveSupport::OrderedOptions.new
-      config.action_dispatch.rescue_responses.merge!(
+
+      rescue_responses = config.action_dispatch.rescue_responses || ActionDispatch::ShowExceptions.rescue_responses #newer or fallback to 3.0
+      rescue_responses.merge!(
           'Roar::Rails::ControllerAdditions::UnsupportedMediaType' => :unsupported_media_type
       )
 
