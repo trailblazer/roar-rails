@@ -17,7 +17,7 @@ module Roar::Rails
 
     module ClassMethods
       def represents(format, options)
-        represents_options.add(format,options)
+        represents_options.add(format, options)
         respond_to format
       end
     end
