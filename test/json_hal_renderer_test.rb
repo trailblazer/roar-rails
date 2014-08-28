@@ -1,12 +1,5 @@
 require 'test_helper'
 
-Mime::Type.register 'application/json+hal', :hal
-
-ActionController.add_renderer :hal do |js, options|
-  self.content_type ||= Mime::HAL
-  js.is_a?(String) ? js : js.to_json
-end
-
 class HalRendererTest < ActionController::TestCase
   include Roar::Rails::TestCase
 

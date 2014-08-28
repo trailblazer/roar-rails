@@ -9,3 +9,10 @@ require "roar/rails/test_case"
 Singer = Struct.new(:name)
 
 # Rails.backtrace_cleaner.remove_silencers!
+
+Mime::Type.register 'application/json+hal', :hal
+
+ActionController.add_renderer :hal do |js, options|
+  self.content_type ||= Mime::HAL
+  js.is_a?(String) ? js : js.to_json
+end
