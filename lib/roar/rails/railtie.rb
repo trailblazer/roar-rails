@@ -18,6 +18,13 @@ module Roar
 
           include UrlMethods  # provide an initial #default_url_options.
         end
+        
+        ::Roar::JSON::JsonApi.module_eval do
+          include app.routes.url_helpers
+          include app.routes.mounted_helpers unless Roar::Rails.rails_version.~ 3.0
+
+          include UrlMethods  # provide an initial #default_url_options.
+        end
       end
     end
   end
