@@ -16,3 +16,10 @@ ActionController.add_renderer :hal do |js, options|
   self.content_type ||= Mime::HAL
   js.is_a?(String) ? js : js.to_json
 end
+
+Mime::Type.register 'application/json+api', :json_api
+
+ActionController.add_renderer :json_api do |js, options|
+  self.content_type ||= Mime[:json_api]
+  js.is_a?(String) ? js : js.to_json
+end
