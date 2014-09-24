@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'roar/rails/json_api'
 
 class JsonApiRendererTest < ActionController::TestCase
   include Roar::Rails::TestCase

@@ -17,7 +17,7 @@ module Roar::Representer
 end
 
 module Roar::JSON
-  autoload("JsonApi", "roar/json/json_api")
+  autoload("JsonApi", "roar/rails/json_api")
 end
 
 module Roar
