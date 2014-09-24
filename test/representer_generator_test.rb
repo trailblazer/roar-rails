@@ -33,6 +33,12 @@ class RepresentetGeneratorTest < Rails::Generators::TestCase
     assert_file representer_path('singer'), /include Roar::Representer::XML/
   end
 
+  test "create a representer with JsonApi format support" do
+    run_generator %w(singer --format=JSON::JsonApi)
+
+    assert_file representer_path('singer'), /include Roar::JSON::JsonApi/
+  end
+
   test "create a representer with property, class and exnted" do
     run_generator %w(singer band:band:group_representer instrument:equipament:instrument_representer)
 

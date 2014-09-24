@@ -16,7 +16,11 @@ module Rails
       private
 
       def format
-        options[:format].upcase
+        if options[:format].upcase == 'JSON::JSONAPI'
+          'JSON::JsonApi'
+        else
+          options[:format].upcase 
+        end
       end
 
       def property_options
