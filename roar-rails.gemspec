@@ -29,4 +29,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "activerecord"
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "tzinfo" # FIXME: why the hell do we need this for 3.1?
+  s.add_development_dependency "pry" # FIXME: why the hell do we need this for 3.1?
 end
