@@ -17,17 +17,17 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   def create
-    @<%= singular_table_name %> = consume! <%= class_name %>.new, represent_with: <%= class_name %>Representer
+    @<%= singular_table_name %> = consume! <%= class_name %>.new, :represent_with => <%= class_name %>Representer
     @<%= singular_table_name %>.save
 
     respond_with @<%= singular_table_name %>, :represent_with => <%= class_name %>Representer
   end
 
   def update
-    consume! @<%= class_name %>, :represent_with => <%= class_name %>Representer
-    @<%= class_name %>.save
+    consume! @<%= singular_table_name %>, :represent_with => <%= class_name %>Representer
+    @<%= singular_table_name %>.save
 
-    respond_with @<%= class_name %>, :represent_with => <%= class_name %>Representer
+    respond_with @<%= singular_table_name %>, :represent_with => <%= class_name %>Representer
   end
 
   def destroy
