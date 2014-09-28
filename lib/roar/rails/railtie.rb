@@ -18,15 +18,13 @@ module Roar
 
           include UrlMethods  # provide an initial #default_url_options.
         end
+
+        Railtie.generators do |app|
+          Railtie::Rails::Generators.configure! app.config.generators
+          Railtie::Rails::Generators.hidden_namespaces.uniq!
+          require 'generators/rails/scaffold_controller_generator'
+        end
       end
     end
-  end
-end
-
-class Railtie < ::Rails::Railtie
-  generators do |app|
-    Rails::Generators.configure! app.config.generators
-    Rails::Generators.hidden_namespaces.uniq!
-    require 'generators/rails/scaffold_controller_generator'
   end
 end
