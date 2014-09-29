@@ -7,7 +7,7 @@ module Rails
         :banner => "property[:class[:extend]] property[:class[:extend]]"
 
       class_option :format, :default => :json, :banner => "--format=JSON",
-        :desc => "Use different formats JSON, JSON::HAL or XML"
+        :desc => "Use different formats JSON, JSON::HAL, JSON::JsonApi or XML"
 
       def generate_representer_file
         template('representer.rb', file_path)
@@ -16,7 +16,11 @@ module Rails
       private
 
       def format
-        options[:format].upcase
+        if options[:format].upcase == 'JSON::JSONAPI'
+          'JSON::JsonApi'
+        else
+          options[:format].upcase 
+        end
       end
 
       def property_options

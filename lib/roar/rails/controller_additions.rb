@@ -70,6 +70,10 @@ module Roar::Rails
     def _render_option_hal(resource, options)
       super(_resource_or_body(resource), options)
     end
+    
+    def _render_option_json_api(resource, options)
+      super(_resource_or_body(resource), options)
+    end
 
     def _resource_or_body(resource)
       resource.is_a?(Roar::Rails::Responder::Response) ? resource.body : resource
