@@ -274,7 +274,7 @@ Put your representers in `app/representers` and they will be autoloaded by Rails
 
 **Note**: this is a temporary work-around, we're trying to fix that in Rails/roar-rails itself [May 2014].
 
-Rails 4.1 expects you to manually register a global HAL or JsonApi renderer, or `respond_with` will throw the exception `ActionController::MissingRenderer (No renderer defined for format: hal)` or `ActionController::MissingRenderer (No renderer defined for format: json_api)`.
+Rails 4.1 expects you to manually register a global HAL or JsonApi renderer, otherwise `respond_with` will throw the exception `ActionController::MissingRenderer (No renderer defined for format: hal)` - `ActionController::MissingRenderer (No renderer defined for format: json_api)`.
 
 One fix is to add this to `config/initializers/mime_types.rb` right below `Mime::Type.register 'application/hal+json', :hal` or if using JsonApi `Mime::Type.register 'application/vnd.json+api', :json_api`:
 
