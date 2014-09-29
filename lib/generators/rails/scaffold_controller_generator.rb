@@ -1,5 +1,6 @@
-require 'rails/generators'
+require 'rails/generators/named_base'
 require 'rails/generators/rails/scaffold_controller/scaffold_controller_generator'
+require 'rails/generators/resource_helpers'
 
 module Rails
   module Generators
