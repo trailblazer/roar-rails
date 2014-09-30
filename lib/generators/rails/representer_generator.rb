@@ -9,8 +9,11 @@ module Rails
       class_option :format, :default => :json, :banner => "--format=JSON",
         :desc => "Use different formats JSON, JSON::HAL or XML"
 
+      class_option :decorator, type: :boolean, aliases: "-d", banner: "--decorator or -d", desc: "Use decorator instead of extend"
+
       def generate_representer_file
-        template('representer.rb', file_path)
+        template = options[:decorator] ? 'decorator.rb' : 'representer.rb'
+        template(template, file_path)
       end
 
       private

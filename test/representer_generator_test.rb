@@ -14,6 +14,12 @@ class RepresentetGeneratorTest < Rails::Generators::TestCase
     assert_file representer_path('singer'), /module SingerRepresenter/
   end
 
+  test "create a representer using using the decorator pattern" do
+    run_generator %w(singer -d)
+
+    assert_file representer_path('singer'), /class SingerRepresenter < Roar::Decorator/
+  end
+
   test "create a representer with correct properties" do
     run_generator %w(singer name id)
 
