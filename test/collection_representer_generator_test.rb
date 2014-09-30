@@ -1,6 +1,5 @@
 require 'test_helper'
 require 'rails/generators'
-
 require 'generators/rails/collection_representer_generator'
 
 class CollectionRepresenterGeneratorTest < Rails::Generators::TestCase
@@ -14,16 +13,16 @@ class CollectionRepresenterGeneratorTest < Rails::Generators::TestCase
     assert_file representer_path('singer'), /module SingersRepresenter/
   end
 
-  test "create a representer with default json support" do
+  test "create a representer with collection support" do
     run_generator %w(singer)
 
-    assert_file representer_path('singer'), /include Roar::Representer::JSON::Collection/
+    assert_file representer_path('singer'), /include Representable::JSON::Collection/
   end
 
-  test "create a representer with different format support" do
-    run_generator %w(singer --format=XML)
+  test "extend the correct representer" do
+    run_generator %w(singer)
 
-    assert_file representer_path('singer'), /include Roar::Representer::XML::Collection/
+    assert_file representer_path('singer'), /items extend: SingerRepresenter, class: Singer/
   end
 
   def representer_path(name)
