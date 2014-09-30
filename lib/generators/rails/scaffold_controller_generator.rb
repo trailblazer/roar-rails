@@ -8,10 +8,7 @@ module Rails
       source_root File.expand_path('../templates', __FILE__)
 
       hook_for :representer, default: true
-
-      hook_for :collection_representer, default: true  do |instance, controller|
-        instance.invoke controller, [instance.name.pluralize]
-      end
+      hook_for :collection_representer, default: true
     end
   end
 end
