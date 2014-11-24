@@ -30,7 +30,7 @@ class ConsumeHalWithNoHalRespondTest < ActionController::TestCase
   # Content-type is set properly, it's a registered mime but responder doesn't do #from_hal.
   # FIXME: why does that still find a representer?
   test "#consume parses hal document and updates the model" do
-    @request.env['CONTENT_TYPE'] = 'application/json+hal'
+    @request.env['CONTENT_TYPE'] = 'application/hal+json'
     # assert_raises Roar::Rails::UnsupportedMediaType do
     assert_raises NoMethodError do # currently, we don't know if a format is supported in general, or not.
       post :consume_json, "{\"name\": \"Bumi\"}"
@@ -103,7 +103,7 @@ class ConsumeHalTest < ActionController::TestCase
   tests SingersController
 
   test "#consume parses HAL document and updates the model" do
-    @request.env['CONTENT_TYPE'] = 'application/json+hal'
+    @request.env['CONTENT_TYPE'] = 'application/hal+json'
     post :consume_hal, "{\"name\": \"Bumi\"}"
     assert_equal %{#<struct Singer name="Bumi">}, @response.body
   end

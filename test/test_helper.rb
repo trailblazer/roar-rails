@@ -10,7 +10,7 @@ Singer = Struct.new(:name)
 
 # Rails.backtrace_cleaner.remove_silencers!
 
-Mime::Type.register 'application/json+hal', :hal
+Mime::Type.register 'application/hal+json', :hal
 
 ActionController.add_renderer :hal do |js, options|
   self.content_type ||= Mime::HAL

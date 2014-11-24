@@ -22,13 +22,13 @@ class HalRendererTest < ActionController::TestCase
 
   tests SingersController
 
-  test "should render correctly in response to a application/json+hal request" do
+  test "should render correctly in response to a application/hal+json request" do
     get :show, :id => "bumi", :format => :hal
     assert_body '{"name":"Bumi","_links":{"self":{"href":"http://Bumi"}}}'
   end
 
-  test "should have a content_type of application/json+hal" do
+  test "should have a content_type of application/hal+json" do
     get :show, :id => "bumi", :format => :hal
-    assert_equal response.content_type, 'application/json+hal'
+    assert_equal response.content_type, 'application/hal+json'
   end
 end
