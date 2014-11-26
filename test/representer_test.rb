@@ -36,4 +36,11 @@ class DecoratorTest < ActionController::TestCase
     get :show, :id => 1, :format => :json
     assert_body "{\"name\":\"Bodyjar\",\"links\":[{\"rel\":\"self\",\"href\":\"http://roar.apotomo.de/bands/Bodyjar\"}]}"
   end
+
+  class CollectionRepresenterTest < DecoratorTest
+    test "it renders a valid collection" do
+      get :index, :format => :json
+      assert_body "{\"bands\":[{\"name\":\"Bodyjar\",\"links\":[{\"rel\":\"self\",\"href\":\"http://roar.apotomo.de/bands/Bodyjar\"}]},{\"name\":\"Pink Floyd\",\"links\":[{\"rel\":\"self\",\"href\":\"http://roar.apotomo.de/bands/Pink%20Floyd\"}]},{\"name\":\"The Beatles\",\"links\":[{\"rel\":\"self\",\"href\":\"http://roar.apotomo.de/bands/The%20Beatles\"}]}]}"
+    end
+  end
 end
