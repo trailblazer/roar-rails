@@ -5,4 +5,5 @@ Dummy::Application.routes.draw do
   delete ':controller(/:action(/:id(.:format)))'
   resources :singers
   resources :bands
+  resources :venues
 end
