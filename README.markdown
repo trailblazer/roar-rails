@@ -181,6 +181,81 @@ end
 
 In decorators' link blocks you currently have to use `represented` to get the actual represented model (this is `self` in module representers).
 
+### Collections with Decorators
+
+When using Decorators, you can include `Roar::Rails::CollectionRepresenter` to create a Representer for a collection of resources.
+
+```ruby
+class BandsRepresenter < Roar::Decorator
+  include Roar::Representer::JSON
+  include Roar::Representer::Feature::Hypermedia
+  include Roar::Rails::CollectionRepresenter
+end
+
+class BandRepresenter < Roar::Decorator
+  include Roar::Representer::JSON
+  include Roar::Representer::Feature::Hypermedia
+
+  property :name
+
+  link :self do
+    band_url(represented.name)
+  end
+end
+
+class BandsController < ActionController::Base
+  include Roar::Rails::ControllerAdditions
+  represents :json, Band
+
+  def index
+    bands = Bands.find(:all)
+
+    respond_with bands
+  end
+end
+```
+
+This will create a collection (`bands` in this case) based on the name of the Representer, using the singular representer (BandRepresenter) to serialize each individual resource in the collection. Therefore **GET** `/bands` would give you a response similar to:
+
+```json
+{
+  "bands": [
+    {
+      "name": "Pink Floyd",
+      "links": [
+        {
+          "rel": "self",
+          "href": "http://roar.apotomo.de/bands/1"
+        }
+      ]
+    },
+    {
+      "name": "The Beatles",
+      "links": [
+        {
+          "rel": "self",
+          "href": "http://roar.apotomo.de/bands/2"
+        }
+      ]
+    }
+  ]
+}
+```
+
+If you need more custom behavior and want to define your own collection, you can do it like so:
+
+```ruby
+class BandsRepresenter < Roar::Decorator
+  include Roar::Representer::JSON
+  include Roar::Representer::Feature::Hypermedia
+
+  collection :bands, :exec_context => :decorator, :decorator => RockBand
+
+  def bands
+    represented
+  end
+end
+```
 
 ## Passing Options
 
