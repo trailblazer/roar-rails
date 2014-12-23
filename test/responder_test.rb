@@ -1,7 +1,7 @@
 require 'test_helper'
 
 module SingersRepresenter
-  include Roar::Representer::JSON
+  include Roar::JSON
 
   collection :singers, :extend => SingerRepresenter
   def singers
@@ -134,7 +134,7 @@ class ResponderTest < ActionController::TestCase
 
   class XmlResponseTest < ResponderTest
     module SingerRepresenter
-      include Roar::Representer::XML
+      include Roar::XML
 
       property :name
       self.representation_wrap = :singer
@@ -256,8 +256,8 @@ class ResponderTest < ActionController::TestCase
 
   class ControllerWithDecoratorTest < ResponderTest
     class SingerRepresentation < Representable::Decorator
-      include Roar::Representer::JSON
-      include Roar::Representer::JSON::HAL
+      include Roar::JSON
+      include Roar::JSON::HAL
 
       property :name
 
@@ -297,7 +297,7 @@ class ResponderTest < ActionController::TestCase
   class PassingUserOptionsTest < ResponderTest
     # FIXME: should be in generic roar-rails test.
     module DynamicSingerRepresenter
-      include Roar::Representer::JSON
+      include Roar::JSON
       property :name, :setter => lambda { |val, opts| self.name = "#{opts[:title]} #{val}" },
                       :getter => lambda { |opts| "#{opts[:title]} #{name}" }
     end

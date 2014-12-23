@@ -42,7 +42,7 @@ class ConsumeWithConfigurationTest < ActionController::TestCase
   include Roar::Rails::TestCase
 
   module MusicianRepresenter
-    include Roar::Representer::JSON
+    include Roar::JSON
     property :name, :as => :called
   end
 
@@ -85,7 +85,7 @@ class ConsumeHalTest < ActionController::TestCase
   include Roar::Rails::TestCase
 
   module MusicianRepresenter
-    include Roar::Representer::JSON::HAL
+    include Roar::JSON::HAL
     property :name
   end
 

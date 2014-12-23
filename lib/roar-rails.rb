@@ -3,17 +3,15 @@ require "roar/representer"
 require "roar/decorator"
 require "roar/rails/railtie"
 
-module Roar::Representer
-  autoload("XML", "roar/representer/xml")
-  autoload("JSON", "roar/representer/json")
+module Roar
+  autoload("XML", "roar/xml")
+  autoload("JSON", "roar/json")
 
   module JSON
     autoload("HAL", "roar/rails/hal")
   end
 
-  module Feature
-    autoload("Hypermedia", "roar/representer/feature/hypermedia")
-  end
+  autoload("Hypermedia", "roar/hypermedia")
 end
 
 

@@ -1,5 +1,5 @@
 module SingerAliasRepresenter
-  include Roar::Representer::JSON
+  include Roar::JSON
 
   property :name, :as => :alias
 

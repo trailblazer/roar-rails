@@ -5,7 +5,7 @@ class RenderTest < ActionController::TestCase
 
   class SingersController < ActionController::Base
     module SingerRepresenter
-      include Roar::Representer::JSON
+      include Roar::JSON
 
       property :name, :as => :title
     end

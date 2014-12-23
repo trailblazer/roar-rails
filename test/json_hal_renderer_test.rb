@@ -5,7 +5,7 @@ class HalRendererTest < ActionController::TestCase
 
   class SingersController < ActionController::Base
     module HalSingerRepresenter
-      include Roar::Representer::JSON::HAL
+      include Roar::JSON::HAL
 
       property :name
       link(:self) { "http://#{name}" }
