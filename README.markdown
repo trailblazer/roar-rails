@@ -32,7 +32,7 @@ This will create the file `app/representers/band_representer.rb` with the follow
 
 ```ruby
   module BandRepresenter
-    include Roar::Representer::JSON
+    include Roar::JSON
 
     property :id
     property :name
@@ -169,7 +169,7 @@ If you prefer roar's decorator approach over extend, just go for it. roar-rails 
 
 ```ruby
 class SingerRepresenter < Roar::Decorator
-  include Roar::Representer::JSON
+  include Roar::JSON
 
   property :name
 
@@ -215,8 +215,8 @@ Any URL helpers from the Rails app are automatically available in representers.
 
 ```ruby
 module FruitRepresenter
-  include Roar::Representer::JSON
-  include Roar::Representer::Feature::Hypermedia
+  include Roar::JSON
+  include Roar::Hypermedia
 
   link :self do
     fruit_url self
