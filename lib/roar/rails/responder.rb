@@ -33,7 +33,7 @@ module Roar
       def create_response(model)
         render_method = "to_#{format}"
         media_format  = Mime[format]
-        Response.new(model.send(render_method, options), media_format)
+        Response.new(model.send(render_method, options), media_format).body
       end
 
       def handle_lonely_collection!(collection)
