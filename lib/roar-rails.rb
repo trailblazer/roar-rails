@@ -9,6 +9,7 @@ module Roar
 
   module JSON
     autoload("HAL", "roar/rails/hal")
+    autoload("JSONAPI", "roar/rails/json_api")
   end
 
   autoload("Hypermedia", "roar/hypermedia")
