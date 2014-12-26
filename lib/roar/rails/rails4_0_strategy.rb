@@ -1,3 +1,5 @@
+require 'responders'
+
 module Roar::Rails
   class Responder < ActionController::Responder
     module VersionStrategy
