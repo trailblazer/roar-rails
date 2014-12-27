@@ -18,7 +18,7 @@ Examples:
 
   You can pass :class and :extend property options:
 
-    rails g singer id instrument:equipament:instrument_representer
+    rails g singer id instrument:equipment:instrument_representer
 
   This will add property options:
 
