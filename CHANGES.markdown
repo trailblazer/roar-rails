@@ -1,3 +1,7 @@
+## Unreleased
+
+* Added a dependency on `responders` gem for Rails 4.2 support
+
 ## 1.0.0
 
 * Requires Roar >= 1.0.0.
