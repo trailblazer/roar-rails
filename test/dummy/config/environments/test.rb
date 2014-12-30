@@ -31,4 +31,10 @@ Dummy::Application.configure do
   # config.active_record.schema_format = :sql
 
   config.representer.default_url_options = {:host => "roar.apotomo.de"}
+
+  if Roar::Rails.rails_version.~ 4.2
+    config.eager_load = false
+    config.active_support.test_order = :sorted
+  end
+
 end
