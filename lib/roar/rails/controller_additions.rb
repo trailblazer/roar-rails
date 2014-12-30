@@ -1,3 +1,4 @@
+require 'responders'
 require 'uber/inheritable_attr'
 require 'roar/rails/responder'
 require 'roar/rails/formats'

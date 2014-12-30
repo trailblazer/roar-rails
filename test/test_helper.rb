@@ -12,7 +12,16 @@ Singer = Struct.new(:name)
 
 Mime::Type.register 'application/hal+json', :hal
 
-ActionController.add_renderer :hal do |js, options|
+
+
+# via https://github.com/jingweno/msgpack_rails/issues/3
+renderer = Proc.new do |js, options|
   self.content_type ||= Mime::HAL
   js.is_a?(String) ? js : js.to_json
+end
+
+if ::Rails::VERSION::MAJOR >= 4 && ::Rails::VERSION::MINOR >= 1
+  ::ActionController::Renderers.add(:hal, &renderer)
+else
+  ::ActionController.add_renderer(:hal, &renderer)
 end

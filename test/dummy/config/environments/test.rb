@@ -34,7 +34,7 @@ Dummy::Application.configure do
 
   if Roar::Rails.rails_version.~ 4.2
     config.eager_load = false
-    config.active_support.test_order = :sorted
+    config.active_support.test_order = :random
   end
 
 end
