@@ -1,6 +1,7 @@
 ## Unreleased
 
 * Added a dependency on `responders` gem for Rails 4.2 support
+* `#render` from `ControllerAdditions::Render` now accepts a status code
 
 ## 1.0.0
 

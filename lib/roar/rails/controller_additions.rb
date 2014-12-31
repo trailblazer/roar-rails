@@ -80,7 +80,8 @@ module Roar::Rails
     module Render
       def render(options)
         format = options.keys.first
-        super format => prepare_model_for(format, options.values.first, options)
+        status = options[:status] || :ok
+        super format => prepare_model_for(format, options.values.first, options), :status => status
       end
     end
   end

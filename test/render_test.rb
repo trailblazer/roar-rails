@@ -17,7 +17,7 @@ class RenderTest < ActionController::TestCase
 
     def show
       singer = Musician.new("Bumi")
-      render :json => singer
+      render :json => singer, status: 201
     end
   end
 
@@ -26,5 +26,6 @@ class RenderTest < ActionController::TestCase
   test "should use Representer for #render" do
     get :show, :id => "bumi", :format => :json
     assert_body '{"title":"Bumi"}'
+    assert_equal 201, response.status
   end
 end
