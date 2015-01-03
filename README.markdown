@@ -270,21 +270,30 @@ end
 
 Put your representers in `app/representers` and they will be autoloaded by Rails. Also, frequently used modules as media representers and features don't need to be required manually.
 
-## Rails 4.1+ and HAL
+## Rails 4.1+ and HAL/JSON-API
 
 **Note**: this is a temporary work-around, we're trying to fix that in Rails/roar-rails itself [May 2014].
 
-Rails 4.1 and up expects you to manually register a global HAL renderer, or `respond_with` will throw the exception `ActionController::MissingRenderer (No renderer defined for format: hal)`.
+Rails 4.1 and up expects you to manually register a global HAL or JSON-API renderer, or `respond_with` will throw an `ActionController::MissingRenderer` exception.
 
 One fix is to add this to `config/initializers/mime_types.rb` right below `Mime::Type.register 'application/hal+json', :hal`:
 
 ```ruby
 ActionController::Renderers.add :hal do |obj, options|
   self.content_type ||= Mime[:hal]
-  obj.body
+  obj
 end
 ```
 
+Similarly, for JSON-API, below `Mime::Type.register 'application/vnd.api+json', :json_api` add:
+
+
+```ruby
+ActionController::Renderers.add :json_api do |obj, options|
+  self.content_type ||= Mime[:json_api]
+  obj
+end
+```
 ## Contributors
 
 * [Railslove](http://www.railslove.de) and especially Michael Bumann [bumi] have heavily supported development of roar-rails ("resource :singers").
