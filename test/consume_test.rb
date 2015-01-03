@@ -38,6 +38,22 @@ class ConsumeHalWithNoHalRespondTest < ActionController::TestCase
   end
 end
 
+class ConsumeJsonApiWithNoJsonApiRespondTest < ActionController::TestCase
+  include Roar::Rails::TestCase
+
+  tests UnnamespaceSingersController
+
+  # Content-type is set properly, it's a registered mime but responder doesn't do #from_json_api.
+  # FIXME: why does that still find a representer?
+  test "#consume parses hal document and updates the model" do
+    @request.env['CONTENT_TYPE'] = 'application/vnd.api+json'
+    # assert_raises Roar::Rails::UnsupportedMediaType do
+    assert_raises NoMethodError do # currently, we don't know if a format is supported in general, or not.
+      post :consume_json, "{\"name\": \"Bumi\"}"
+    end
+  end
+end
+
 class ConsumeWithConfigurationTest < ActionController::TestCase
   include Roar::Rails::TestCase
 
@@ -105,6 +121,36 @@ class ConsumeHalTest < ActionController::TestCase
   test "#consume parses HAL document and updates the model" do
     @request.env['CONTENT_TYPE'] = 'application/hal+json'
     post :consume_hal, "{\"name\": \"Bumi\"}"
+    assert_equal %{#<struct Singer name="Bumi">}, @response.body
+  end
+end
+
+class ConsumeJsonApiTest < ActionController::TestCase
+  include Roar::Rails::TestCase
+
+  module MusicianRepresenter
+    include Roar::JSON::JSONAPI
+    type :singer
+    property :name
+  end
+
+
+  class SingersController < ActionController::Base
+    include Roar::Rails::ControllerAdditions
+    represents :json_api, :entity => MusicianRepresenter
+
+    def consume_json_api
+      singer = consume!(Singer.new)
+      render :text => singer.inspect
+    end
+  end
+
+  tests SingersController
+
+  test "#consume parses JSON-API document and updates the model" do
+    @request.env['CONTENT_TYPE'] = 'application/vnd.api+json'
+    post :consume_json_api, "{\"singer\": {\"name\": \"Bumi\"}}"
+
     assert_equal %{#<struct Singer name="Bumi">}, @response.body
   end
 end
