@@ -10,7 +10,7 @@ Examples:
   This will create a representer as follows:
 
   module BandRepresenter
-    include Roar::Representer::JSON
+    include Roar::JSON
 
     property :id
     property :name
@@ -23,7 +23,7 @@ Examples:
   This will add property options:
 
     module SingerRepresenter
-      include Roar::Representer::JSON
+      include Roar::JSON
 
       property :id
       property :instrument, :class => Equipment, :extend => InstrumentRepresenter
@@ -34,7 +34,7 @@ Examples:
     rails g representer Band id name --format=xml
 
   module BandRepresenter
-    include Roar::Representer::XML
+    include Roar::XML
 
     property :id
     property :name
