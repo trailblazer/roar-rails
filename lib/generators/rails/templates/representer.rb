@@ -1,5 +1,5 @@
 module <%= class_name %>Representer
-  include Roar::Representer::<%= format %>
+  include Roar::<%= format %>
   <% property_options.each do |property| %>
   <%= property -%>
   <% end %>
