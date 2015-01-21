@@ -1,7 +1,8 @@
-## Unreleased
+## 1.0.1
 
 * Added a dependency on `responders` gem for Rails 4.2 support
 * `#render` from `ControllerAdditions::Render` now accepts a status code
+* Added support for JSON-API.
 
 ## 1.0.0
 
