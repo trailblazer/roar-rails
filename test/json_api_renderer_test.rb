@@ -12,9 +12,11 @@ class JsonApiRendererTest < ActionController::TestCase
       link(:self) { "//self"}
     end
 
+    SingerRepresenter.for_collection.prepare([]).to_json_api
+
     include Roar::Rails::ControllerAdditions
 
-    represents :json_api, entity: SingerRepresenter, collection: SingerRepresenter # should be inferred.
+    represents :json_api, entity: SingerRepresenter, collection: SingerRepresenter.for_collection # should be inferred.
 
     def show
       singer = Musician.new("Bumi")
@@ -39,7 +41,8 @@ class JsonApiRendererTest < ActionController::TestCase
   test "should render collection of models correctly in response to a application/vnd.api+json" do
     get :index, :format => :json_api
     # assert_body '{"people":[{"first_name":"Chad"},{"first_name":"Fremont"}]}'
-    assert_equal response.body, '{"people":[{"first_name":"Chad"},{"first_name":"Fremont"}]}'
+
+    response.body.must_equal "{\"song\":[{\"name\":\"Bumi\"},{\"name\":\"Chad\"}],\"links\":{\"self\":{\"href\":\"//self\"}}}"
   end
 
   test "should have a content_type of application/vnd.api+json for a single model" do
