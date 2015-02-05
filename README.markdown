@@ -270,6 +270,16 @@ end
 
 Put your representers in `app/representers` and they will be autoloaded by Rails. Also, frequently used modules as media representers and features don't need to be required manually.
 
+## JSON-API
+
+In a JSON-API environment, only one representer is written for both singular and collection resources. However, you have to configure `represents` accordingly so it knows what representer to use for collections.
+
+```ruby
+class SongsController < ApplicationController
+  represents :json_api, entity: SongRepresenter, collection: SongRepresenter.for_collection
+```
+
+
 ## Rails 4.1+ and HAL/JSON-API
 
 **Note**: this is a temporary work-around, we're trying to fix that in Rails/roar-rails itself [May 2014].
