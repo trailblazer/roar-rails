@@ -35,14 +35,14 @@ class JsonApiRendererTest < ActionController::TestCase
   test "should render single model correctly in response to a application/vnd.api+json" do
     get :show, :id => "1", :format => :json_api
 
-    response.body.must_equal "{\"song\":{\"name\":\"Bumi\"},\"links\":{\"self\":{\"href\":\"//self\"}}}"
+    response.body.must_equal "{\"songs\":{\"name\":\"Bumi\"},\"links\":{\"self\":{\"href\":\"//self\"}}}"
   end
 
   test "should render collection of models correctly in response to a application/vnd.api+json" do
     get :index, :format => :json_api
     # assert_body '{"people":[{"first_name":"Chad"},{"first_name":"Fremont"}]}'
 
-    response.body.must_equal "{\"song\":[{\"name\":\"Bumi\"},{\"name\":\"Chad\"}],\"links\":{\"self\":{\"href\":\"//self\"}}}"
+    response.body.must_equal "{\"songs\":[{\"name\":\"Bumi\"},{\"name\":\"Chad\"}],\"links\":{\"self\":{\"href\":\"//self\"}}}"
   end
 
   test "should have a content_type of application/vnd.api+json for a single model" do
