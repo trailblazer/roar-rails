@@ -12,7 +12,7 @@ class RenderTest < ActionController::TestCase
 
     module SingersRepresenter
       include Representable::JSON::Collection
-      items :extend => PersonRepresenter
+      items :extend => SingerRepresenter
     end
 
     include Roar::Rails::ControllerAdditions
@@ -45,5 +45,4 @@ class RenderTest < ActionController::TestCase
     assert_equal response.body, '[{"title":"Bumi"},{"title":"Iggy"}]'
     assert_equal 201, response.status
   end
-
 end

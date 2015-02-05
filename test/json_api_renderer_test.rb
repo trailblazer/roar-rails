@@ -1,37 +1,39 @@
 require 'test_helper'
 
-class HalRendererTest < ActionController::TestCase
+class JsonApiRendererTest < ActionController::TestCase
   include Roar::Rails::TestCase
 
-  class PeopleController < ActionController::Base
-    module PersonRepresenter
+  class SingersController < ActionController::Base
+    module SingerRepresenter
       include Roar::JSON::JSONAPI
-      type :people
-      property :first_name
+      type :song
+      property :name
+
+      link(:self) { "//self"}
     end
 
     include Roar::Rails::ControllerAdditions
 
-    represents :json_api, :entity => PersonRepresenter
+    represents :json_api, entity: SingerRepresenter, collection: SingerRepresenter # should be inferred.
 
     def show
-      person = Person.find 1
-      respond_with person
+      singer = Musician.new("Bumi")
+      respond_with singer
     end
 
     def index
-      people = Person.find([1,2])
-      respond_with people, represent_items_with:PersonRepresenter
+      singers = [Musician.new("Bumi"), Musician.new("Chad")]
+      respond_with singers
     end
 
   end
 
-  tests PeopleController
+  tests SingersController
 
   test "should render single model correctly in response to a application/vnd.api+json" do
     get :show, :id => "1", :format => :json_api
-    # assert_body '{"people":{"first_name":"Chad"}}'
-    assert_equal response.body, '{"people":{"first_name":"Chad"}}'
+
+    response.body.must_equal "{\"song\":{\"name\":\"Bumi\"},\"links\":{\"self\":{\"href\":\"//self\"}}}"
   end
 
   test "should render collection of models correctly in response to a application/vnd.api+json" do
