@@ -12,8 +12,6 @@ class JsonApiRendererTest < ActionController::TestCase
       link(:self) { "//self"}
     end
 
-    SingerRepresenter.for_collection.prepare([]).to_json_api
-
     include Roar::Rails::ControllerAdditions
 
     represents :json_api, entity: SingerRepresenter, collection: SingerRepresenter.for_collection # should be inferred.
