@@ -17,6 +17,20 @@ Roar-rails gives you conventions and convenient access to a lot of Roar's functi
 
 This gem works with all Rails >= 3.x.
 
+## Prerequisites
+
+Add it to your app's `Gemfile`.
+
+```ruby
+gem "roar-rails"
+```
+
+Note: For Rails > 4.2, you need to add the `responders` gem, too, if you use `respond_with`.
+
+
+```ruby
+gem "responders"
+```
 
 ## Generators
 
