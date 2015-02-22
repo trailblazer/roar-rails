@@ -25,7 +25,7 @@ Add it to your app's `Gemfile`.
 gem "roar-rails"
 ```
 
-Note: For Rails > 4.2, you need to add the `responders` gem, too, if you use `respond_with`.
+Note: For Rails >= 4.2, you need to add the `responders` gem, too, if you use `respond_with`.
 
 
 ```ruby
