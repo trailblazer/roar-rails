@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Roar::Rails::VERSION
   s.authors     = ["Nick Sutterer"]
   s.email       = ["apotonick@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/apotonick/roar-rails"
   s.summary     = %q{Use Roar in Rails.}
   s.description = %q{Rails extensions for using Roar in the popular web framework.}
 
