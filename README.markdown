@@ -25,11 +25,11 @@ Add it to your app's `Gemfile`.
 gem "roar-rails"
 ```
 
-Note: For Rails >= 4.2, you need to add the `responders` gem, too, if you use `respond_with`.
-
+Note: For Rails >= 4.2, you need to add the `responders` gem, too, if you use `respond_with`. This has to be before the `roar-rails` entry in the Gemfile.
 
 ```ruby
 gem "responders"
+gem "roar-rails"
 ```
 
 ## Generators
