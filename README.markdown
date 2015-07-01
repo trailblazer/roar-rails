@@ -184,6 +184,7 @@ If you prefer roar's decorator approach over extend, just go for it. roar-rails 
 ```ruby
 class SingerRepresenter < Roar::Decorator
   include Roar::JSON
+  include Roar::Hypermedia
 
   property :name
 
