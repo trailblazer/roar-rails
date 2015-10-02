@@ -42,7 +42,7 @@ module Roar::Rails
     end
 
     def entity_representer(format, model, controller_path)
-      model_name = model.class.name.underscore
+      model_name = model.model_name.name.underscore
 
       if namespace = controller_path.namespace
         model_name = "#{namespace}/#{model_name}"
