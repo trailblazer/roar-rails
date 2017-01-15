@@ -29,5 +29,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "activemodel"
   s.add_development_dependency "activerecord"
   s.add_development_dependency "sqlite3"
+  s.add_development_dependency "multi_json"
   s.add_development_dependency "tzinfo" # FIXME: why the hell do we need this for 3.1?
 end
