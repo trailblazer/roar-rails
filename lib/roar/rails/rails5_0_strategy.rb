@@ -8,6 +8,9 @@ module Roar::Rails
 
   module TestCase
     module VersionStrategy
+      def process_args(action, http_method, document="", params={})
+        [action, { method: http_method, params: params }]
+      end
     end
   end
 end
