@@ -32,7 +32,7 @@ Dummy::Application.configure do
 
   config.representer.default_url_options = {:host => "roar.apotomo.de"}
 
-  if Roar::Rails.rails_version.~ 4.2
+  if Rails::VERSION::MAJOR >= 4
     config.eager_load = false
     config.active_support.test_order = :random
   end

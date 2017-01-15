@@ -18,22 +18,22 @@ end
 
 module Roar
   module Rails
-    require 'uber/version'
     def self.rails_version
-      Uber::Version.new(::ActionPack::VERSION::STRING)
+      Gem::Version.new([ActionPack::VERSION::MAJOR, ActionPack::VERSION::MINOR].join('.'))
     end
 
-    if rails_version.~ 3.0
+    case rails_version
+    when Gem::Version.new(3.0)
       require 'roar/rails/rails3_0_strategy'
-    elsif rails_version.~ 3.1
+    when Gem::Version.new(3.1)
       require 'roar/rails/rails3_1_strategy'
-    elsif rails_version.~ 3.2
+    when Gem::Version.new(3.2)
       require 'roar/rails/rails3_2_strategy'
-    elsif rails_version.~ 4.0
+    when Gem::Version.new(4.0), Gem::Version.new(4.1)
       require 'roar/rails/rails4_0_strategy'
-    elsif rails_version.~ 4.2
+    when Gem::Version.new(4.2)
       require 'roar/rails/rails4_2_strategy'
-    elsif rails_version.~ 5.0
+    when Gem::Version.new(5.0)
       require 'roar/rails/rails5_0_strategy'
     else
       # fallback to 4.0 strategy
