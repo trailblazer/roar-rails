@@ -56,6 +56,7 @@ end
 
 class ConsumeWithConfigurationTest < ActionController::TestCase
   include Roar::Rails::TestCase
+  SingerRepresenter  = ::SingerRepresenter
 
   module MusicianRepresenter
     include Roar::JSON
@@ -82,17 +83,18 @@ class ConsumeWithConfigurationTest < ActionController::TestCase
     assert_equal %{#<struct Singer name="Bumi">}, @response.body
   end
 
-  test "#do not consume missing content type" do
-    assert_raises Roar::Rails::UnsupportedMediaType do
-      post :consume_json, "{\"name\": \"Bumi\"}"
+  if ActiveRecord::VERSION::MAJOR < 5
+    test "#do not consume missing content type" do
+      assert_raises Roar::Rails::UnsupportedMediaType do
+        post :consume_json, "{\"name\": \"Bumi\"}"
+      end
     end
-  end
 
-
-  test "#do not consume parses unknown content type" do
-    @request.env['CONTENT_TYPE'] = 'application/custom+json'
-    assert_raises Roar::Rails::UnsupportedMediaType do
-      post :consume_json, "{\"name\": \"Bumi\"}"
+    test "#do not consume parses unknown content type" do
+      @request.env['CONTENT_TYPE'] = 'application/custom+json'
+      assert_raises Roar::Rails::UnsupportedMediaType do
+        post :consume_json, "{\"name\": \"Bumi\"}"
+      end
     end
   end
 end

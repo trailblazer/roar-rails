@@ -18,16 +18,19 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_runtime_dependency "roar",          ">= 1.0.0", "<= 1.1.0"
+  s.add_runtime_dependency "roar",          '~> 1.0.4'
   s.add_runtime_dependency "test_xml",      ">= 0.1.6"  # TODO: remove dependency as most people don't use XML.
   s.add_runtime_dependency "actionpack"
   s.add_runtime_dependency "railties",      ">= 3.0.0"
   s.add_runtime_dependency "uber",          "~> 0.0.5"
   s.add_runtime_dependency "responders"
 
-  s.add_development_dependency "minitest"
+  s.add_development_dependency 'minitest-rails'
+  s.add_development_dependency 'minitest'
+
   s.add_development_dependency "activemodel"
   s.add_development_dependency "activerecord"
   s.add_development_dependency "sqlite3"
+  s.add_development_dependency "multi_json"
   s.add_development_dependency "tzinfo" # FIXME: why the hell do we need this for 3.1?
 end

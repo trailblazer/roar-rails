@@ -124,7 +124,7 @@ class FormatsTest < MiniTest::Spec
 
     it "returns nil when not present" do
       skip "not sure what to do when format is unknown"
-      subject.for(:xml, Class.new.new, "bands").must_equal nil
+      subject.for(:xml, Class.new.new, "bands").must_be_nil
     end
   end
 end
@@ -132,7 +132,7 @@ end
 class PathTest < MiniTest::Spec
   let (:path) { Roar::Rails::Formats::Path }
 
-  it { path.new("bands").namespace.must_equal nil }
+  it { path.new("bands").namespace.must_be_nil }
   it { path.new("v1/bands").namespace.must_equal "v1" }
   it { path.new("api/v1/bands").namespace.must_equal "api/v1" }
 end

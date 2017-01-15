@@ -1,8 +1,4 @@
-if ::ActionPack::VERSION::MAJOR == 4
-  require 'test_xml/mini_test'
-else
-  require 'test_xml/test_unit'
-end
+require 'minitest'
 
 module Roar
   module Rails
