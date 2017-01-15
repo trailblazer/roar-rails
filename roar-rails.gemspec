@@ -25,7 +25,9 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "uber",          "~> 0.0.5"
   s.add_runtime_dependency "responders"
 
-  s.add_development_dependency "minitest"
+  s.add_development_dependency 'minitest-rails'
+  s.add_development_dependency 'minitest'
+
   s.add_development_dependency "activemodel"
   s.add_development_dependency "activerecord"
   s.add_development_dependency "sqlite3"

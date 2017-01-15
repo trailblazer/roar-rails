@@ -6,7 +6,8 @@ gem "nokogiri", "~> 1.6.8"
 gem "appraisal"
 gem "railties", "~> 3.2.13"
 gem "activerecord", "~> 3.2.13"
-gem "minitest", "4.7.5"
+gem "minitest", "~> 4.7.5"
+gem "minitest-rails", "~> 1.0"
 
 group :test do
   gem "rake", "10.1.0"

@@ -8,7 +8,7 @@ gem "railties", "~> 4.1.0"
 gem "actionpack", "~> 4.1.0"
 gem "activemodel", "~> 4.1.0"
 gem "activerecord", "~> 4.1.0"
-gem "minitest", "~> 5.2.0"
+gem "minitest-rails", "~> 2.0"
 
 group :test do
   gem "rake", "10.1.0"
