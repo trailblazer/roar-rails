@@ -5,6 +5,12 @@ _Makes using Roar's representers in your Rails app fun._
 [![Build Status](https://travis-ci.org/apotonick/roar-rails.svg?branch=master)](https://travis-ci.org/apotonick/roar-rails)
 [![Gem Version](https://badge.fury.io/rb/roar-rails.svg)](http://badge.fury.io/rb/roar-rails)
 
+**IMPORTANT NOTE: roar-rails 1.0.2 does not support Roar 1.1**. Support is still under development and will be released as part of roar-rails 1.1. See [#130](https://github.com/apotonick/roar-rails/issues/130).
+
+_roar-rails development will be discontinued in the future and we will encourage users to begin migrating to [Trailblazer](trailblazer.to) (and [trailblazer-rails](https://github.com/trailblazer/trailblazer-rails))._
+
+---
+
 Roar is a framework for parsing and rendering REST documents. For a better overview about representers please check the [roar repository](https://github.com/trailblazer/roar#roar).
 
 Roar-rails gives you conventions and convenient access to a lot of Roar's functionality within your Rails app.
