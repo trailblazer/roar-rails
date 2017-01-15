@@ -2,7 +2,7 @@
 
 _Makes using Roar's representers in your Rails app fun._
 
-Roar is a framework for parsing and rendering REST documents. For a better overview about representers please check the [roar repository](https://github.com/apotonick/roar#roar).
+Roar is a framework for parsing and rendering REST documents. For a better overview about representers please check the [roar repository](https://github.com/trailblazer/roar#roar).
 
 Roar-rails gives you conventions and convenient access to a lot of Roar's functionality within your Rails app.
 
