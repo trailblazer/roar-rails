@@ -56,6 +56,7 @@ end
 
 class ConsumeWithConfigurationTest < ActionController::TestCase
   include Roar::Rails::TestCase
+  SingerRepresenter  = ::SingerRepresenter
 
   module MusicianRepresenter
     include Roar::JSON
