@@ -2,6 +2,9 @@
 
 _Makes using Roar's representers in your Rails app fun._
 
+[![Build Status](https://travis-ci.org/apotonick/roar-rails.svg?branch=master)](https://travis-ci.org/apotonick/roar-rails)
+[![Gem Version](https://badge.fury.io/rb/roar-rails.svg)](http://badge.fury.io/rb/roar-rails)
+
 Roar is a framework for parsing and rendering REST documents. For a better overview about representers please check the [roar repository](https://github.com/trailblazer/roar#roar).
 
 Roar-rails gives you conventions and convenient access to a lot of Roar's functionality within your Rails app.
