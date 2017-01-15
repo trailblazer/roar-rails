@@ -24,13 +24,13 @@ class RepresentetGeneratorTest < Rails::Generators::TestCase
   test "create a representer with default json support" do
     run_generator %w(singer)
 
-    assert_file representer_path('singer'), /include Roar::Representer::JSON/
+    assert_file representer_path('singer'), /include Roar::JSON/
   end
 
   test "create a representer with different format support" do
     run_generator %w(singer --format=XML)
 
-    assert_file representer_path('singer'), /include Roar::Representer::XML/
+    assert_file representer_path('singer'), /include Roar::XML/
   end
 
   test "create a representer with property, class and exnted" do
