@@ -17,11 +17,11 @@ Mime::Type.register 'application/vnd.api+json', :json_api
 
 # see also https://github.com/jingweno/msgpack_rails/issues/3
 ::ActionController::Renderers.add :hal do |js, options|
-  self.content_type ||= Mime::HAL
+  self.content_type ||= Mime[:hal]
   js.is_a?(String) ? js : js.to_json
 end
 
 ::ActionController::Renderers.add :json_api do |js, options|
-  self.content_type ||= Mime::JSONAPI
+  self.content_type ||= Mime[:json_api]
   js.is_a?(String) ? js : js.to_json
 end
