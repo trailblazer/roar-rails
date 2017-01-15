@@ -4,6 +4,7 @@
 bin
 .bundle
 Gemfile*.lock
+gemfiles/*.gemfile.lock
 pkg/*
 test/dummy/log/*
 test/dummy/tmp/*

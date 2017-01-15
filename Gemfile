@@ -10,3 +10,5 @@ group :test do
 end
 
 gem 'nokogiri', '~> 1.6.8'
+
+gem 'appraisal'
