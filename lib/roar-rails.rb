@@ -29,8 +29,12 @@ module Roar
       require 'roar/rails/rails3_1_strategy'
     elsif rails_version.~ 3.2
       require 'roar/rails/rails3_2_strategy'
+    elsif rails_version.~ 4.0
+      require 'roar/rails/rails4_0_strategy'
     elsif rails_version.~ 4.2
       require 'roar/rails/rails4_2_strategy'
+    elsif rails_version.~ 5.0
+      require 'roar/rails/rails5_0_strategy'
     else
       # fallback to 4.0 strategy
       require 'roar/rails/rails4_0_strategy'
