@@ -8,3 +8,5 @@ group :test do
   #gem 'representable', path: "../representable"
   gem 'rake', '10.1.0'
 end
+
+gem 'nokogiri', '~> 1.6.8'

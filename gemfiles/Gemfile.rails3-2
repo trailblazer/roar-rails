@@ -7,3 +7,5 @@ gemspec :path => '../'
 gem 'railties', '~> 3.2.13'
 gem 'activerecord', '~> 3.2.13'
 gem 'minitest', '4.7.5'
+
+gem 'nokogiri', '~> 1.6.8'

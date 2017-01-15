@@ -10,3 +10,5 @@ gem 'activemodel', '~> 4.2.0'
 gem 'activerecord', '~> 4.2.0'
 
 gem 'minitest', '~> 5.5.0'
+
+gem 'nokogiri', '~> 1.6.8'
