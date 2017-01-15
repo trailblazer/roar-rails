@@ -1,3 +1,8 @@
+## 1.0.2
+
+* Make Roar version requirement stricter: restrict to 1.0.x series.
+* Initial support for Rails 5 support.
+
 ## 1.0.1
 
 * Added a dependency on `responders` gem for Rails 4.2 support
