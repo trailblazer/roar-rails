@@ -4,10 +4,12 @@ class JsonApiRendererTest < ActionController::TestCase
   include Roar::Rails::TestCase
 
   class SingersController < ActionController::Base
-    module SingerRepresenter
-      include Roar::JSON::JSONAPI
-      type :song
-      property :name
+    class SingerRepresenter < Roar::Decorator
+      include Roar::JSON::JSONAPI.resource :song
+
+      attributes do
+        property :name
+      end
 
       link(:self) { "//self"}
     end

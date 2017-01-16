@@ -130,12 +130,13 @@ end
 class ConsumeJsonApiTest < ActionController::TestCase
   include Roar::Rails::TestCase
 
-  module MusicianRepresenter
-    include Roar::JSON::JSONAPI
-    type :singer
-    property :name
-  end
+  class MusicianRepresenter < Roar::Decorator
+    include Roar::JSON::JSONAPI.resource :singer
 
+    attributes do
+      property :name
+    end
+  end
 
   class SingersController < ActionController::Base
     include Roar::Rails::ControllerAdditions
