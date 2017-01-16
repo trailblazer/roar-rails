@@ -130,6 +130,10 @@ end
 class ConsumeJsonApiTest < ActionController::TestCase
   include Roar::Rails::TestCase
 
+  Band      = Struct.new(:name, :id)
+  Singer    = Struct.new(:name, :id)
+  Musician  = Struct.new(:name, :id)
+
   class MusicianRepresenter < Roar::Decorator
     include Roar::JSON::JSONAPI.resource :singer
 
@@ -152,9 +156,9 @@ class ConsumeJsonApiTest < ActionController::TestCase
 
   test "#consume parses JSON-API document and updates the model" do
     @request.env['CONTENT_TYPE'] = 'application/vnd.api+json'
-    post :consume_json_api, "{\"singer\": {\"name\": \"Bumi\"}}"
+    post :consume_json_api, %({"data":{"attributes":{"name":"Bumi"},"type":"song"}})
 
-    assert_equal %{#<struct Singer name="Bumi">}, @response.body
+    assert_equal %{#<struct ConsumeJsonApiTest::Singer name="Bumi", id=nil>}, @response.body
   end
 end
 
