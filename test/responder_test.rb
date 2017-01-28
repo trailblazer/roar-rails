@@ -298,8 +298,8 @@ class ResponderTest < ActionController::TestCase
     # FIXME: should be in generic roar-rails test.
     module DynamicSingerRepresenter
       include Roar::JSON
-      property :name, :setter => lambda { |val, opts| self.name = "#{opts[:title]} #{val}" },
-                      :getter => lambda { |opts| "#{opts[:title]} #{name}" }
+      property :name, :setter => lambda { |opts| self.name = "#{opts[:user_options][:title]} #{opts[:fragment]}" },
+                      :getter => lambda { |opts| "#{opts[:user_options][:title]} #{name}" }
     end
     class MusicianController < BaseController
       represents :json, :entity => DynamicSingerRepresenter, :collection => SingersRepresenter
@@ -310,7 +310,7 @@ class ResponderTest < ActionController::TestCase
     test "passes options to entity representer" do
       get do
         singer = Singer.new("Bumi")
-        respond_with singer, :title => "Mr."
+        respond_with singer, user_options: { title: "Mr." }
       end
 
       @response.body.must_equal("{\"name\":\"Mr. Bumi\"}")
@@ -318,7 +318,7 @@ class ResponderTest < ActionController::TestCase
 
     test "passes options to explicit collection representer" do
       get do
-        respond_with [Singer.new("Bumi"), Singer.new("Iggy")], :title => "Mr.", :represent_items_with => DynamicSingerRepresenter
+        respond_with [Singer.new("Bumi"), Singer.new("Iggy")], user_options: { title: "Mr." }, :represent_items_with => DynamicSingerRepresenter
       end
 
       @response.body.must_equal("[{\"name\":\"Mr. Bumi\"},{\"name\":\"Mr. Iggy\"}]")
@@ -330,7 +330,7 @@ class ResponderTest < ActionController::TestCase
       @request.env['CONTENT_TYPE'] = 'application/json'
 
       put singer.to_json do
-        created_singer = consume!(Singer.new, :title => "Mr.")
+        created_singer = consume!(Singer.new, user_options: { title: "Mr." })
         respond_with created_singer
       end
 
