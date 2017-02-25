@@ -1,3 +1,11 @@
+## 1.1.0
+
+**Roar 1.1 (and Representable 3.0) support** (see [Roar CHANGES](https://github.com/trailblazer/roar/blob/master/CHANGES.markdown#110))
+
+* Require Roar >= 1.1.0.
+* Improved support for JSON API (now requires separate [roar-jsonapi](https://github.com/trailblazer/roar-jsonapi) gem).
+* Fix Uber version requirement.
+
 ## 1.0.2
 
 * Make Roar version requirement stricter: restrict to 1.0.x series.
