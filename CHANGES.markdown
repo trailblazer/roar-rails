@@ -9,7 +9,7 @@
 ## 1.0.2
 
 * Make Roar version requirement stricter: restrict to 1.0.x series.
-* Initial support for Rails 5 support.
+* Initial support for Rails 5.
 
 ## 1.0.1
 
@@ -20,7 +20,7 @@
 ## 1.0.0
 
 * Requires Roar >= 1.0.0.
-* In `#consume!` roar-rails now finds the correct representer for the `Content-type:` header. In former version the representer name was infered using the `Accept:` header, which was totally wrong. Thanks to @pgaertig for fixing that.
+* In `#consume!` roar-rails now finds the correct representer for the `Content-type:` header. In former version the representer name was inferred using the `Accept:` header, which was totally wrong. Thanks to @pgaertig for fixing that.
 
 ## 0.1.6
 
@@ -55,7 +55,7 @@
 ## 0.1.0
 
 * `ActiveRecord::Relation` is now detected as a collection and the appropriate representer should be found.
-* Entity (singular) representers are now correctly infered even if you only specified `collection:` in `::represents`. That works by querying the model.
+* Entity (singular) representers are now correctly inferred even if you only specified `collection:` in `::represents`. That works by querying the model.
 * Entity representers are now *namespaced* when guessed (i.e., when you didn't specify them explicitly in `::represents`) as it works with collection representers already. If you have a namespaced controller and it suddenly doesn't find its entity representer anymore, either namespace the representer or specify its name in `::represents`.
 
 ## 0.0.14
