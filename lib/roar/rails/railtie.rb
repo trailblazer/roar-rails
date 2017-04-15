@@ -12,6 +12,7 @@ module Roar
       )
 
       initializer "roar.set_configs" do |app|
+        Roar.logger = ::Rails.logger
         ::Roar::Representer.module_eval do
           include app.routes.url_helpers
           include app.routes.mounted_helpers unless (::Rails::VERSION::MAJOR == 3 && ::Rails::VERSION::MINOR == 0)
