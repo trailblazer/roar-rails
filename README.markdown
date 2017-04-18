@@ -5,7 +5,7 @@ _Makes using Roar's representers in your Rails app fun._
 [![Build Status](https://travis-ci.org/apotonick/roar-rails.svg?branch=master)](https://travis-ci.org/apotonick/roar-rails)
 [![Gem Version](https://badge.fury.io/rb/roar-rails.svg)](http://badge.fury.io/rb/roar-rails)
 
-_roar-rails development will be discontinued in the future and we will encourage users to begin migrating to [Trailblazer](trailblazer.to) (and [trailblazer-rails](https://github.com/trailblazer/trailblazer-rails))._
+_roar-rails development will be discontinued in the future and we will encourage users to begin migrating to [Trailblazer](http://trailblazer.to) (and [trailblazer-rails](https://github.com/trailblazer/trailblazer-rails))._
 
 ---
 
