@@ -8,4 +8,5 @@ gemfiles/*.gemfile.lock
 pkg/*
 test/dummy/log/*
 test/dummy/tmp/*
+test/tmp/*
 .rvmrc
