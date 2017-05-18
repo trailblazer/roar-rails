@@ -45,3 +45,4 @@ module Roar
 end
 
 require "roar/rails/controller_additions"
+require "roar/rails/page_representer"
