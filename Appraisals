@@ -47,3 +47,12 @@ appraise 'rails-5.0' do
   gem 'activerecord', '~> 5.0.0'
   gem 'minitest-rails', '~> 3.0'
 end
+
+appraise 'rails-5.1' do
+  gem 'railties',     '~> 5.1.0'
+  gem 'actionpack',   '~> 5.1.0'
+
+  gem 'activemodel',  '~> 5.1.0'
+  gem 'activerecord', '~> 5.1.0'
+  gem 'minitest-rails', '~> 3.0'
+end
