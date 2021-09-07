@@ -203,6 +203,118 @@ end
 
 In decorators' link blocks you currently have to use `represented` to get the actual represented model (this is `self` in module representers).
 
+### Pagination with Decorators
+Roar-rails pagination works with either [will_paginate](https://github.com/mislav/will_paginate) or [Kaminari](https://github.com/amatsuda/kaminari). It is based on Nick Sutterer's [blog post](http://nicksda.apotomo.de/2012/05/ruby-on-rest-6-pagination-with-roar/). You must install one of these for roar-rails pagination to work. In your Gemfile, include either
+
+```ruby
+gem 'will_paginate'
+```
+or
+
+```ruby
+gem 'kaminari'
+```
+
+To use roar-rails pagination, include `Roar::Rails::PageRepresenter` in the paginated Representer and define `page_url`.
+
+```ruby
+class VenuesRepresenter < Roar::Decorator
+  include Roar::Representer::JSON
+  include Roar::Representer::Feature::Hypermedia
+  include Roar::Rails::PageRepresenter
+
+  collection :venues, :exec_context => :decorator, :decorator => VenueRepresenter
+
+  def venues
+    represented
+  end
+
+  def page_url(args)
+    venues_url args # Using Rails URL helpers
+  end
+end
+
+class VenueRepresenter < Roar::Decorator
+  include Roar::Representer::JSON
+  include Roar::Representer::Feature::Hypermedia
+
+  property :name
+end
+
+# Using will_paginate
+class VenuesController < ActionController::Base
+  include Roar::Rails::ControllerAdditions
+  represents :json, Venue
+
+  def index
+    @venues = Venue.paginate(:page => params[:page], :per_page => params[:per_page])
+
+    respond_with @venues
+  end
+end
+
+# Using Kaminari
+class VenuesController < ActionController::Base
+  include Roar::Rails::ControllerAdditions
+  represents :json, Venue
+
+  def index
+    @venues = Venue.page(params[:page]).per(params[:per_page])
+
+    respond_with @venues
+  end
+end
+```
+
+**GET** `/venues?page=2&per_page=1` would give you a response similar to:
+
+```json
+{
+  "total_entries": 3,
+  "links": [
+    {
+      "rel": "self",
+      "href": "http://roar.apotomo.de/venues?page=2&per_page=1"
+    },
+    {
+      "rel": "next",
+      "href": "http://roar.apotomo.de/venues?page=3&per_page=1"
+    },
+    {
+      "rel": "previous",
+      "href": "http://roar.apotomo.de/venues?page=1&per_page=1"
+    }
+  ],
+  "venues": [
+    {
+      "name": "The Gorge"
+    }
+  ]
+}
+```
+
+You can define additional pagination properties, such as `per_page`, that are provided by [will_paginate](https://github.com/mislav/will_paginate) and [Kaminari](https://github.com/amatsuda/kaminari) in your response by defining the property in your paginated representer.
+
+```ruby
+class VenuesRepresenter < Roar::Decorator
+  include Roar::Representer::JSON
+  include Roar::Representer::Feature::Hypermedia
+  include Roar::Rails::PageRepresenter
+
+  property :per_page
+
+  collection :venues, :exec_context => :decorator, :decorator => VenueRepresenter
+
+  def venues
+    represented
+  end
+
+  def page_url(args)
+    venues_url args
+  end
+end
+
+```
 
 ## Passing Options
 

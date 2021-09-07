@@ -34,4 +34,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "multi_json"
   s.add_development_dependency "tzinfo" # FIXME: why the hell do we need this for 3.1?
+  s.add_development_dependency "will_paginate"
+  s.add_development_dependency "kaminari"
 end
