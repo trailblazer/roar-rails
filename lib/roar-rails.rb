@@ -49,3 +49,4 @@ module Roar
 end
 
 require "roar/rails/controller_additions"
+require "roar/rails/collection_representer"
