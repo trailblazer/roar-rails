@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_runtime_dependency "roar",          '~> 1.1.0'
+  s.add_runtime_dependency "roar",          "~> 1.1"
   s.add_runtime_dependency "test_xml",      ">= 0.1.6"  # TODO: remove dependency as most people don't use XML.
   s.add_runtime_dependency "actionpack"
   s.add_runtime_dependency "railties",      ">= 3.0.0"
