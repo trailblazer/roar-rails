@@ -1,3 +1,9 @@
+## Next
+
+## 1.2.0
+
+* Relax version requirement for Roar
+
 ## 1.1.0
 
 **Roar 1.1 (and Representable 3.0) support** (see [Roar CHANGES](https://github.com/trailblazer/roar/blob/master/CHANGES.markdown#110))
