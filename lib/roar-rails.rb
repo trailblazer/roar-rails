@@ -1,20 +1,19 @@
-require "roar/rails/version"
-require "roar/representer"
-require "roar/decorator"
-require "roar/rails/railtie"
+require 'roar/rails/version'
+require 'roar/representer'
+require 'roar/decorator'
+require 'roar/rails/railtie'
 
 module Roar
-  autoload("XML", "roar/xml")
-  autoload("JSON", "roar/json")
+  autoload('XML', 'roar/xml')
+  autoload('JSON', 'roar/json')
 
   module JSON
-    autoload("HAL", "roar/rails/hal")
-    autoload("JSONAPI", "roar/rails/json_api")
+    autoload('HAL', 'roar/rails/hal')
+    autoload('JSONAPI', 'roar/rails/json_api')
   end
 
-  autoload("Hypermedia", "roar/hypermedia")
+  autoload('Hypermedia', 'roar/hypermedia')
 end
-
 
 module Roar
   module Rails
@@ -35,17 +34,21 @@ module Roar
       require 'roar/rails/rails4_2_strategy'
     when Gem::Version.new(5.0)
       require 'roar/rails/rails5_0_strategy'
-    when Gem::Version.new("5.1")
+    when Gem::Version.new('5.1')
       require 'roar/rails/rails5_0_strategy'
-    when Gem::Version.new("5.2")
+    when Gem::Version.new('5.2')
       require 'roar/rails/rails5_0_strategy'
+    when Gem::Version.new('7.0')
+      require 'roar/rails/rails7_0_strategy'
+    when Gem::Version.new('7.1')
+      require 'roar/rails/rails7_0_strategy'
     else
-      # fallback to 4.0 strategy
-      require 'roar/rails/rails4_0_strategy'
+      # fallback to latest strategy
+      require 'roar/rails/rails7_0_strategy'
     end
 
-    autoload("TestCase", "roar/rails/test_case")
+    autoload('TestCase', 'roar/rails/test_case')
   end
 end
 
-require "roar/rails/controller_additions"
+require 'roar/rails/controller_additions'
