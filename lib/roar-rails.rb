@@ -40,9 +40,11 @@ module Roar
       require 'roar/rails/rails5_0_strategy'
     when Gem::Version.new('7.0')
       require 'roar/rails/rails7_0_strategy'
+    when Gem::Version.new('7.1')
+      require 'roar/rails/rails7_0_strategy'
     else
-      # fallback to 4.0 strategy
-      require 'roar/rails/rails4_0_strategy'
+      # fallback to latest strategy
+      require 'roar/rails/rails7_0_strategy'
     end
 
     autoload('TestCase', 'roar/rails/test_case')
